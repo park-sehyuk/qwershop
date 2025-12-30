@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>회원관리</title>
+    <link rel="stylesheet" href="../adminCss/userList.css" />
+  </head>
+
+  <body>
+    <div id="scale">
+      <div class="left-side">
+        <a href="/managerUI/admin/userList.html" class="text-border">
+          <button class="userList">
+            <div class="userimg">
+              <img src="../img/user-color.png" alt="" />
+            </div>
+            <div>회원관리</div>
+          </button>
+        </a>
+
+        <a href="/managerUI/admin/post.html" class="text-border">
+          <button class="postList">
+            <div class="userimg2"><img src="../img/menu-bar.png" alt="" /></div>
+            <div>게시물 관리</div>
+          </button>
+        </a>
+
+        <a href="/managerUI/admin/category.html" class="text-border">
+          <button class="categoryList">
+            <div class="userimg3"><img src="../img/blogging.png" alt="" /></div>
+            <div>카테고리 리스트</div>
+          </button>
+        </a>
+      </div>
+      <div class="top-right">
+        <div class="right-side">
+          <div class="right-Title">
+            <p class="right-Title1">회원관리</p>
+            <p class="right-Title2">구매하신 회원분들의 내역조회 확인입니다.</p>
+          </div>
+          <div class="payment">
+            <p class="payment-text">결제 일시</p>
+            <div class="payment-cal">
+              <input type="date" id="startDate" value="2025-05-25" />
+              <input type="date" id="endDate" value="2025-07-06" />
+            </div>
+          </div>
+          <div class="button-tap">
+            <div class="startsearch">
+              <button class="starline">초기화</button>
+              <button class="search">검색</button>
+            </div>
+            <button class="download">엑셀 다운로드</button>
+          </div>
+        </div>
+        <table class="user-data-table">
+          <thead>
+            <tr>
+              <th>아이디</th>
+              <th>이름</th>
+              <th>E-mail</th>
+              <th>전화번호</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>seho123</td>
+              <td>김세호</td>
+              <td>seho123@naver.com</td>
+              <td>010-0000-0011</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>weur312</td>
+              <td>김영광</td>
+              <td>weur312@naver.com</td>
+              <td>010-0000-0012</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>howi203</td>
+              <td>김효진</td>
+              <td>howi203@google.com</td>
+              <td>010-0000-0013</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>oowkwn33</td>
+              <td>김원훈</td>
+              <td>qpqke22@naver.com</td>
+              <td>010-0000-0014</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>qkqk222</td>
+              <td>조진세</td>
+              <td>wqliruj@google.com</td>
+              <td>010-0000-0015</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>weqih2235</td>
+              <td>박승철</td>
+              <td>keqe22@google.com</td>
+              <td>010-0000-0016</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>jkqweh2</td>
+              <td>김동규</td>
+              <td>wqehk@naver.com</td>
+              <td>010-0000-0017</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>1919ww</td>
+              <td>강일호</td>
+              <td>1919ww@google.com</td>
+              <td>010-8872-1369</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>1yong93312</td>
+              <td>강일용</td>
+              <td>1yong93@naver.com</td>
+              <td>010-0369-1369</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+            <tr>
+              <td>oquw00</td>
+              <td>이정은</td>
+              <td>oqje23@google.com</td>
+              <td>010-0000-0020</td>
+              <td>
+                <button class="userDetail" data-id="1">유저 상세정보</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="userDetailModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>회원 상세 정보</h2>
+          <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="modal-name">이름:</label>
+            <input type="text" id="modal-name" value="김사과" />
+          </div>
+          <div class="form-group">
+            <label for="modal-id">아이디:</label>
+            <input type="text" id="modal-id" value="apple" readonly />
+          </div>
+          <div class="form-group">
+            <label>비밀번호:</label>
+            <button class="change-password">비밀번호 변경</button>
+          </div>
+          <div class="form-group">
+            <label for="modal-phone">연락처:</label>
+            <input type="text" id="modal-phone" value="010-1234-5678" />
+          </div>
+          <div class="form-group">
+            <label for="modal-email">이메일:</label>
+            <input type="email" id="modal-email" value="apple@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="modal-address">주소:</label>
+            <input type="text" id="modal-address" value="(12345) 서울시 ..." />
+            <button>주소검색</button>
+          </div>
+          <div class="form-group">
+            <label for="modal-grade">회원등급:</label>
+            <select id="modal-grade">
+              <option value="VIP">VIP</option>
+              <option value="VVIP">VVIP</option>
+              <option value="일반회원">일반회원</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-points">보유 적립금:</label>
+            <input type="text" id="modal-points" value="15,000" /> P
+          </div>
+          <div class="form-group">
+            <label for="modal-memo">메모:</label>
+            <textarea id="modal-memo" rows="3">7/15 배송 문의 전화 옴. 친절하게 응대함.</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="save-button">저장</button>
+          <button class="close-button-footer">닫기</button>
+        </div>
+      </div>
+    </div>
+    <script src="../adminJs/userList.js"></script>
+  </body>
+</html>
+  </body>
+</html>

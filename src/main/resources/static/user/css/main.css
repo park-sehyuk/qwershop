@@ -1,0 +1,156 @@
+@charset "UTF-8";
+#mainslider {
+  width: 1470px;
+  margin: 0 auto;
+  margin-bottom: 160px;
+}
+
+/* best 아이템 */
+#bestList {
+  width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 160px;
+  overflow: hidden;
+}
+#bestList h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 42px;
+}
+
+#bestItem #bestItemList {
+  width: 1440px;
+}
+#bestItem #bestItemList .item {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+#bestItem #bestItemList img {
+  width: 100%;
+  height: 694px;
+  margin-bottom: 7px;
+}
+#bestItem #bestItemList .title {
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: #565656;
+}
+#bestItem li .price {
+  font-size: 15px;
+  color: #000;
+  padding-right: 10px;
+}
+#bestItem li .content {
+  font-size: 14px;
+  color: #565656;
+  margin-bottom: 3px;
+}
+
+/* 추천 상품 아이템 */
+#suggList {
+  width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 160px;
+}
+#suggList h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 42px;
+}
+#suggItem #suggItemList {
+  display: flex;
+  gap: 20px;
+}
+#suggItem #suggItemList .item {
+  width: 503px;
+}
+#suggItem img {
+  width: 100%;
+  height: 694px;
+  margin-bottom: 7px;
+}
+#suggItem .title {
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: #565656;
+}
+#suggItem .price {
+  font-size: 15px;
+  color: #000;
+  padding-right: 10px;
+}
+#suggItem .content {
+  font-size: 14px;
+  color: #565656;
+  margin-bottom: 3px;
+}
+#hashList {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  margin-bottom: 20px;
+}
+#hashList button {
+  font-size: 28px;
+}
+
+/* 이달의 상품 */
+#productList {
+  width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 160px;
+}
+#productList h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 42px;
+}
+#productItem #productItemList {
+  display: flex;
+  gap: 20px;
+}
+#productItem .item {
+  width: 503px;
+}
+#productItem img {
+  width: 100%;
+  height: 694px;
+  margin-bottom: 7px;
+}
+#productItem .title {
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: #565656;
+}
+#productItem .price {
+  font-size: 15px;
+  color: #000;
+  padding-right: 10px;
+}
+#productItem .content {
+  font-size: 14px;
+  color: #565656;
+  margin-bottom: 3px;
+}
+
+/* sns 사진 */
+#snsImgList {
+  width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 160px;
+}
+#snsImgList h1 {
+  text-align: end;
+  font-size: 36px;
+  margin-bottom: 42px;
+}
+#imgList ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6.5px;
+}
+
+#imgList li img {
+  width: 355px;
+  height: 470px;
+}

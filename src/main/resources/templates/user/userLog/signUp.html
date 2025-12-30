@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>signUP</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/commen.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/userLog/signUp.css" />
+  </head>
+  <body>
+
+    <div id="header"></div>
+
+    <div class="form-container">
+      <div class="form-wrapper">
+        <h1 class="form-title">회원가입</h1>
+
+        <form action="#">
+          <div class="form-group">
+            <label for="user-id">아이디</label>
+            <div class="input-with-button">
+              <input
+                type="text"
+                id="user-id"
+                placeholder="아이디 입력 (6~20자)"
+              />
+              <button type="button" class="btn btn-inline">중복 확인</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="user-password">비밀번호</label>
+            <input
+              type="password"
+              id="user-password"
+              placeholder="비밀번호 입력 (문자, 숫자, 특수문자 포함 8~20자)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="user-password-confirm">비밀번호 확인</label>
+            <input
+              type="password"
+              id="user-password-confirm"
+              placeholder="비밀번호 재입력"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="user-name">이름</label>
+            <input
+              type="text"
+              id="user-name"
+              placeholder="이름을 입력해주세요."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="user-phone">전화번호</label>
+            <input
+              type="tel"
+              id="user-phone"
+              placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="user-email-id">이메일 주소</label>
+            <div class="email-group">
+              <input type="text" id="user-email-id" />
+              <span class="email-at">@</span>
+              <input type="text" id="user-email-domain" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="user-birthdate">생년월일</label>
+            <input type="text" id="user-birthdate" placeholder="예: 19980924" />
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="btn btn-primary">가입하기</button>
+            <button type="button" class="btn btn-secondary">가입취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="../js/userLog/signUp.js"></script>
+    <script src="../js/common.js"></script>
+  </body>
+</html>

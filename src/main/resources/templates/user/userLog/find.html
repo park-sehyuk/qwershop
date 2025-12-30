@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>아이디 찾기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/userLog/find.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/commen.css" />
+  </head>
+  <body>
+    <header id="header"></header>
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active">아이디 찾기</div>
+        <div class="tab"><a href="../userLog/findpw.html">비밀번호 찾기</a></div>
+      </div>
+
+      <div class="content-box">
+        <p class="instruction">
+          고객님의 이름과 휴대 전화 번호를 입력해 주세요.
+        </p>
+
+        <div class="input-group">
+          <label for="userName">이름</label>
+          <input type="text" id="userName" placeholder="" />
+        </div>
+
+        <div class="input-group">
+          <label for="userPhone">휴대 전화 번호</label>
+          <input type="text" id="userPhone" placeholder="" />
+        </div>
+
+        <div class="certification-group">
+          <button class="btn-certification">인증번호</button>
+          <input type="text" placeholder="인증번호 입력" />
+        </div>
+      </div>
+
+      <button class="btn-confirm">확인</button>
+    </div>
+    <footer id="footer"></footer>
+    <script src="../js/userLog/find.js"></script>
+    <script src="../js/common.js"></script>
+  </body>
+</html>

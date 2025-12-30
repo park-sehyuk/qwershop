@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+.form-container {
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+  width: 100%;
+  max-width: 480px;
+  padding: 20px;
+}
+
+.form-wrapper {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 10px 0;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="tel"] {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+input:focus {
+  border-bottom-color: #000;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-with-button input {
+  flex-grow: 1;
+}
+
+.email-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.email-group input {
+  text-align: center;
+}
+
+.email-at {
+  font-size: 16px;
+  color: #888;
+}
+
+.btn {
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  flex-shrink: 0;
+}
+
+.btn-inline {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.btn-inline:hover {
+  background-color: #dee2e6;
+}
+
+.button-group {
+  margin-top: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+.button-group .btn {
+  flex-grow: 1;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.btn-primary {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+}
+
+.btn-secondary {
+  background-color: #e9ecef;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.btn-secondary:hover {
+  background-color: #dee2e6;
+}

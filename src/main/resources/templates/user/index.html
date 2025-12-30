@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QWER</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/commen.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div id="header"></div>
+    <div id="main-wrapper">
+      <!-- 메인 슬라이더 -->
+      <div id="mainslider">
+        <div class="slick-slider">
+          <div class="sliderImg"><img src="img/han1.jpg" alt="" /></div>
+          <div class="sliderImg"><img src="img/han2.jpg" alt="" /></div>
+          <div class="sliderImg"><img src="img/han3.jpg" alt="" /></div>
+        </div>
+      </div>
+      <!-- best 상품 리스트 -->
+      <div id="bestList">
+        <h1>BEST</h1>
+        <div id="bestItem">
+          <div id="bestItemList"></div>
+        </div>
+      </div>
+      <!-- 추천 상품 -->
+      <div id="suggList">
+        <h1>추천 상품</h1>
+        <div id="hash">
+          <ul id="hashList">
+            <li><button id="gucciBtn">#구찌</button></li>
+            <li><button id="poloBtn">#랄프로렌</button></li>
+            <li><button id="maisonBtn">#메종 키츠네</button></li>
+            <li><button id="balBtn">#발렌시아가</button></li>
+          </ul>
+        </div>
+        <div id="suggItem">
+          <div id="suggItemList"></div>
+        </div>
+      </div>
+      <!-- 이달의 상품 -->
+      <div id="productList">
+        <h1>이달의 상품</h1>
+        <div id="productItem">
+          <div id="productItemList"></div>
+        </div>
+      </div>
+      <!-- sns -->
+      <div id="snsImgList">
+        <h1>sns</h1>
+        <div id="imgList">
+          <ul>
+            <li><img src="img/sns1.jpg" alt="" /></li>
+            <li><img src="img/sns2.png" alt="" /></li>
+            <li><img src="img/sns3.jpeg" alt="" /></li>
+            <li><img src="img/sns4.jpeg" alt="" /></li>
+            <li><img src="img/sns5.avif" alt="" /></li>
+            <li><img src="img/sns6.jpg" alt="" /></li>
+            <li><img src="img/sns7.avif" alt="" /></li>
+            <li><img src="img/sns8.jpg" alt="" /></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <footer id="footer"></footer>
+
+    <template id="items">
+      <div class="item">
+        <a href="">
+          <img src="" alt="" />
+          <p class="title"></p>
+          <p class="price"></p>
+          <p class="content"></p>
+        </a>
+      </div>
+    </template>
+    <script src="js/index.js"></script>
+    <script src="js/common.js"></script>
+  </body>
+</html>

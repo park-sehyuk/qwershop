@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+.login-container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+  width: 100%;
+  padding: 20px;
+}
+
+.form-wrapper {
+  width: 650px;
+  height: 500px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 30px 0;
+  color: #000;
+}
+
+.tab-nav {
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #868e96;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.tab-item.active {
+  color: #000000;
+  font-weight: 700;
+  border-bottom-color: #000000;
+}
+
+.form-content {
+  padding-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-bottom-color: #000;
+}
+
+.options-group {
+  margin-bottom: 30px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #495057;
+  cursor: pointer;
+}
+
+.save-id-check {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-login,
+.btn-order-inquiry {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover .btn-order-inquiry:hover {
+  background-color: #333;
+}
+
+.util-links {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.util-links a {
+  text-decoration: none;
+  color: #495057;
+  margin: 0 5px;
+  transition: color 0.3s;
+}
+
+.util-links a:hover {
+  color: #000;
+}
+
+.util-links .separator {
+  color: #ced4da;
+}
+
+.hidden {
+  display: none;
+}
+.sub-title {
+  margin-bottom: 19px;
+}
+.password-input-wrapper {
+  position: relative;
+}
+.password-input-wrapper input[type="password"],
+.password-input-wrapper input[type="text"] {
+  padding-right: 40px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}

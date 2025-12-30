@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>카테고리 관리</title>
+    <link rel="stylesheet" href="../adminCss/category.css">
+</head>
+<body>
+    <div id="scale">
+        <div class="left-side">
+
+            <a href="/managerUI/admin/userList.html" class="text-border">
+            <button class="userList">
+                <div class="userimg"><img src="../img/user-nonecolor.png" alt=""></div>
+                <div>회원관리</div>
+            </button>
+            </a>
+
+            <a href="/managerUI/admin/post.html" class="text-border">
+             <button class="postList">
+                <div class="userimg2"><img src="../img/menu-bar.png" alt=""></div>
+                <div>게시물 관리</div></button>
+            </a>
+            
+            <a href="/managerUI/admin/category.html" class="text-border">
+            <button class="categoryList">
+                <div class="userimg3"><img src="../img/blogging color.png" alt=""></div>
+                <div>카테고리 리스트</div>
+            </button>
+            </a>
+        </div>
+        <div class="top-right">
+            <div class="right-side">
+                <div class="right-Title">
+                    <p class="right-Title1">탭 메뉴 고급 관리</p>
+                    <p class="right-Title2">웹사이트 헤더에 표시되는 탭 메뉴의 모든 속성을 관리합니다.</p>
+                </div>
+                <div class="category-search-area">
+                    <p class="search-text">탭 메뉴명 검색</p>
+                    <div class="search-input-group">
+                        <input type="text" placeholder="탭 메뉴명 입력" class="category-search-input">
+                        <button class="search">검색</button>
+                    </div>
+                </div>
+                <div class="button-tap">
+                    <div class="startsearch">
+                        <button class="starline">초기화</button>
+                    </div>
+                    <button class="add-category">새 탭 메뉴 추가</button>
+                </div>
+            </div>
+
+            <table class="category-data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>탭 메뉴명</th>
+                        <th>연결 URL</th>
+                        <th>표시 순서</th>
+                        <th>상태</th>
+                        <th>생성일</th>
+                        <th>마지막 수정일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Best</td>
+                        <td>/products/best</td>
+                        <td>1</td>
+                        <td class="status-active">활성</td>
+                        <td>2023-01-01</td>
+                        <td>2024-03-15</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Men</td>
+                        <td>/products/men</td>
+                        <td>2</td>
+                        <td class="status-active">활성</td>
+                        <td>2023-01-01</td>
+                        <td>2024-03-15</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Women</td>
+                        <td>/products/women</td>
+                        <td>3</td>
+                        <td class="status-active">활성</td>
+                        <td>2023-01-01</td>
+                        <td>2024-03-15</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Kids</td>
+                        <td>/products/kids</td>
+                        <td>4</td>
+                        <td class="status-active">활성</td>
+                        <td>2023-01-01</td>
+                        <td>2024-03-15</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Sale</td>
+                        <td>/promotions/sale</td>
+                        <td>5</td>
+                        <td class="status-active">활성</td>
+                        <td>2023-01-01</td>
+                        <td>2024-03-15</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>New Arrivals</td>
+                        <td>/products/new</td>
+                        <td>6</td>
+                        <td class="status-inactive">비활성</td>
+                        <td>2024-05-20</td>
+                        <td>-</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Event</td>
+                        <td>/events</td>
+                        <td>7</td>
+                        <td class="status-scheduled">예정</td>
+                        <td>2024-06-01</td>
+                        <td>-</td>
+                        <td><button>수정</button> <button>삭제</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../adminJs/category.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+@charset "utf-8";
+
+#big-Title {
+    width: 1400px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-Side {
+    width: 1400px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+}
+
+.top-Side .left-image {
+    margin-right: 30px;
+    width: 950px;
+    height: 900px;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    /* 초기 이미지는 JavaScript에서 동적으로 설정됩니다. */
+    /* background-image: url(/userUI/img/옷\ 이미지.jpg); */ 
+}
+
+.right-Side {
+    border-top: 1px solid rgb(211, 211, 211);
+    border-left: 1px solid rgb(211, 211, 211);
+    padding-left: 30px;
+    position: relative;
+    border-bottom: 1px solid rgb(211, 211, 211);
+    border-right: 1px solid rgb(211, 211, 211);
+}
+
+.right-Side .text-Title {
+    padding-top: 60px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.right-Side .price {
+    font-size: 30px;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.right-Side .brand-name {
+    font-size: 18px;
+}
+
+.right-Side .brand-hagul {
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 15px;
+}
+
+.right-Side .Rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.right-Side .Rating .icon {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 15px;
+    height: 15px;
+    background-size: 15px;
+    background-image: url("/userUI/img/star.png");
+}
+
+.right-Side .Rating .number {
+    margin-left: 2px;
+}
+
+.right-Side .Rating .review {
+    text-decoration: underline;
+    margin-left: 10px;
+}
+
+.right-Side .size-Bar {
+    width: 400px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 2.6;
+    padding-left: 20px;
+    font-weight: bolder;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-Side .size-Bar .size-icon {
+    margin-top: 12px;
+    margin-right: 25px;
+    width: 27px;
+    height: 27px;
+    color: white;
+    border: 0.5px solid rgb(124, 124, 124);
+    border-radius: 80px;
+    background-image: url(/userUI/img/triangle.png);
+    background-size: 17px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.right-Side .color {
+    display: flex;
+    /* gap: 50px; 제거하고 각 .color-option에 margin-right 부여 */
+    margin-bottom: 30px;
+    /* flex-wrap: wrap; 여러 색상이 한 줄에 다 안 들어갈 경우를 대비하여 추가 */
+    flex-wrap: wrap; 
+}
+
+.right-Side .color-text {
+    font-size: 20px;
+    font-weight: bolder;
+    /* margin-left: 121px; 이 값을 제거하여 flex 컨테이너에 맞게 정렬될 수 있도록 함 */
+    margin-bottom: 20px;
+}
+
+/* JavaScript에서 동적으로 생성되는 .color-option 버튼 스타일 */
+.right-Side .color .color-option {
+    width: 60px; /* 기존 red, blue, black과 동일한 크기 */
+    height: 60px;
+    border-radius: 10px; /* 기존과 동일하게 사각형으로 */
+    border: 1px solid #ccc; /* 기본 테두리 */
+    margin-right: 20px; /* 버튼 간격 조정 */
+    margin-bottom: 10px; /* 여러 줄로 표시될 때 하단 여백 */
+    cursor: pointer;
+    outline: none; /* 클릭 시 외곽선 제거 */
+    display: block; /* 각 색상 버튼을 블록 요소로 변경하여 새 줄에 표시 (필요시 inline-block으로 변경) */
+    /* display: inline-block; */ /* 만약 한 줄에 여러 개 표시하고 싶다면 이 값을 사용하세요 */
+}
+
+/* 선택된 색상 버튼에 대한 스타일 */
+.right-Side .color .color-option.selected {
+    border: 2px solid #000; /* 선택된 색상에 대한 강조 테두리 */
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); /* 선택 효과 */
+}
+
+/* 기존 하드코딩된 색상 버튼 관련 CSS는 삭제 (red, blue, Black 클래스) */
+/* .right-Side .color .red, .blue, .Black { ... } */
+/* .color .red::after, .blue::after { ... } */
+
+
+.Buy-Cart {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.Buy-Cart .Buy {
+    width: 120px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bolder;
+    border: 1px solid black;
+}
+
+.Buy-Cart .Cart {
+    width: 90px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bolder;
+    border: 1px solid black;
+}
+
+.cloth-container {
+    width: 600px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.cloth {
+    display: flex;
+    gap: 10px;
+    /* width: 640px; 동적으로 계산될 수 있도록 제거 */
+    transition: transform 0.5s ease-in-out;
+}
+
+.cloth img{
+    width: 150px;
+    height: 180px;
+    flex-shrink: 0;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.cloth img.selected-thumbnail {
+    border: 2px solid #007bff;
+}
+
+.cloth p {
+    width: 150px;
+    height: 180px;
+    flex-shrink: 0;
+}
+
+.scroll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.scroll p.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-top: 0;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.scroll p.dot.active {
+    background-color: #000000;
+}
+
+.scroll-icon1 {
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url("/userUI/img/left\ icon.jpg");
+}
+
+.scroll-icon2 {
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url("/userUI/img/right\ icon.jpg");
+}
+
+.bottom-Side {
+    width: 1400px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding-top: 150px;
+    padding-left: 60px;
+}
+
+.bottom-image-container {
+    width: 729px;
+    height: 800px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    border: 1px solid #eee;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.bottom-image-container:hover {
+    overflow-y: scroll;
+    scrollbar-width: auto;
+    -ms-overflow-style: scrollbar;
+}
+
+.bottom-image-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.bottom-image-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.bottom-image-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+}
+
+.bottom-image-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.bottom-image-container img {
+    width: 100%;
+    height: 800px;
+    object-fit: cover;
+    display: block;
+}
+
+.bottom-Sidetext .impor {
+    margin-top: 60px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.bottom-Sidetext li {
+    list-style-type: disc;
+    font-size: 17px;
+    color: grey;
+    margin-bottom: 32px;
+}
+
+.size-options {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px 0;
+    margin-top: 10px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 10;
+    top: 315px;
+    left: 30px;
+    display: none;
+}
+
+.size-options ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.size-options ul li button {
+    width: 100%;
+    padding: 10px 20px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.size-options ul li button:hover {
+    background-color: #f0f0f0;
+}
+
+.size-options ul li button.selected {
+    background-color: #e0e0e0;
+    font-weight: bold;
+    color: #007bff;
+}
