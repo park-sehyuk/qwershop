@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout}">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QWER</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -14,31 +13,39 @@
       type="text/javascript"
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/commen.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <!-- CSS -->
+    <link th:href="@{/user/css/base.css}" rel="stylesheet"/>
+    <link th:href="@{/user/css/main.css}" rel="stylesheet"/>
+
+    <!-- jQuery / slick -->
+<!--    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>-->
+<!--    <link th:href="@{//cdn.jsdelivr.net/npm/slick-carousel/1.8.1/slick/slick.css}" rel="stylesheet"/>-->
+<!--    <script th:src="@{//cdn.jsdelivr.net/npm/slick-carousel/1.8.1/slick/slick.min.js}"></script>-->
+
   </head>
-  <body>
-    <div id="header"></div>
+  <div layout:fragment="content">
     <div id="main-wrapper">
       <!-- 메인 슬라이더 -->
       <div id="mainslider">
         <div class="slick-slider">
-          <div class="sliderImg"><img src="img/han1.jpg" alt="" /></div>
-          <div class="sliderImg"><img src="img/han2.jpg" alt="" /></div>
-          <div class="sliderImg"><img src="img/han3.jpg" alt="" /></div>
+          <div class="sliderImg"><img th:src="@{/user/imges/han1.jpg}" alt=""></div>
+          <div class="sliderImg"><img th:src="@{/user/imges/han2.jpg}" alt=""></div>
+          <div class="sliderImg"><img th:src="@{/user/imges/han3.jpg}" alt=""></div>
         </div>
       </div>
-      <!-- best 상품 리스트 -->
+
+      <!-- BEST -->
       <div id="bestList">
         <h1>BEST</h1>
         <div id="bestItem">
           <div id="bestItemList"></div>
         </div>
       </div>
+
       <!-- 추천 상품 -->
       <div id="suggList">
         <h1>추천 상품</h1>
+
         <div id="hash">
           <ul id="hashList">
             <li><button id="gucciBtn">#구찌</button></li>
@@ -47,10 +54,12 @@
             <li><button id="balBtn">#발렌시아가</button></li>
           </ul>
         </div>
+
         <div id="suggItem">
           <div id="suggItemList"></div>
         </div>
       </div>
+
       <!-- 이달의 상품 -->
       <div id="productList">
         <h1>이달의 상품</h1>
@@ -58,36 +67,41 @@
           <div id="productItemList"></div>
         </div>
       </div>
-      <!-- sns -->
+
+      <!-- SNS -->
       <div id="snsImgList">
         <h1>sns</h1>
         <div id="imgList">
           <ul>
-            <li><img src="img/sns1.jpg" alt="" /></li>
-            <li><img src="img/sns2.png" alt="" /></li>
-            <li><img src="img/sns3.jpeg" alt="" /></li>
-            <li><img src="img/sns4.jpeg" alt="" /></li>
-            <li><img src="img/sns5.avif" alt="" /></li>
-            <li><img src="img/sns6.jpg" alt="" /></li>
-            <li><img src="img/sns7.avif" alt="" /></li>
-            <li><img src="img/sns8.jpg" alt="" /></li>
+            <li><img th:src="@{/user/imges/sns1.jpg}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns2.png}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns3.jpeg}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns4.jpeg}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns5.avif}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns6.jpg}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns7.avif}" alt=""></li>
+            <li><img th:src="@{/user/imges/sns8.jpg}" alt=""></li>
           </ul>
         </div>
       </div>
-    </div>
-    <footer id="footer"></footer>
 
+    </div>
+
+    <!-- 템플릿 -->
     <template id="items">
       <div class="item">
         <a href="">
-          <img src="" alt="" />
+<!--          <img th:src="@{}" alt="">-->
           <p class="title"></p>
           <p class="price"></p>
           <p class="content"></p>
         </a>
       </div>
     </template>
-    <script src="js/index.js"></script>
-    <script src="js/common.js"></script>
-  </body>
+
+    <!-- JS -->
+    <script th:src="@{/user/js/index.js}"></script>
+    <script th:src="@{/user/js/common.js}"></script>
+
+  </div>
 </html>

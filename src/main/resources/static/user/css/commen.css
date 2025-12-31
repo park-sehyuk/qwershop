@@ -2,7 +2,7 @@
 
 /* 페이지에 상관없이 사용되는(헤더, 푸터, 버튼등) 스타일 저장 */
 
-body {
+div {
   font-family: "Spoqa Han Sans Neo", "sans-serif";
   font-size: 14px;
   line-height: 1.5;
@@ -34,24 +34,24 @@ a {
   border-top: 1px solid #121212;
   border-bottom: 1px solid #121212;
 }
-header #category {
+#header #category {
   display: flex;
   font-size: 24px;
   font-weight: 400px;
   gap: 40px;
 }
-header #category > li {
+#header #category > li {
   color: #222;
   padding: 24px 0px;
 }
-header #icons {
+#header #icons {
   display: flex;
   gap: 10px;
   align-items: center;
   font-size: 13px;
   font-weight: 400px;
 }
-header .midRight {
+#header .midRight {
   position: absolute;
   right: 100px;
   display: flex;
@@ -67,7 +67,7 @@ header .midRight {
   background-color: #fff;
   margin-left: 10px;
 }
-header .midRight .cart a span {
+#header .midRight .cart a span {
   position: relative;
   top: -1px;
   display: inline-block;
@@ -80,41 +80,41 @@ header .midRight .cart a span {
   text-align: Center;
   margin-left: 2px;
 }
-header .midRight button {
+#header .midRight button {
   display: block;
   width: 26px;
   height: 26px;
-  background-image: url(../img/search.png);
+  background-image: url(../imges/search.png);
   text-indent: -99999px;
 }
 
-footer {
+#footer {
   background-color: #f4f4f4;
   height: auto;
   padding: 0 25px;
 }
-footer span {
+#footer span {
   display: block;
   color: #222;
 }
-footer strong {
+#footer strong {
   font-weight: bold;
 }
-footer .fMenu {
+#footer .fMenu {
   border-bottom: 1px solid #222;
 }
-footer .fMenu ul {
+#footer .fMenu ul {
   display: flex;
   gap: 30px;
   padding: 28px 0px;
   justify-content: center;
 }
-footer .fMenu ul li {
+#footer .fMenu ul li {
   position: relative;
   font-size: 14px;
   color: #222;
 }
-footer .fMenu ul li:not(:last-child)::after {
+#footer .fMenu ul li:not(:last-child)::after {
   content: "";
   display: block;
   width: 1px;
@@ -170,7 +170,7 @@ footer .fMenu ul li:not(:last-child)::after {
   border-radius: 50%;
   background-color: #f5f5f5;
   text-indent: -9999px;
-  background-image: url(../img/reading.png);
+  background-image: url(../imges/reading.png);
   background-size: 24px 24px;
   background-position: center;
 }
@@ -184,7 +184,7 @@ footer .fMenu ul li:not(:last-child)::after {
   border-radius: 50%;
   background-color: #f5f5f5;
   text-indent: -9999px;
-  background-image: url(../img/x.png);
+  background-image: url(../imges/x.png);
   background-size: 24px 24px;
   background-position: center;
   display: none;

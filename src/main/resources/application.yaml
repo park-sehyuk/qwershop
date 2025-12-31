@@ -1,3 +1,29 @@
 spring:
   application:
     name: qwershop
+
+
+  devtools:
+    livereload:
+      enabled: true
+
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3306/qwerShop?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: k2512p1t3
+    password: km2512p1t3
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+#file:
+#  upload:
+#    itemImgLocation: /Users/hyuki/Desktop/K-MOVE/BACKEND/boot/shop/item
+#    uploadPath: file:///Users/hyuki/Desktop/K-MOVE/BACKEND/boot/shop/
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:mybatis-config.xml

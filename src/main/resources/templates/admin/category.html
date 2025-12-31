@@ -1,30 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>카테고리 관리</title>
-    <link rel="stylesheet" href="../adminCss/category.css">
+    <link rel="stylesheet" th:href="@{/admin/css/category.css}">
 </head>
-<body>
+<body id="category" >
     <div id="scale">
         <div class="left-side">
 
-            <a href="/managerUI/admin/userList.html" class="text-border">
+            <a th:href="@{/admin/userList.html}" class="text-border">
             <button class="userList">
-                <div class="userimg"><img src="../img/user-nonecolor.png" alt=""></div>
+                <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
                 <div>회원관리</div>
             </button>
             </a>
 
-            <a href="/managerUI/admin/post.html" class="text-border">
+            <a th:href="@{/admin/post.html}" class="text-border">
              <button class="postList">
-                <div class="userimg2"><img src="../img/menu-bar.png" alt=""></div>
+                <div class="userimg2"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
                 <div>게시물 관리</div></button>
             </a>
             
-            <a href="/managerUI/admin/category.html" class="text-border">
+            <a th:href="@{/admin/category.html}" class="text-border">
             <button class="categoryList">
-                <div class="userimg3"><img src="../img/blogging color.png" alt=""></div>
+                <div class="userimg3"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
                 <div>카테고리 리스트</div>
             </button>
             </a>
@@ -138,6 +136,6 @@
             </table>
         </div>
     </div>
-    <script src="../adminJs/category.js"></script>
+    <script th:src="@{/admin/js/category.js}"></script>
 </body>
 </html>

@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      layout:decorate="~{layouts/layout}">
   <head>
-    <meta charset="UTF-8" />
-    <title>signUP</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/commen.css" />
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/userLog/signUp.css" />
+    <link rel="stylesheet" th:href="@{/user/css/base.css}" />
+    <link rel="stylesheet" th:href="@{/user/css/userLog/signUp.css}" />
   </head>
-  <body>
-
-    <div id="header"></div>
+  <div id="signUp" layout:fragment="content">
 
     <div class="form-container">
       <div class="form-wrapper">
@@ -87,8 +83,7 @@
         </form>
       </div>
     </div>
-    <footer id="footer"></footer>
-    <script src="../js/userLog/signUp.js"></script>
-    <script src="../js/common.js"></script>
-  </body>
+    
+    <script th:src="@{/user/js/userLog/signUp.js}"></script>
+  </div>
 </html>

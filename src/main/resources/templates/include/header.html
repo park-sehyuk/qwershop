@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div id="header" th:fragment="header">
+  <div id="header-top">
+    <h1 class="title"><a th:href="@{/main}" id="title">QWER</a></h1>
+  </div>
+  <div id="header-mid">
+    <div class="midLeft">
+      <ul id="category">
+        <li><a th:href="@{/}">New</a></li>
+        <li><a th:href="@{/}">Best</a></li>
+        <li>
+          <a th:href="@{/}">Men</a>
+          <ul class="subMenuTitle">
+            <li>
+              <a th:href="@{/}">상의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반팔</a></li>
+                <li><a th:href="@{/}">긴팔</a></li>
+                <li><a th:href="@{/}">맨투맨</a></li>
+                <li><a th:href="@{/}">니트</a></li>
+                <li><a th:href="@{/}">아우터</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">하의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반바지</a></li>
+                <li><a th:href="@{/}">슬랙스</a></li>
+                <li><a th:href="@{/}">청바지</a></li>
+                <li><a th:href="@{/}">면바지</a></li>
+                <li><a th:href="@{/}">트랙팬츠</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">신발</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">러닝화</a></li>
+                <li><a th:href="@{/}">스니커즈</a></li>
+                <li><a th:href="@{/}">구두</a></li>
+                <li><a th:href="@{/}">샌들</a></li>
+                <li><a th:href="@{/}">슬리퍼</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">그 외</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">양말</a></li>
+                <li><a th:href="@{/}">가방</a></li>
+                <li><a th:href="@{/}">악세사리</a></li>
+                <li><a th:href="@{/}">모자</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a th:href="@{/}">Women</a>
+          <ul class="subMenuTitle">
+            <li>
+              <a th:href="@{/}">상의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반팔</a></li>
+                <li><a th:href="@{/}">긴팔</a></li>
+                <li><a th:href="@{/}">맨투맨</a></li>
+                <li><a th:href="@{/}">니트</a></li>
+                <li><a th:href="@{/}">아우터</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">하의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반바지</a></li>
+                <li><a th:href="@{/}">슬랙스</a></li>
+                <li><a th:href="@{/}">청바지</a></li>
+                <li><a th:href="@{/}">면바지</a></li>
+                <li><a th:href="@{/}">트랙팬츠</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">신발</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">러닝화</a></li>
+                <li><a th:href="@{/}">스니커즈</a></li>
+                <li><a th:href="@{/}">구두</a></li>
+                <li><a th:href="@{/}">샌들</a></li>
+                <li><a th:href="@{/}">슬리퍼</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">그 외</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">양말</a></li>
+                <li><a th:href="@{/}">가방</a></li>
+                <li><a th:href="@{/}">악세사리</a></li>
+                <li><a th:href="@{/}">모자</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a th:href="@{/}">Kids</a>
+          <ul class="subMenuTitle">
+            <li>
+              <a th:href="@{/}">상의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반팔</a></li>
+                <li><a th:href="@{/}">긴팔</a></li>
+                <li><a th:href="@{/}">맨투맨</a></li>
+                <li><a th:href="@{/}">니트</a></li>
+                <li><a th:href="@{/}">아우터</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">하의</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">반바지</a></li>
+                <li><a th:href="@{/}">슬랙스</a></li>
+                <li><a th:href="@{/}">청바지</a></li>
+                <li><a th:href="@{/}">면바지</a></li>
+                <li><a th:href="@{/}">트랙팬츠</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">신발</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">러닝화</a></li>
+                <li><a th:href="@{/}">스니커즈</a></li>
+                <li><a th:href="@{/}">샌들</a></li>
+                <li><a th:href="@{/}">슬리퍼</a></li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/}">그 외</a>
+              <ul class="sub-menu">
+                <li><a th:href="@{/}">양말</a></li>
+                <li><a th:href="@{/}">가방</a></li>
+                <li><a th:href="@{/}">악세사리</a></li>
+                <li><a th:href="@{/}">모자</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a th:href="@{/}">Sale</a></li>
+      </ul>
+    </div>
+    <div class="midRight">
+      <ul id="icons">
+        <li class="login"><a th:href="@{userLog/login.html}">로그인</a></li>
+        <li class="signUp">
+          <a th:href="@{userLog/signUp.html}">회원가입</a>
+        </li>
+        <li class="cart">
+          <a th:href="@{/}">장바구니<span>0</span></a>
+        </li>
+      </ul>
+      <button id="searchBtn">검색</button>
+    </div>
+  </div>
+  <div id="searchResult">
+    <div id="srTop">
+      <div id="searchDiv">
+        <p><button id="srBtn">돋보기</button></p>
+        <input type="text" name="search" id="search" />
+        <button id="clear">지우기</button>
+      </div>
+    </div>
+    <div id="srMid">
+      <p>인기 검색어</p>
+      <ul>
+        <li><button>상품1</button></li>
+        <li><button>상품12</button></li>
+        <li><button>상품123</button></li>
+        <li><button>상품1234</button></li>
+        <li><button>상품12345</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</html>

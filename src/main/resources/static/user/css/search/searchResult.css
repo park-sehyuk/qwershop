@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-body {
+#searchResult {
   margin: 0;
   padding: 20px;
   background-color: #ffffff;

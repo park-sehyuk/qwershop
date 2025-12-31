@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      layout:decorate="~{layouts/layout}">
 
 <head>
-  <meta charset="UTF-8">
-  <title>detail page</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/commen.css">
-  <link rel="stylesheet" href="../css/production/detail.css">
+  <link rel="stylesheet" th:href="@{/user/css/base.css}">
+  <link rel="stylesheet" th:href="@{/user/css/production/detail.css}">
 </head>
 
-<body>
-  <header id="header"></header>
+<div id="detail" layout:fragment="content">
   <div id="big-Title">
     
     <div class="top-Side">
@@ -41,9 +39,9 @@
         </div>
         <p class="color-text">색상</p>
         <div class="color" id="product-colors">
-          <button class="red"><a href=""></a></button>
-          <button class="blue"><a href=""></a></button>
-          <button class="Black"><a href=""></a></button>
+          <button class="red"><a th:href="@{/}"></a></button>
+          <button class="blue"><a th:href="@{/}"></a></button>
+          <button class="Black"><a th:href="@{/}"></a></button>
         </div>
         <div class="Buy-Cart">
           <button class="Buy">장바구니</button>
@@ -83,9 +81,8 @@
     </div>
     
   </div>
-  <footer id="footer"></footer>
-  <script src="/userUI/js/production/detail.js"></script>
-  <script src="../js/common.js"></script>
-</body>
+  <script th:src="@{/user/js/production/detail.js}"></script>
+  <script th:src="@{/user/js/common.js}"></script>
+</div>
 
 </html>

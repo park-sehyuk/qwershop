@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<div id="footer" th:fragment="footer">-->
+<!--  <div class="fMenu">-->
+<!--    <ul>-->
+<!--      <li><a href="">회사소개</a></li>-->
+<!--      <li><a href="">이용약관</a></li>-->
+<!--      <li>-->
+<!--        <a href=""><strong>개인정보처리방침</strong></a>-->
+<!--      </li>-->
+<!--      <li><a href="">상품교환안내</a></li>-->
+<!--      <li><a href="">가맹안내</a></li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--  <div class="fInfo">-->
+<!--    <div class="fLeft">-->
+<!--      <span class="point"><strong>QWER 본사 대표전화 1234-5678</strong></span>-->
+<!--      <br />-->
+<!--      <span>OPEN : AM 10:00 ~ PM 17:00</span>-->
+<!--      <span>LUNCH : PM 12:00 ~ PM 13:00</span>-->
+<!--      <span>SAT/HOLIDAY OFF</span>-->
+<!--      <br />-->
+<!--      <span-->
+<!--        >제휴 문의 및 기타 사항은<br />-->
+<!--        대표전화로 전화주시기 바랍니다.<br />-->
+<!--        대표전화 : 1234-5678-->
+<!--      </span>-->
+<!--    </div>-->
+<!--    <div class="fMid">-->
+<!--      <span class="point"><strong>COMPANY INFO</strong></span>-->
+<!--      <br />-->
+<!--      <span>상호(법인명) : QWER</span>-->
+<!--      <span>대표자(성명) : 박세혁</span>-->
+<!--      <span>사업자등록번호 : 123-45-67890 </span>-->
+<!--      <span>통신판매업 신고</span>-->
+<!--      <span><a href="">[사업자 정보확인]</a></span>-->
+<!--      <span>개인정보보호책임자 : 박세혁</span>-->
+<!--      <span>호스팅제공자 : 박세혁</span><br />-->
+<!--      <span-->
+<!--        >QWER 제품과 관련된 모든 디자인, 이미지, 문구, 콘텐츠 등에 대한 저작권은-->
+<!--        QWER에 있으며,<br />-->
+<!--        허가 없이 무단 사용, 복제, 도용 시 저작권법에 의거하여 민/형사상의-->
+<!--        처벌을 받을 수 있습니다.<br />-->
+<!--        QWER는 의료기사 등에 관한 법률에 따라 온라인 판매가 이루어지지-->
+<!--        않습니다.</span-->
+<!--      >-->
+<!--    </div>-->
+<!--    <div class="fRight">-->
+<!--      <span class="point"-->
+<!--        >Copyright© <strong>QWER</strong>. All rights reserved.</span-->
+<!--      >-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div id="footer" th:fragment="footer">
+
+  <div class="fMenu">
+    <ul>
+      <li><a th:href="@{/about}">회사소개</a></li>
+      <li><a th:href="@{/terms}">이용약관</a></li>
+      <li>
+        <a th:href="@{/privacy}"><strong>개인정보처리방침</strong></a>
+      </li>
+      <li><a th:href="@{/exchange}">상품교환안내</a></li>
+      <li><a th:href="@{/franchise}">가맹안내</a></li>
+    </ul>
+  </div>
+
+  <div class="fInfo">
+    <div class="fLeft">
+      <span class="point"><strong>QWER 본사 대표전화 1234-5678</strong></span><br />
+      <span>OPEN : AM 10:00 ~ PM 17:00</span>
+      <span>LUNCH : PM 12:00 ~ PM 13:00</span>
+      <span>SAT/HOLIDAY OFF</span><br />
+      <span>
+        제휴 문의 및 기타 사항은<br />
+        대표전화로 전화주시기 바랍니다.<br />
+        대표전화 : 1234-5678
+      </span>
+    </div>
+
+    <div class="fMid">
+      <span class="point"><strong>COMPANY INFO</strong></span><br />
+      <span>상호(법인명) : QWER</span>
+      <span>대표자(성명) : 박세혁</span>
+      <span>사업자등록번호 : 123-45-67890 </span>
+      <span>통신판매업 신고</span>
+      <span><a th:href="@{/business-info}">[사업자 정보확인]</a></span>
+      <span>개인정보보호책임자 : 박세혁</span>
+      <span>호스팅제공자 : 박세혁</span><br />
+      <span>
+        QWER 제품과 관련된 모든 디자인, 이미지, 문구, 콘텐츠 등에 대한 저작권은 QWER에 있으며,<br />
+        허가 없이 무단 사용, 복제, 도용 시 저작권법에 의거하여 민/형사상의 처벌을 받을 수 있습니다.<br />
+        QWER는 의료기사 등에 관한 법률에 따라 온라인 판매가 이루어지지 않습니다.
+      </span>
+    </div>
+
+    <div class="fRight">
+      <span class="point">
+        Copyright© <strong>QWER</strong>. All rights reserved.
+      </span>
+    </div>
+  </div>
+
+</div>
+
+</html>

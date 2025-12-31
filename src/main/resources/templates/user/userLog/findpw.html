@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      layout:decorate="~{layouts/layout}">
   <head>
-    <meta charset="UTF-8" />
-    <title>비밀번호 찾기</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../css/userLog/findpw.css" />
-    <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/commen.css" />
+    <link rel="stylesheet" th:href="@{/user/css/base.css}" />
+    <link rel="stylesheet" th:href="@{/user/css/userLog/findpw.css}" />
   </head>
-  <body>
-    <header id="header"></header>
+  <div id="findPw" layout:fragment="content">
     <div class="container">
       <div class="tabs">
-        <div class="tab"><a href="../userLog/find.html">아이디 찾기</a></div>
+        <div class="tab"><a th:href="@{/find}">아이디 찾기</a></div>
         <div class="tab active">비밀번호 찾기</div>
       </div>
 
@@ -44,8 +42,7 @@
 
       <button class="btn-confirm">확인</button>
     </div>
-    <footer id="footer"></footer>
-    <script src="../js/userLog/find.js"></script>
-    <script src="../js/common.js"></script>
-  </body>
+    <script th:src="@{/user/js/userLog/find.js}"></script>
+    <script th:src="@{/user/js/common.js}"></script>
+  </div>
 </html>
