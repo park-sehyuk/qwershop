@@ -12,7 +12,7 @@ public class MainController {
         return "user/index";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/user/login")
     public String login(){
         return "user/userLog/login";
     }

@@ -14,11 +14,6 @@
       <div class="form-wrapper">
         <h1 class="main-title">LOGIN</h1>
 
-        <div class="tab-nav">
-          <a th:href="@{#}" class="tab-item active" id="member-tab">회원</a>
-          <a th:href="@{#}" class="tab-item" id="non-member-tab">비회원</a>
-        </div>
-
         <div class="form-content">
           <form action="#" id="member-login-form">
             <div class="form-group">
@@ -52,20 +47,6 @@
             </div>
 
             <button type="submit" class="btn btn-login">로그인</button>
-          </form>
-          <form action="#" id="non-member-order-form" class="hidden">
-            <h2 class="sub-title">비회원 주문조회</h2>
-            <div class="form-group">
-              <label for="reservation-number">예약번호</label>
-              <input type="text" id="reservation-number" />
-            </div>
-            <div class="form-group">
-              <label for="customer-name">고객명</label>
-              <input type="text" id="customer-name" />
-            </div>
-            <button type="submit" class="btn btn-order-inquiry">
-              주문조회
-            </button>
           </form>
 
           <div class="util-links">
