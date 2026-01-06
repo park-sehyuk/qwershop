@@ -273,19 +273,19 @@ function saveDetail(item) {
   localStorage.setItem("itmeDetail", JSON.stringify(item));
 }
 
-function bestList() {
-  // 베스트 아이템 리스트
-  bestItemList.forEach((item) => {
-    const cloneLi = items.content.firstElementChild.cloneNode(true);
-    cloneLi.querySelector("img").src = item.src;
-    cloneLi.querySelector(".title").textContent = item.title;
-    cloneLi.querySelector(".price").textContent = `가격: ${parseFloat(
-      item.price
-    ).toLocaleString()}원`;
-    cloneLi.querySelector(".content").textContent = item.content;
-    bestItemListEl.appendChild(cloneLi);
-  });
-}
+// function bestList() {
+//   // 베스트 아이템 리스트
+//   bestItemList.forEach((item) => {
+//     const cloneLi = items.content.firstElementChild.cloneNode(true);
+//     cloneLi.querySelector("img").src = item.src;
+//     cloneLi.querySelector(".title").textContent = item.title;
+//     cloneLi.querySelector(".price").textContent = `가격: ${parseFloat(
+//       item.price
+//     ).toLocaleString()}원`;
+//     cloneLi.querySelector(".content").textContent = item.content;
+//     bestItemListEl.appendChild(cloneLi);
+//   });
+// }
 
 function suggItem() {
   // 추천 아이템 리스트
