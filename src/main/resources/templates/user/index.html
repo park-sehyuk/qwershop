@@ -17,13 +17,15 @@
 
     <script>
       $(document).ready(function () {
-        $("#bestItemList").slick({
-          slidesToShow: 4,
-          slidesToScroll: 1,
+        $("#suggItemList").slick({
+          slidesToShow: 4,      // 한 번에 보이는 개수
+          slidesToScroll: 3,
           autoplay: true,
-          arrows: true,
+          autoplaySpeed: 2500,
+          arrows: false,
           dots: false,
         });
+
       });
     </script>
 
@@ -72,12 +74,12 @@
         <h1>추천 상품</h1>
 
         <div id="hash">
-          <ul id="hashList">
-            <li><a id="gucciBtn" th:href="@{/main(suggBrand='구찌')}">#구찌</a></li>
-            <li><a id="poloBtn" th:href="@{/main(suggBrand='랄프로렌')}">#랄프로렌</a></li>
-            <li><a id="maisonBtn" th:href="@{/main(suggBrand='메종키츠네')}">#메종 키츠네</a></li>
-            <li><a id="balBtn" th:href="@{/main(suggBrand='발렌시아가')}">#발렌시아가</a></li>
-          </ul>
+          <form th:action="@{/main}" method="get" id="hashList">
+            <button id="gucciBtn" type="submit" name="suggBrand" value="구찌">#구찌</button>
+            <button id="poloBtn" type="submit" name="suggBrand" value="랄프로렌">#랄프로렌</button>
+            <button id="maisonBtn" type="submit" name="suggBrand" value="메종키츠네">#메종 키츠네</button>
+            <button id="balBtn" type="submit" name="suggBrand" value="발렌시아가">#발렌시아가</button>
+          </form>
         </div>
 
         <div id="suggItem">
