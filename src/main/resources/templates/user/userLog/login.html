@@ -1,65 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-  <head>
-    <title>QWER</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/user/css/base.css}" />
-    <link rel="stylesheet" th:href="@{/user/css/userLog/login.css}" />
-  </head>
+<head>
+  <title>QWER</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" th:href="@{/user/css/base.css}" />
+  <link rel="stylesheet" th:href="@{/user/css/userLog/login.css}" />
+</head>
 
-  <div id="login" layout:fragment="content">
-    <div class="login-container">
-      <div class="form-wrapper">
-        <h1 class="main-title">LOGIN</h1>
+<div id="login" layout:fragment="content">
+  <div class="login-container">
+    <div class="form-wrapper">
+      <h1 class="main-title">LOGIN</h1>
 
-        <div class="form-content">
-          <form action="#" id="member-login-form">
-            <div class="form-group">
-              <label for="user-id">아이디</label>
-              <input type="text" id="user-id" />
-            </div>
+      <div class="form-content">
+        <form th:action="@{/user/login}" method="post" id="member-login-form">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-            <div class="form-group">
-              <label for="user-password">패스워드</label>
-              <div class="password-input-wrapper">
-                <input type="password" id="user-password" />
-                <button
-                  type="button"
-                  class="toggle-password-btn"
-                  id="toggle-password"
-                >
-                  <img
-                    th:src="@{/user/imges/open-eyes.jpeg}"
-                    id="toggle-eye-icon"
-                    alt="눈"
-                  />
-                </button>
-              </div>
-            </div>
-
-            <div class="options-group">
-              <label class="checkbox-label">
-                <input type="checkbox" class="save-id-check" />
-                아이디 저장
-              </label>
-            </div>
-
-            <button type="submit" class="btn btn-login">로그인</button>
-          </form>
-
-          <div class="util-links">
-            <a th:href="@{/user/userLog/find.html}">아이디 찾기</a>
-            <span class="separator">|</span>
-            <a th:href="@{/user/userLog/findpw.html}">비밀번호 찾기</a>
-            <span class="separator">|</span>
-            <a th:href="@{/new}">회원가입</a>
+          <div class="form-group">
+            <label for="user-id">아이디</label>
+            <input type="text" id="user-id" name="id" required />
           </div>
+
+          <div class="form-group">
+            <label for="user-password">패스워드</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="user-password" name="pw" required />
+              <button
+                      type="button"
+                      class="toggle-password-btn"
+                      id="toggle-password"
+              >
+                <img
+                        th:src="@{/user/imges/open-eyes.jpeg}"
+                        id="toggle-eye-icon"
+                        alt="눈"
+                />
+              </button>
+            </div>
+          </div>
+
+          <div class="options-group">
+            <label class="checkbox-label">
+              <input type="checkbox" class="save-id-check" />
+              아이디 저장
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-login">로그인</button>
+        </form>
+
+        <div class="util-links">
+          <a th:href="@{/find}">아이디 찾기</a>
+          <span class="separator">|</span>
+          <a th:href="@{/findpw}">비밀번호 찾기</a>
+          <span class="separator">|</span>
+          <a th:href="@{/signUp}">회원가입</a>
         </div>
       </div>
     </div>
-    <script th:src="@{/user/js/userLog/login.js}"></script>
-    <script th:src="@{/user/js/common.js}"></script>
   </div>
+  <script th:src="@{/user/js/userLog/login.js}"></script>
+  <script th:src="@{/user/js/common.js}"></script>
+</div>
 </html>
