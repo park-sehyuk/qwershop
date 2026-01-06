@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://java.sun.com/JSP/Page">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>장바구니 - QWER</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" th:href="@{/user/css/base.css}" />
+	<link rel="stylesheet" th:href="@{/user/css/production/cart.css}" />
+</head>
+<div layout:fragment="content">
+<main class="cart-container">
+	<h1 class="cart-title">장바구니</h1>
+
+	<section class="cart-box">
+		<table class="cart-table">
+			<thead>
+			<tr>
+				<th class="col-item">상품</th>
+				<th class="col-price">가격</th>
+				<th class="col-qty">수량</th>
+				<th class="col-sub">합계</th>
+				<th class="col-act">삭제</th>
+			</tr>
+			</thead>
+			<tbody id="cart-items">
+			</tbody>
+		</table>
+
+		<div class="cart-actions">
+			<button id="clear-cart" class="btn btn-secondary">전체삭제</button>
+			<div class="cart-summary">
+				<div>총 상품금액: <span id="total-price">0</span>원</div>
+				<button id="checkout" class="btn btn-primary" onclick="location.href='/order'">주문하기</button>
+			</div>
+		</div>
+	</section>
+
+	<template id="cart-item-template">
+		<tr class="cart-row">
+			<td class="col-item">
+				<div class="item-info">
+					<img class="item-thumb" src="" alt="" />
+					<div class="item-meta">
+						<div class="item-title"></div>
+						<div class="item-option"></div>
+					</div>
+				</div>
+			</td>
+			<td class="col-price"><span class="price"></span>원</td>
+			<td class="col-qty">
+				<div class="qty-controls">
+					<button class="qty-decrease">-</button>
+					<input type="number" class="qty-input" min="1" value="1" />
+					<button class="qty-increase">+</button>
+				</div>
+			</td>
+			<td class="col-sub"><span class="subprice"></span>원</td>
+			<td class="col-act"><button class="remove-item btn">삭제</button></td>
+		</tr>
+	</template>
+</main>
+<script th:src="@{/user/js/production/cart.js}"></script>
+<script th:src="@{/user/js/common.js}"></script>
+</div>
+</html>

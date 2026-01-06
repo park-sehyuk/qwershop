@@ -14,7 +14,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // [중요] 이 메서드를 추가하세요. CSS, JS, 이미지 접근을 시큐리티 검사 없이 통과시킵니다.
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
@@ -28,23 +27,23 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 .authorizeHttpRequests(auth -> auth
-                        // 페이지 주소들만 허용
                         .requestMatchers("/", "/main", "/signUp", "/find/**", "/search", "/itemList", "/detail", "/user/**").permitAll()
                         .requestMatchers("/members/**", "/item/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/user/login") // MainController의 @GetMapping("/user/login")에 맞춤
+                        .loginPage("/user/login")
                         .defaultSuccessUrl("/", true)
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
                 .logout(logout -> logout
-                        .logoutUrl("/members/logout")
+                        .logoutUrl("/logout") // [수정] HTML의 th:action="@{/logout}"과 일치시킴
                         .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true))
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")) // 로그아웃 시 쿠키 삭제 추가
 
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));

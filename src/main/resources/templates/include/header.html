@@ -141,18 +141,25 @@
             </li>
           </ul>
         </li>
-        <li><a th:href="@{/}">관리자 페이지 이동</a></li>
+        <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+          <a th:href="@{/admin/main}">관리자 페이지 이동</a>
+        </li>
       </ul>
     </div>
     <div class="midRight">
       <ul id="icons">
-        <li class="login"><a th:href="@{userLog/login.html}">로그인</a></li>
-        <li class="signUp">
-          <a th:href="@{userLog/signUp.html}">회원가입</a>
-        </li>
-        <li class="cart">
-          <a th:href="@{/}">장바구니<span>0</span></a>
-        </li>
+        <th:block th:if="${#authorization.expression('isAnonymous()')}">
+          <li class="login"><a th:href="@{/user/login}">로그인</a></li>
+          <li class="signUp"><a th:href="@{/signUp}">회원가입</a></li>
+        </th:block>
+
+        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+          <li class="logout">
+            <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
+            <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
+          </li>
+          <li class="cart"><a th:href="@{/cart}">장바구니<span>0</span></a></li>
+        </th:block>
       </ul>
       <button id="searchBtn">검색</button>
     </div>
