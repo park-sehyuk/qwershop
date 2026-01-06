@@ -11,10 +11,6 @@ public class MainController {
         return "user/index";
     }
 
-    @GetMapping("/main")
-    public String mianPage(){
-        return "user/index";
-    }
 
     @GetMapping("/user/login")
     public String login(){

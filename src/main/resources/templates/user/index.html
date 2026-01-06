@@ -7,12 +7,26 @@
       rel="stylesheet"
       type="text/css"
       href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-    />
+    />-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script
       type="text/javascript"
       src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
     ></script>
+
+
+    <script>
+      $(document).ready(function () {
+        $("#bestItemList").slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          autoplay: true,
+          arrows: true,
+          dots: false,
+        });
+      });
+    </script>
+
     <!-- CSS -->
     <link th:href="@{/user/css/base.css}" rel="stylesheet"/>
     <link th:href="@{/user/css/main.css}" rel="stylesheet"/>
@@ -38,7 +52,18 @@
       <div id="bestList">
         <h1>BEST</h1>
         <div id="bestItem">
-          <div id="bestItemList"></div>
+          <div id="bestItemList">
+            <th:block th:each="bestItem : ${bestItems}">
+            <div class="item">
+            <a th:href="'/detail/'+ ${bestItem.itemId}">
+              <img th:src="${bestItem.itemUrl}" th:alt="${bestItem.itemName}">
+              <p class="title">[[${bestItem.itemName}]]</p>
+              <p class="price">[[${bestItem.itemPrice}]]원</p>
+              <p class="content">[[${bestItem.itemBrand}]]</p>
+            </a>
+          </div>
+          </th:block>
+          </div>
         </div>
       </div>
 
@@ -48,15 +73,26 @@
 
         <div id="hash">
           <ul id="hashList">
-            <li><button id="gucciBtn">#구찌</button></li>
-            <li><button id="poloBtn">#랄프로렌</button></li>
-            <li><button id="maisonBtn">#메종 키츠네</button></li>
-            <li><button id="balBtn">#발렌시아가</button></li>
+            <li><a id="gucciBtn" th:href="@{/main(suggBrand='구찌')}">#구찌</a></li>
+            <li><a id="poloBtn" th:href="@{/main(suggBrand='랄프로렌')}">#랄프로렌</a></li>
+            <li><a id="maisonBtn" th:href="@{/main(suggBrand='메종키츠네')}">#메종 키츠네</a></li>
+            <li><a id="balBtn" th:href="@{/main(suggBrand='발렌시아가')}">#발렌시아가</a></li>
           </ul>
         </div>
 
         <div id="suggItem">
-          <div id="suggItemList"></div>
+          <div id="suggItemList">
+            <th:block th:each="suggItem : ${suggItems}">
+              <div class="item">
+                <a th:href="'/detail/'+ ${suggItem.itemId}">
+                  <img th:src="${suggItem.itemUrl}" th:alt="${suggItem.itemName}">
+                  <p class="title">[[${suggItem.itemName}]]</p>
+                  <p class="price">[[${suggItem.itemPrice}]]원</p>
+                  <p class="content">[[${suggItem.itemBrand}]]</p>
+                </a>
+              </div>
+            </th:block>
+          </div>
         </div>
       </div>
 
@@ -64,7 +100,18 @@
       <div id="productList">
         <h1>이달의 상품</h1>
         <div id="productItem">
-          <div id="productItemList"></div>
+          <div id="productItemList">
+            <th:block th:each="mtItem : ${monthlyItems}">
+              <div class="item">
+                <a th:href="'/detail/'+ ${mtItem.itemId}">
+                  <img th:src="${mtItem.itemUrl}" th:alt="${mtItem.itemName}">
+                  <p class="title">[[${mtItem.itemName}]]</p>
+                  <p class="price">[[${mtItem.itemPrice}]]원</p>
+                  <p class="content">[[${mtItem.itemBrand}]]</p>
+                </a>
+              </div>
+            </th:block>
+          </div>
         </div>
       </div>
 
@@ -87,17 +134,6 @@
 
     </div>
 
-    <!-- 템플릿 -->
-    <template id="items">
-      <div class="item">
-        <a href="">
-<!--          <img th:src="@{}" alt="">-->
-          <p class="title"></p>
-          <p class="price"></p>
-          <p class="content"></p>
-        </a>
-      </div>
-    </template>
 
     <!-- JS -->
     <script th:src="@{/user/js/index.js}"></script>
