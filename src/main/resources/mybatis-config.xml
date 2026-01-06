@@ -10,6 +10,6 @@
     </settings>
 
     <typeAliases>
-
+        <typeAlias alias="memberDto" type="com.example.qwershop.user.member.dto.MemberDto" />
     </typeAliases>
 </configuration>
