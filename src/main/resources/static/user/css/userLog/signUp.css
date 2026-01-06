@@ -142,3 +142,13 @@ input:focus {
 .btn-secondary:hover {
   background-color: #dee2e6;
 }
+
+.radio-group {
+  display: flex;
+  gap: 50px;
+}
+
+.radio-group p {
+  display: flex;
+  gap: 15px;
+}
