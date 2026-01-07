@@ -20,6 +20,9 @@
 .btn{padding:9px 14px;border-radius:4px;cursor:pointer}
 .btn-primary{background:#007bff;color:#fff;border:none}
 .btn-secondary{background:#f5f5f5;border:1px solid #ddd}
+.btn-secondary {
+  color: #222222;
+}
 
 @media(max-width:720px){
   .item-thumb{width:60px;height:60px}
