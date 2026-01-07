@@ -19,12 +19,20 @@ public class MainItemController {
 
     private final MainItemService mainItemService;
 
-    @GetMapping("/main")
-    public String main(@RequestParam(required = false) String suggBrand
+    @GetMapping("/")
+    public String main( @RequestParam(required = false) String suggBrand
                         , Model model){
 
 
-        List<MainItemDto> suggItems = mainItemService.getSuggItems(suggBrand);
+        List<MainItemDto> suggItems;
+
+        if (suggBrand == null) {
+            // 기본 추천
+            suggItems = mainItemService.findSuggItems();
+        } else {
+            // 브랜드 추천
+            suggItems = mainItemService.getSuggItems(suggBrand);
+        }
 
         model.addAttribute("bestItems", mainItemService.findBestItems());
         model.addAttribute("suggItems", suggItems);

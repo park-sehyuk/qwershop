@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.user.detail.mapper.DetailMapper">
+
+    <select id="selectItem" parameterType="Long" resultType="detailDto">
+        SELECT  i.item_id
+                , item_name
+                , item_brand
+                , item_price
+                , item_url
+        FROM    item i  JOIN item_img ii ON i.item_id = ii.item_id
+        WHERE  i.item_id = #{itemId}
+    </select>
+
+    <select id="groupType" parameterType="String" resultType="groupDto">
+        SELECT  group_id
+                , group_code
+                , code_name
+                , sort_order
+                , use_yn
+        FROM    detail_code
+        WHERE   group_code = #{groupCode}
+    </select>
+
+</mapper>

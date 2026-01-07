@@ -28,6 +28,10 @@ public class MainItemService {
         return findItemCategory(15);
     }
 
+    public List<MainItemDto> findSuggItems() {
+        return findItemCategory(14);
+    }
+
     public List<MainItemDto> getSuggItems(String brand) {
         return mainItemMapper.selectSugBrand(brand);
     }

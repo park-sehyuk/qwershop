@@ -27,7 +27,7 @@
 }
 #bestItem #bestItemList img {
   width: 100%;
-  height: 694px;
+  height: 550px;
   margin-bottom: 7px;
 }
 #bestItem #bestItemList .title {
@@ -49,7 +49,6 @@
 /* 추천 상품 아이템 */
 #suggList {
   width: 1440px;
-  margin: 0 auto;
   margin-bottom: 160px;
 }
 #suggList h1 {
@@ -60,13 +59,15 @@
 #suggItem #suggItemList {
   display: flex;
   gap: 20px;
+  justify-content: center;
 }
 #suggItem #suggItemList .item {
-  width: 503px;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 #suggItem img {
   width: 100%;
-  height: 694px;
+  height: 550px;
   margin-bottom: 7px;
 }
 #suggItem .title {
@@ -97,8 +98,8 @@
 /* 이달의 상품 */
 #productList {
   width: 1440px;
-  margin: 0 auto;
   margin-bottom: 160px;
+
 }
 #productList h1 {
   text-align: center;
@@ -114,7 +115,7 @@
 }
 #productItem img {
   width: 100%;
-  height: 694px;
+  height: 550px;
   margin-bottom: 7px;
 }
 #productItem .title {
@@ -154,3 +155,4 @@
   width: 355px;
   height: 470px;
 }
+
