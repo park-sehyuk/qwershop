@@ -78,7 +78,7 @@
     width: 15px;
     height: 15px;
     background-size: 15px;
-    background-image: url("/userUI/img/star.png");
+    /*background-image: url("/userUI/img/star.png");*/
 }
 
 .right-Side .Rating .number {
@@ -113,7 +113,7 @@
     color: white;
     border: 0.5px solid rgb(124, 124, 124);
     border-radius: 80px;
-    background-image: url(/userUI/img/triangle.png);
+    /*background-image: url("/user/imges/triangle.png");*/
     background-size: 17px;
     background-repeat: no-repeat;
     background-position: center;
@@ -278,7 +278,7 @@
     height: 30px;
     background-repeat: no-repeat;
     background-size: 100%;
-    background-image: url("/userUI/img/left\ icon.jpg");
+    /*background-image: url("/userUI/img/left\ icon.jpg");*/
 }
 
 .scroll-icon2 {
@@ -286,7 +286,7 @@
     height: 30px;
     background-repeat: no-repeat;
     background-size: 100%;
-    background-image: url("/userUI/img/right\ icon.jpg");
+    /*background-image: url("/img/right\ icon.jpg");*/
 }
 
 .bottom-Side {

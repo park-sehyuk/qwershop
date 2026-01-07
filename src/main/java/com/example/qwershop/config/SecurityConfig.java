@@ -30,20 +30,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 페이지 주소들만 허용
                         .requestMatchers("/", "/main", "/signUp", "/find/**", "/search", "/itemList", "/detail", "/user/**").permitAll()
-                        .requestMatchers("/members/**", "/item/**").permitAll()
+                        .requestMatchers("/members/**", "/item/**", "/detail/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/user/login") // MainController의 @GetMapping("/user/login")에 맞춤
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/main", true)
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
                 .logout(logout -> logout
                         .logoutUrl("/members/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/main")
                         .invalidateHttpSession(true))
 
                 .exceptionHandling(exception -> exception

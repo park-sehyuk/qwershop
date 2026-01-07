@@ -12,5 +12,7 @@
     <typeAliases>
         <typeAlias alias="memberDto" type="com.example.qwershop.user.member.dto.MemberDto" />
         <typeAlias alias="mainItemDto" type="com.example.qwershop.user.main.dto.MainItemDto" />
+        <typeAlias alias="detailDto" type="com.example.qwershop.user.detail.dto.DetailDto" />
+        <typeAlias alias="groupDto" type="com.example.qwershop.user.detail.dto.GroupDto" />
     </typeAliases>
 </configuration>

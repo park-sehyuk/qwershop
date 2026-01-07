@@ -19,7 +19,7 @@ public class MainItemController {
 
     private final MainItemService mainItemService;
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String main( @RequestParam(required = false) String suggBrand
                         , Model model){
 
