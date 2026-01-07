@@ -36,14 +36,14 @@ public class SecurityConfig {
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/user/login") // MainController의 @GetMapping("/user/login")에 맞춤
-                        .defaultSuccessUrl("/main", true)
+                        .defaultSuccessUrl("/", true)
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
                 .logout(logout -> logout
                         .logoutUrl("/members/logout")
-                        .logoutSuccessUrl("/main")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
 
                 .exceptionHandling(exception -> exception
