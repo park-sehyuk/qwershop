@@ -12,13 +12,7 @@ public class MainController {
     }
 
 
-    @GetMapping("/user/login")
-    public String login(){
-        return "user/userLog/login";
-    }
-
-    // @GetMapping("/signUp") -> 삭제됨
-    // @PostMapping("/signUp") -> 삭제됨
+    // [이동됨] /user/login -> LoginController로 이동
 
     @GetMapping("/find")
     public String find(){
