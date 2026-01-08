@@ -52,8 +52,10 @@ public class CartController {
         }
 
         String loginId = principal.getName();
+        System.out.println("로그인한 아이디: " + loginId);
 
         List<CartDetailDto> cartItems = cartService.getCartList(loginId);
+        System.out.println("조회된 아이템 개수: " + cartItems.size());
 
         int totalPrice = cartItems.stream()
                 .mapToInt(item -> item.getPrice() * item.getCount())
