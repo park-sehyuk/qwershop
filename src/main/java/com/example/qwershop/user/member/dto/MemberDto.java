@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
+
     private Long member_id;
     private String id;
     private String pw;

@@ -19,22 +19,36 @@ const modalEmail = document.getElementById('modal-email');
 // openButtons가 여러 개이므로 각각에 대해 똑같은 기능을 달아준다.
 openButtons.forEach((button) => {
   button.addEventListener('click', () => {
-    // 2-1. 클릭된 버튼이 속한 행(tr)의 데이터 가져오기
-    const userRow = button.closest('tr'); // 버튼에서 가장 가까운 부모 <tr>을 찾음
-    const id = userRow.children[0].innerText;
-    const name = userRow.children[1].innerText;
-    const email = userRow.children[2].innerText;
-    const phone = userRow.children[3].innerText;
+    // 2-1. 클릭된 버튼에서 유저 ID 가져오기
+    const userId = button.getAttribute('data-id');
 
-    // 2-2. 가져온 데이터로 모달 안의 내용 채우기
-    modalName.value = name;
-    modalId.value = id;
-    modalEmail.value = email;
-    modalPhone.value = phone;
-    // (나머지 주소, 등급 등도 이런 식으로 채울 수 있어요)
+    // 2-2. 서버에서 해당 유저의 상세 정보 가져오기 (AJAX)
+    fetch(`/admin/userDetail/${userId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(user => {
+        // 2-3. 가져온 데이터로 모달 안의 내용 채우기
+        modalName.value = user.name || '';
+        modalId.value = user.id || '';
+        modalEmail.value = user.email || '';
+        modalPhone.value = user.phone || '';
+        
+        // 추가 정보 필드 (HTML에 있는 것들)
+        document.getElementById('modal-address').value = user.address || '';
+        // 회원등급, 적립금, 메모 등은 DB 설계에 따라 추가로 채울 수 있습니다.
+        // 현재 MemberDto에는 address까지만 있으므로 나머지는 예시로 둡니다.
 
-    // 2-3. 모달을 화면에 보여주기 (CSS에서 display: none; 을 block; 으로 변경)
-    modal.style.display = 'block';
+        // 2-4. 모달을 화면에 보여주기
+        modal.style.display = 'block';
+      })
+      .catch(error => {
+        console.error('Error fetching user details:', error);
+        alert('사용자 정보를 가져오는 데 실패했습니다.');
+      });
   });
 });
 
