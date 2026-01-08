@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.admin.itemManagement.mapper.ItemManagerMapper">
+
+    <insert id="insertItem" parameterType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto"
+            useGeneratedKeys="true" keyProperty="itemId" keyColumn="item_id">
+        INSERT INTO item (
+            item_name, item_type, item_brand, item_price,
+            item_stock, item_category, reg_time, update_time
+        )
+        VALUES (
+                   #{itemName}, #{dbType}, #{itemBrand}, #{itemPrice},
+                   #{itemStock}, #{dbCategory}, NOW(), NOW()
+               )
+    </insert>
+
+    <insert id="insertImg">
+        INSERT INTO item_img (
+            item_id,
+            item_url,
+            img_name,
+            is_main,
+            reg_time,
+            update_time
+        )
+        VALUES (
+                   #{itemId},
+                   #{url},
+                   #{imgName},
+                   #{isMain},
+                   NOW(),
+                   NOW()
+               )
+    </insert>
+
+</mapper>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>제품 추가 - 관리자 모드</title>
+  <link rel="stylesheet" th:href="@{/admin/css/addpost.css}">
+</head>
+<body id="addpost">
+<div id="scale">
+  <div class="left-side">
+    <a th:href="@{/admin/userlist}" class="text-border">
+      <button class="userList">
+        <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
+        <div>회원관리</div>
+      </button>
+    </a>
+    <a th:href="@{/admin/postlist}" class="text-border">
+      <button class="postList">
+        <div class="userimg2"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
+        <div>게시물 관리</div>
+      </button>
+    </a>
+    <a th:href="@{/admin/categorylist}" class="text-border">
+      <button class="categoryList">
+        <div class="userimg3"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+        <div>카테고리 리스트</div>
+      </button>
+    </a>
+  </div>
+
+  <div class="top-right">
+    <div class="right-side">
+      <div class="right-Title">
+        <p class="right-Title1">새 제품 등록</p>
+        <p class="right-Title2">새로운 상품의 상세 정보를 입력해주세요.</p>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <form id="add-product-form" th:action="@{/admin/addpost}" method="post">
+
+        <div class="form-group">
+          <label for="itemName">상품명</label>
+          <input type="text" id="itemName" name="itemName" class="category-search-input" placeholder="예: 프린트 코튼 저지 티셔츠" required>
+        </div>
+
+        <div class="form-group">
+          <label for="itemBrand">브랜드(제조사)</label>
+          <input type="text" id="itemBrand" name="itemBrand" class="category-search-input" placeholder="예: 구찌" required>
+        </div>
+
+        <div class="form-group">
+          <label for="itemPrice">판매가(원)</label>
+          <input type="number" id="itemPrice" name="itemPrice" class="category-search-input" placeholder="숫자만 입력" required>
+        </div>
+
+        <div class="form-group">
+          <label for="itemCategory">카테고리</label>
+          <select id="itemCategory" name="itemCategory" class="category-search-input" style="height: 40px;">
+            <option value="남성상의-반팔">남성상의-반팔</option>
+            <option value="긴팔">긴팔</option>
+            <option value="니트">니트</option>
+            <option value="아우터">아우터</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>판매 상태</label>
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <label><input type="radio" name="itemType" value="AVAILABLE" checked> 판매중</label>
+            <label><input type="radio" name="itemType" value="OUT_OF_STOCK"> 품절</label>
+          </div>
+        </div>
+
+        <div class="form-group img-upload-section">
+          <label>상품 이미지 등록</label>
+          <div class="image-upload-wrapper">
+            <div id="image-preview-container" class="preview-container"></div>
+            <button type="button" class="search" id="add-img-btn" style="width: 50px;">+</button>
+            <input type="file" id="p-image-file" accept="image/*" multiple hidden>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="itemStock">재고 수량</label>
+          <input type="number" id="itemStock" name="itemStock" class="category-search-input" placeholder="예: 100" required>
+        </div>
+
+        <div class="form-group">
+          <label for="itemContent">상세 설명</label>
+          <textarea id="itemContent" name="itemContent" class="category-search-input" style="height: 100px; padding: 10px;" placeholder="제품 상세 설명을 입력하세요."></textarea>
+        </div>
+
+        <div class="button-tap" style="justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="starline" onclick="history.back()">취소</button>
+          <button type="submit" class="add-category">제품 등록하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script th:src="@{/admin/js/addpost.js}"></script>
+</body>
+</html>
