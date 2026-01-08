@@ -20,4 +20,8 @@
         SELECT member_id FROM member WHERE id = #{id}
     </select>
 
+    <select id="selectMemberId" resultType="int">
+        SELECT member_id
+        FROM   member
+        WHERE  email = #{email}  </select>
 </mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.qwershop.admin.usermanagement.mapper.UserManagerMapper">
+
+    <select id="getAllUsers" resultType="com.example.qwershop.admin.usermanagement.dto.SelectUsersDto">
+        SELECT 
+            member_id, id, pw, name, phone, email, address, gender, birth, status, req_time
+        FROM member
+    </select>
+
+    <select id="getUserById" resultType="com.example.qwershop.user.member.dto.MemberDto">
+        SELECT 
+            member_id, id, pw, name, phone, email, address, gender, birth, status
+        FROM member 
+        WHERE id = #{id}
+    </select>
+
+</mapper>

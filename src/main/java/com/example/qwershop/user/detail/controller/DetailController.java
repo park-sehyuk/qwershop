@@ -26,8 +26,8 @@ public class DetailController {
         List<GroupDto> size = detailservice.findSize();
 
         model.addAttribute("item", item);
-        model.addAttribute("color", color);
-        model.addAttribute("size", size);
+        model.addAttribute("colors", color);
+        model.addAttribute("sizes", size);
 
         return "user/production/detail";
     }
