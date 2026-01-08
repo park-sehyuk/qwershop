@@ -9,6 +9,100 @@
   <link rel="stylesheet" th:href="@{/user/css/production/detail.css}">
 </head>
 
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            calculateToalPrice();
+
+            // 수량이 변경될 때마다 총 금액 계산
+            $("#count").on("input change", function(){
+                calculateToalPrice();
+            });
+        });
+
+        function calculateToalPrice(){
+            var count = $("#count").val();
+            var price = $("#price").val();
+            var totalPrice = price * count;
+            // 천단위 콤마 추가해서 출력
+            $("#totalPrice").html(totalPrice.toLocaleString() + '원');
+        }
+
+        // 공통 요청 함수 (중복 코드 제거를 위해 생성)
+        async function sendRequest(url, paramData, successMsg) {
+            // 색상 선택 여부 체크
+            if(!paramData.color) {
+                alert("색상을 선택해주세요.");
+                $("#colorSelect").focus();
+                return;
+            }
+
+            if(!paramData.size){
+                alert("사이즈를 선택해주세요.");
+                $("#sizeSelect").focus();
+                return;
+            }
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [header]: token
+                    },
+                    body: JSON.stringify(paramData),
+                    cache: 'no-cache'
+                });
+
+                if (response.status === 401) {
+                    alert('로그인 후 이용해주세요');
+                    location.href = '/user/login'; // 주소 확인 필요 (/user/login 인지)
+                    return;
+                }
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                alert(successMsg);
+                location.href = (url === "/order") ? "/order/history" : "/cart"; // 이동할 페이지 설정
+
+            } catch (error) {
+                alert("실패: " + error.message);
+            }
+        }
+
+        // 주문하기
+        function order() {
+            var paramData = {
+                itemId: $("#itemId").val(),
+                count: $("#count").val(),
+                color: $("#colorSelect").val(), // 색상 추가
+                size: $("#sizeSelect").val()
+            };
+            sendRequest("/order", paramData, "주문이 완료되었습니다.");
+        }
+
+        // 장바구니 담기
+        function addCart() {
+            var paramData = {
+                itemId: $("#itemId").val(),
+                count: $("#count").val(),
+                color: $("#colorSelect").val() ,// 색상 추가
+                size: $("#sizeSelect").val() // 사이즈 추가
+            };
+            sendRequest("/cart", paramData, "장바구니에 추가되었습니다.");
+        }
+
+    </script>
+</th:block>
+
+
+
 <div id="detail" layout:fragment="content">
   <div id="big-Title">
     <div class="top-Side">
@@ -46,28 +140,73 @@
           </div>
         </div>
       </div>
-    <form>
-      <div class="right-Side">
-        <p class="text-Title">즉시 구매가</p>
-        <p class="price" th:text="'가격 : ' + ${item.itemPrice} + '원'">가격</p>
-        <p class="brand-name" th:text="'브랜드명 : ' + ${item.itemBrand}">브랜드명</p>
-        <p class="brand-hagul" th:text="'상품명 : '+${item.itemName}">한글 상품명</p>
 
-        <div class="Rating">
-<!--          <p class="number" th:text="">4.8</p>-->
-<!--          <p class="review" th:text="">리뷰 0</p>-->
-        </div>
+        <div class="right-Side">
+            <input type="hidden" id="itemId" th:value="${item.itemId}">
+            <input type="hidden" id="price" th:value="${item.itemPrice}">
 
-        <div class="color">
-          <button class="color-option" th:style="'background-color:'"></button>
-        </div>
+            <div class="product-header" style="margin-bottom: 20px; border-bottom: 1px solid #f4f4f4; padding-bottom: 15px;">
+                <p class="brand-name"
+                   th:text="${item.itemBrand}"
+                   style="font-size: 14px; color: #888; font-weight: 600; text-decoration: underline; margin-bottom: 4px;">
+                    브랜드명
+                </p>
+                <h2 class="product-title"
+                    th:text="${item.itemName}"
+                    style="font-size: 22px; font-weight: 700; color: #222; margin: 0; line-height: 1.4;">
+                    상품 이름
+                </h2>
+            </div>
 
-        <div class="Buy-Cart">
-          <button type="submit" class="Buy">장바구니</button>
-          <button class="Cart">구매</button>
+            <p class="price" style="font-size: 24px; font-weight: 800; color: #333; margin-bottom: 20px;">
+                <span th:text="${#numbers.formatInteger(item.itemPrice, 0, 'COMMA')}">0</span>원
+            </p>
+
+            <div class="quantity-select">
+                <label style="font-weight: bold; font-size: 14px;">수량 : </label>
+                <input type="number" id="count" name="count" value="1" min="1"
+                       style="width: 60px; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+
+            <div class="color-select" style="margin-top: 20px;">
+                <p style="font-weight: bold; margin-bottom: 8px;">색상 선택</p>
+                <select id="colorSelect" name="color" class="color-dropdown" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="" disabled selected>색상을 선택해주세요</option>
+                    <th:block th:each="color : ${colors}">
+                        <option th:value="${color.codeName}" th:text="${color.codeName}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="size-select" style="margin-top: 20px; margin-bottom: 20px;">
+                <p style="font-weight: bold; margin-bottom: 8px;">사이즈 선택</p>
+                <select id="sizeSelect" name="size" class="size-dropdown" required
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <option value="" disabled selected>사이즈를 선택해주세요</option>
+                    <th:block th:each="size : ${sizes}">
+                        <option th:value="${size.codeName}" th:text="${size.codeName}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="total-price-area" style="margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <strong style="font-size: 16px;">총 결제 금액</strong>
+                <span id="totalPrice" style="font-size: 22px; font-weight: 800; color: #f33;">0원</span>
+            </div>
+
+            <div class="Buy-Cart" style="display: flex; gap: 10px;">
+                <button type="button" class="Buy" onclick="addCart()"
+                        style="flex: 1; height: 50px; background: #fff; border: 1px solid #222; font-weight: bold; cursor: pointer;">
+                    장바구니
+                </button>
+                <button type="button" class="Cart" onclick="order()"
+                        style="flex: 1; height: 50px; background: #222; color: #fff; border: none; font-weight: bold; cursor: pointer;">
+                    바로 구매
+                </button>
+            </div>
         </div>
       </div>
-        </form>
     </div>
   </div>
 <!-- 하단 추가 정보는 정보 탭으로 이동했으므로 하단 섹션 제거 -->
