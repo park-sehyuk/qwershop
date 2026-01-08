@@ -18,7 +18,7 @@
 <!--        WHERE m.id = #{userId}  ORDER BY c.reg_time DESC-->
 <!--    </select>-->
 
-    <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">
+    <select id="getCartList" resultType="cartDetailDto">
         SELECT
             c.cart_id as cartId,
             i.item_name as itemNm,
@@ -27,4 +27,29 @@
         FROM cart c
             JOIN item i ON c.item_id = i.item_id
         WHERE c.member_id = 7  </select>
+
+    <select id="findCartItem" resultType="cartDto" parameterType="cartDto">
+        SELECT * FROM cart
+        WHERE member_id = #{memberId}
+          AND item_id = #{itemId}
+          AND selected_color = #{selectedColor}
+          AND selected_size = #{selectedSize}
+    </select>
+
+    <update id="updateCartCount" parameterType="cartDto">
+        UPDATE cart
+        SET count = count + #{count},
+            update_time = NOW()
+        WHERE cart_id = #{cartId}
+    </update>
+
+    <insert id="insertCart" parameterType="cartDto">
+        INSERT INTO cart (
+            member_id, item_id, count, selected_color, selected_size, reg_time, update_time
+        ) VALUES (
+                     #{memberId}, #{itemId}, #{count}, #{selectedColor}, #{selectedSize}, NOW(), NOW()
+                 )
+    </insert>
+
+
 </mapper>
