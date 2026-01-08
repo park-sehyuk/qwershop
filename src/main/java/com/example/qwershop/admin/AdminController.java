@@ -8,17 +8,13 @@ public class AdminController {
 
     @GetMapping("/admin/itemList")
     public String itemLlist(){
-        return "/admin/post";
+        return "admin/post";
     }
 
-    @GetMapping("/admin/userList")
-    public String userList(){
-        return "/admin/userList";
-    }
 
     @GetMapping("/admin/category")
     public String category(){
-        return "/admin/category";
+        return "admin/category";
     }
 
 }

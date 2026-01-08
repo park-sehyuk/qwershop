@@ -8,7 +8,7 @@
   <body>
     <div id="scale">
       <div class="left-side">
-        <a th:href="@{/admin/userList.html}" class="text-border">
+        <a th:href="@{/admin/userList}" class="text-border">
           <button class="userList">
             <div class="userimg">
               <img th:src="@{/admin/img/user-color.png}" alt="" />
@@ -17,14 +17,14 @@
           </button>
         </a>
 
-        <a th:href="@{/admin/post.html}" class="text-border">
+        <a th:href="@{/admin/itemList}" class="text-border">
           <button class="postList">
             <div class="userimg2"><img th:src="@{/admin/img/menu-bar.png}" alt="" /></div>
             <div>게시물 관리</div>
           </button>
         </a>
 
-        <a th:href="@{/admin/category.html}" class="text-border">
+        <a th:href="@{/admin/category}" class="text-border">
           <button class="categoryList">
             <div class="userimg3"><img th:src="@{/admin/img/blogging.png}" alt="" /></div>
             <div>카테고리 리스트</div>
@@ -63,94 +63,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>seho123</td>
-              <td>김세호</td>
-              <td>seho123@naver.com</td>
-              <td>010-0000-0011</td>
+            <tr th:each="user : ${users}">
+              <td th:text="${user.id}">seho123</td>
+              <td th:text="${user.name}">김세호</td>
+              <td th:text="${user.email}">seho123@naver.com</td>
+              <td th:text="${user.phone}">010-0000-0011</td>
               <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>weur312</td>
-              <td>김영광</td>
-              <td>weur312@naver.com</td>
-              <td>010-0000-0012</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>howi203</td>
-              <td>김효진</td>
-              <td>howi203@google.com</td>
-              <td>010-0000-0013</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>oowkwn33</td>
-              <td>김원훈</td>
-              <td>qpqke22@naver.com</td>
-              <td>010-0000-0014</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>qkqk222</td>
-              <td>조진세</td>
-              <td>wqliruj@google.com</td>
-              <td>010-0000-0015</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>weqih2235</td>
-              <td>박승철</td>
-              <td>keqe22@google.com</td>
-              <td>010-0000-0016</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>jkqweh2</td>
-              <td>김동규</td>
-              <td>wqehk@naver.com</td>
-              <td>010-0000-0017</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>1919ww</td>
-              <td>강일호</td>
-              <td>1919ww@google.com</td>
-              <td>010-8872-1369</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>1yong93312</td>
-              <td>강일용</td>
-              <td>1yong93@naver.com</td>
-              <td>010-0369-1369</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
-              </td>
-            </tr>
-            <tr>
-              <td>oquw00</td>
-              <td>이정은</td>
-              <td>oqje23@google.com</td>
-              <td>010-0000-0020</td>
-              <td>
-                <button class="userDetail" data-id="1">유저 상세정보</button>
+                <button class="userDetail" th:attr="data-id=${user.id}">유저 상세정보</button>
               </td>
             </tr>
           </tbody>
@@ -213,7 +132,5 @@
       </div>
     </div>
     <script th:src="@{/admin/js/userList.js}"></script>
-  </body>
-</html>
   </body>
 </html>
