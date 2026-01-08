@@ -3,28 +3,23 @@
 
 <mapper namespace="com.example.qwershop.user.cart.mapper.CartMapper">
 
-<!--    <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">-->
-<!--        SELECT-->
-<!--            c.cart_id AS cartId,-->
-<!--            i.item_name AS itemNm,-->
-<!--            i.item_price AS price,-->
-<!--            c.count AS count,-->
-<!--        'default.jpg' AS imgUrl,-->
-<!--        c.selected_color AS selectedColor,-->
-<!--        c.selected_size AS selectedSize-->
-<!--        FROM cart c-->
-<!--            JOIN item i ON c.item_id = i.item_id-->
-<!--            JOIN member m ON c.member_id = m.member_id-->
-<!--        WHERE m.id = #{userId}  ORDER BY c.reg_time DESC-->
-<!--    </select>-->
-
     <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">
         SELECT
-            c.cart_id as cartId,
-            i.item_name as itemNm,
-            i.item_price as price,
-            c.count as count
+            c.cart_id AS cartId,
+            i.item_name AS itemNm,
+            i.item_price AS price,
+            c.count AS count,
+            c.selected_color AS selectedColor,
+            c.selected_size AS selectedSize,
+            /* 이미지 테이블에서 실제 URL을 가져옴, 없으면 기본이미지 표시 */
+            IFNULL(im.item_url, '/user/img/no-image.jpg') AS imgUrl
         FROM cart c
             JOIN item i ON c.item_id = i.item_id
-        WHERE c.member_id = 7  </select>
+            JOIN member m ON c.member_id = m.member_id
+            /* 이미지 테이블 조인: 해당 상품의 메인 이미지만 가져오기 */
+            LEFT JOIN item_img im ON i.item_id = im.item_id AND im.is_main = 'Y'
+        WHERE m.id = #{userId}
+        ORDER BY c.reg_time DESC
+    </select>
+
 </mapper>
