@@ -52,5 +52,14 @@ public class MemberService implements UserDetailsService {
             throw new IllegalStateException("중복된 아이디입니다.");
     }
 
+    public int getMemberId(String email) {
+        Integer memberId = memberMapper.selectMemberId(email);
+
+        if (memberId == null) {
+            throw new RuntimeException("해당 사용자를 찾을 수 없습니다.");
+        }
+
+        return memberId;
+    }
 
 }
