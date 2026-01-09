@@ -39,11 +39,18 @@ public class MemberService implements UserDetailsService {
 
     public int insertMember(MemberDto memberDto) {
         this.overlapId(memberDto.getId());
+        this.overlapPhone(memberDto.getPhone());
 
         String encodedPassword = passwordEncoder.encode(memberDto.getPw());
         memberDto.setPw(encodedPassword);
 
         return memberMapper.insertMember(memberDto);
+    }
+    public void overlapPhone(String phone) {
+        MemberDto findMember = memberMapper.findByPhone(phone);
+        if (findMember != null) {
+            throw new IllegalStateException("이미 가입된 전화번호입니다.");
+        }
     }
 
     public void overlapId(String id) {

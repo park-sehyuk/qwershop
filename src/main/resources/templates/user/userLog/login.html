@@ -13,50 +13,35 @@
   <div class="login-container">
     <div class="form-wrapper">
       <h1 class="main-title">LOGIN</h1>
-
       <div class="form-content">
         <form th:action="@{/user/login}" method="post" id="member-login-form">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
           <div class="form-group">
             <label for="user-id">아이디</label>
             <input type="text" id="user-id" name="id" required />
           </div>
-
           <div class="form-group">
             <label for="user-password">패스워드</label>
             <div class="password-input-wrapper">
               <input type="password" id="user-password" name="pw" required />
-              <button
-                      type="button"
-                      class="toggle-password-btn"
-                      id="toggle-password"
-              >
-                <img
-                        th:src="@{/user/imges/open-eyes.jpeg}"
-                        id="toggle-eye-icon"
-                        alt="눈"
-                />
+              <button type="button" class="toggle-password-btn" id="toggle-password">
+                <img th:src="@{/user/imges/open-eyes.jpeg}" id="toggle-eye-icon" alt="눈" />
               </button>
             </div>
           </div>
-
           <div class="options-group">
             <label class="checkbox-label">
               <input type="checkbox" class="save-id-check" />
               아이디 저장
             </label>
           </div>
-
           <button type="submit" class="btn btn-login">로그인</button>
         </form>
-
         <div>
           <a th:href="@{/oauth2/authorization/kakao}">
             <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/l7IXyzAaK67NLqfB5InSFE/o.jpg" width="222" alt="카카오 로그인 버튼">
           </a>
         </div>
-
         <div class="util-links">
           <a th:href="@{/find}">아이디 찾기</a>
           <span class="separator">|</span>
@@ -69,5 +54,11 @@
   </div>
   <script th:src="@{/user/js/userLog/login.js}"></script>
   <script th:src="@{/user/js/common.js}"></script>
+  <script th:inline="javascript">
+    var successMessage = [[${successMessage}]];
+    if (successMessage) {
+      alert(successMessage);
+    }
+  </script>
 </div>
 </html>

@@ -1,8 +1,12 @@
 @charset "utf-8";
 
-#searchResult {
+#searchPage {
+  display: block !important;
+  position: relative !important;
+  top: 0 !important;
+  height: auto !important;
   margin: 0;
-  padding: 20px;
+  padding: 40px 0;
   background-color: #ffffff;
   color: #333;
 }
@@ -10,12 +14,12 @@
 .container {
   width: 90%;
   max-width: 1200px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .container h1 {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -23,160 +27,109 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 15px 0;
   border-bottom: 1px solid #eee;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
-.item-count span {
-  font-size: 14px;
-}
+
 .sort-container {
   position: relative;
-  display: inline-block;
 }
+
 .sort-button {
-  background-color: transparent;
+  background: none;
   border: none;
   cursor: pointer;
   font-size: 14px;
+  display: flex;
+  align-items: center;
 }
-.sort-button .arrow {
-  margin-left: 5px;
-  font-size: 10px;
-}
+
 .sort-dropdown {
   display: none;
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: white;
-  min-width: 120px;
+  background: #fff;
   border: 1px solid #ddd;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  padding: 5px 0;
+  min-width: 140px;
+  z-index: 1000;
 }
+
 .sort-container.active .sort-dropdown {
   display: block;
 }
+
 .sort-dropdown a {
-  color: black;
+  display: block;
   padding: 10px 15px;
   text-decoration: none;
-  display: block;
-  font-size: 14px;
-}
-.sort-dropdown a:hover {
-  background-color: #f1f1f1;
+  color: #333;
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 25px 20px;
-  margin-bottom: 40px;
+  gap: 40px 20px;
 }
+
 .product-item {
-  background-color: #fff;
-  text-align: left;
-}
-.product-item .img-wrapper {
-  width: 100%;
-  height: 300px;
-  background-color: #f7f7f7;
-  margin-bottom: 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.product-item img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
-.product-item .info .name {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-.product-item .info .price {
-  font-size: 15px;
-  font-weight: bold;
+  flex-direction: column;
 }
 
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-}
-.pagination {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-}
-.page-link {
-  display: block;
-  padding: 8px 12px;
-  text-decoration: none;
-  color: #333;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.page-link:hover {
-  background-color: #f0f0f0;
-}
-.page-link.active {
-  background-color: #333;
-  color: white;
-  border-color: #333;
-}
-
-.product-item .info {
-  padding: 15px 10px;
-  text-align: left;
-}
-
-.product-item .brand {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.product-item .img-wrapper {
+.img-wrapper {
   position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #f7f7f7;
   overflow: hidden;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .wish-button {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid #ddd;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 20px;
-  color: #ccc;
+  border: 1px solid #ddd;
+  background: rgba(255,255,255,0.8);
   cursor: pointer;
+}
+
+.info { padding: 15px 0; }
+.info .brand { font-size: 12px; color: #888; font-weight: bold; margin-bottom: 5px; }
+.info .name { font-size: 14px; margin-bottom: 8px; height: 2.8em; overflow: hidden; }
+.info .name a { text-decoration: none; color: #333; }
+.info .price { font-size: 15px; font-weight: bold; }
+
+.pagination-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  padding: 50px 0;
 }
 
-.wish-button:hover {
-  background-color: white;
-  color: #ff4d4d;
+.pagination {
+  display: flex;
+  list-style: none;
+  gap: 5px;
 }
 
-.wish-button.active {
-  background-color: #ff4d4d;
-  color: white;
-  border-color: #ff4d4d;
+.page-link {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.page-link.active {
+  background: #000;
+  color: #fff;
 }

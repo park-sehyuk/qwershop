@@ -1,46 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      xmlns:layout="http://www.ultreq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/user/css/base.css}" />
-    <link rel="stylesheet" th:href="@{/user/css/search/searchResult.css}" />
-  </head>
+<head>
+  <title>검색 결과</title>
+  <link rel="stylesheet" th:href="@{/user/css/search/searchResult.css}" />
+</head>
 
-  <div id="searchResult" layout:fragment="content">
-    <div class="container">
-        
-        <h1>"<span id="searchName"></span>" 검색 결과입니다.</h1>
+<div layout:fragment="content" id="searchPage">
+  <div class="container">
+    <h1>"<span id="searchName" th:text="${query}"></span>" 검색 결과입니다.</h1>
 
-          <div class="filter-bar">
-        <div class="item-count">
-          <span id="total-items">0 Item</span>
-        </div>
-        <div class="sort-container">
-          <button class="sort-button">
-            <span id="sort-text">정렬 기준</span>
-            <span class="arrow">▼</span>
-          </button>
-          <div class="sort-dropdown">
-            <a href="#" data-sort="popular">인기순</a>
-            <a href="#" data-sort="price_desc">높은가격순</a>
-            <a href="#" data-sort="price_asc">낮은가격순</a>
-          </div>
+    <div class="filter-bar">
+      <div class="item-count">
+        <span id="total-items" th:text="${#lists.size(searchResults)} + ' Item'">0 Item</span>
+      </div>
+      <div class="sort-container">
+        <button class="sort-button" type="button">
+          <span id="sort-text">정렬 기준</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sort-dropdown">
+          <a href="#" data-sort="popular">인기순</a>
+          <a href="#" data-sort="price_desc">높은가격순</a>
+          <a href="#" data-sort="price_asc">낮은가격순</a>
         </div>
       </div>
-
-      <main id="product-grid" class="product-grid"></main>
-
-      <nav class="pagination-container">
-        <ul id="pagination" class="pagination"></ul>
-      </nav>
-    </div>
-        
     </div>
 
-    <script th:src="@{/user/js/search/searchResult.js}"></script>
-    <script th:src="@{/user/js/common.js}"></script>
+    <div id="product-grid" class="product-grid">
+      <div th:each="item : ${searchResults}" class="product-item">
+        <div class="img-wrapper">
+          <a th:href="@{/detail(id=${item.itemId})}">
+            <img th:src="${item.itemUrl}" th:alt="${item.itemName}"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23aaa%22>No Image</text></svg>';">
+          </a>
+          <button class="wish-button" th:data-product-name="${item.itemName}">♥</button>
+        </div>
+        <div class="info">
+          <div class="brand" th:text="${item.itemBrand}">브랜드</div>
+          <div class="name">
+            <a th:href="@{/detail(id=${item.itemId})}" th:text="${item.itemName}">상품명</a>
+          </div>
+          <div class="price" th:text="${#numbers.formatInteger(item.itemPrice, 0, 'COMMA')} + '원'">0원</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="pagination-container">
+      <ul id="pagination" class="pagination"></ul>
+    </nav>
+  </div>
+
+  <script th:inline="javascript">
+    window.dbProducts = [[${searchResults}]];
+  </script>
+  <script th:src="@{/user/js/search/searchResult.js}"></script>
 </div>
-
 </html>
