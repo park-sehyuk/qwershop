@@ -6,10 +6,11 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>장바구니 - QWER</title>
-	<th:block layout:fragment="css">
-		<link rel="stylesheet" th:href="@{/user/css/production/cart.css}" />
-	</th:block>
+	<title>장바구니 - QWER SHOP</title>
+	<link rel="stylesheet" th:href="@{/user/css/production/cart.css}" />
+	<style>
+
+	</style>
 </head>
 
 <body>
@@ -21,11 +22,11 @@
 			<table class="cart-table">
 				<thead>
 				<tr>
-					<th class="col-item">상품</th>
-					<th class="col-price">가격</th>
+					<th class="col-item">상품정보</th>
+					<th class="col-price">판매가</th>
 					<th class="col-qty">수량</th>
 					<th class="col-sub">합계</th>
-					<th class="col-act">삭제</th>
+					<th class="col-act">선택</th>
 				</tr>
 				</thead>
 				<tbody id="cart-items">
@@ -35,32 +36,46 @@
 							<img class="item-thumb" th:src="${item.imgUrl}" th:alt="${item.itemNm}" />
 							<div class="item-meta">
 								<div class="item-title" th:text="${item.itemNm}">상품명</div>
-								<div class="item-option" th:text="${item.selectedColor} + ' / ' + ${item.selectedSize}">옵션</div>
+								<div class="option-tag">
+									Color: <span th:text="${item.selectedColor}">색상</span>
+									/ Size: <span th:text="${item.selectedSize}">사이즈</span>
+								</div>
 							</div>
 						</div>
 					</td>
-					<td class="col-price"><span th:text="${item.price}">0</span>원</td>
-					<td class="col-qty">
-						<div class="qty-controls">
-							<input type="number" class="qty-input" th:value="${item.count}" min="1" />
-						</div>
+					<td class="col-price text-center">
+						<span class="price-text" th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}">0</span>원
 					</td>
-					<td class="col-sub"><span th:text="${item.price * item.count}">0</span>원</td>
-					<td class="col-act">
-						<button class="remove-item btn" th:onclick="'deleteCartItem(' + ${item.cartId} + ')'">삭제</button>
+					<td class="col-qty text-center">
+						<input type="number" class="qty-input" th:value="${item.count}" min="1" />
+					</td>
+					<td class="col-sub text-center">
+						<span class="price-text" th:text="${#numbers.formatInteger(item.price * item.count, 0, 'COMMA')}">0</span>원
+					</td>
+					<td class="col-act text-center">
+						<button class="btn-remove" th:onclick="'deleteCartItem(' + ${item.cartId} + ')'">삭제</button>
 					</td>
 				</tr>
+
 				<tr th:if="${#lists.isEmpty(cartItems)}">
-					<td colspan="5" style="text-align: center; padding: 50px;">장바구니가 비어 있습니다.</td>
+					<td colspan="5" style="text-align: center; padding: 100px 0; color: #999;">
+						<i class="fas fa-shopping-cart" style="font-size: 40px; margin-bottom: 20px; display: block;"></i>
+						장바구니가 비어 있습니다.
+					</td>
 				</tr>
 				</tbody>
 			</table>
 
-			<div class="cart-actions">
-				<button id="clear-cart" class="btn btn-secondary">전체삭제</button>
-				<div class="cart-summary">
-					<div>총 상품금액: <span id="total-price" th:text="${totalPrice}">0</span>원</div>
-					<button id="checkout" class="btn btn-primary" onclick="location.href='/order'">주문하기</button>
+			<div class="cart-footer">
+				<div class="total-price-area">
+					<span class="total-label">총 결제 금액</span>
+					<span class="total-amount">
+            <span id="total-price" th:text="${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">0</span>원
+        </span>
+				</div>
+
+				<div class="button-area">
+					<button type="button" class="btn-order" onclick="location.href='/order'">주문하기</button>
 				</div>
 			</div>
 		</section>

@@ -3,6 +3,57 @@
 
 <mapper namespace="com.example.qwershop.user.cart.mapper.CartMapper">
 
+    <select id="getCartList" resultType="cartDetailDto">
+        SELECT
+            c.cart_id AS cartId,
+            i.item_name AS itemNm,
+            i.item_price AS price,
+            c.count AS count,
+            c.selected_color AS selectedColor,
+            c.selected_size AS selectedSize,
+            /* 이미지 테이블에서 실제 URL을 가져옴, 없으면 기본이미지 표시 */
+            IFNULL(im.item_url, '/user/img/no-image.jpg') AS imgUrl
+        FROM cart c
+            JOIN item i ON c.item_id = i.item_id
+            JOIN member m ON c.member_id = m.member_id
+            /* 이미지 테이블 조인: 해당 상품의 메인 이미지만 가져오기 */
+            LEFT JOIN item_img im ON i.item_id = im.item_id AND im.is_main = 'Y'
+        WHERE m.id = #{userId}
+        ORDER BY c.reg_time DESC
+    </select>
+
+    <select id="checkCartItem" resultType="Integer">
+        SELECT count(*)
+        FROM cart c
+                 JOIN member m ON c.member_id = m.member_id
+        WHERE c.item_id = #{itemId}
+          AND m.id = #{userId}
+          AND c.selected_color = #{color}
+          AND c.selected_size = #{size}
+    </select>
+
+    <insert id="insertCartItem">
+        INSERT INTO cart (item_id, member_id, count, selected_color, selected_size, reg_time)
+        VALUES (
+                   #{dto.itemId},
+                   (SELECT member_id FROM member WHERE id = #{userId}),
+                   #{dto.count},
+                   #{dto.color},
+                   #{dto.size},
+                   NOW()
+               )
+    </insert>
+
+    <update id="updateCartItemCount">
+        UPDATE cart c
+            JOIN member m ON c.member_id = m.member_id
+            SET c.count = c.count + #{dto.count}
+        WHERE c.item_id = #{dto.itemId}
+          AND m.id = #{userId}
+          AND c.selected_color = #{dto.color}
+          AND c.selected_size = #{dto.size}
+    </update>
+  
 <!--    <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">-->
 <!--        SELECT-->
 <!--            c.cart_id AS cartId,-->
@@ -17,39 +68,5 @@
 <!--            JOIN member m ON c.member_id = m.member_id-->
 <!--        WHERE m.id = #{userId}  ORDER BY c.reg_time DESC-->
 <!--    </select>-->
-
-    <select id="getCartList" resultType="cartDetailDto">
-        SELECT
-            c.cart_id as cartId,
-            i.item_name as itemNm,
-            i.item_price as price,
-            c.count as count
-        FROM cart c
-            JOIN item i ON c.item_id = i.item_id
-        WHERE c.member_id = 7  </select>
-
-    <select id="findCartItem" resultType="cartDto" parameterType="cartDto">
-        SELECT * FROM cart
-        WHERE member_id = #{memberId}
-          AND item_id = #{itemId}
-          AND selected_color = #{selectedColor}
-          AND selected_size = #{selectedSize}
-    </select>
-
-    <update id="updateCartCount" parameterType="cartDto">
-        UPDATE cart
-        SET count = count + #{count},
-            update_time = NOW()
-        WHERE cart_id = #{cartId}
-    </update>
-
-    <insert id="insertCart" parameterType="cartDto">
-        INSERT INTO cart (
-            member_id, item_id, count, selected_color, selected_size, reg_time, update_time
-        ) VALUES (
-                     #{memberId}, #{itemId}, #{count}, #{selectedColor}, #{selectedSize}, NOW(), NOW()
-                 )
-    </insert>
-
 
 </mapper>

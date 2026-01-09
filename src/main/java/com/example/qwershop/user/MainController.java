@@ -24,11 +24,6 @@ public class MainController {
         return "user/search/searchResult";
     }
 
-    @GetMapping("/itemList")
-    public String itemList(){
-        return "user/production/itemList";
-    }
-
     @GetMapping("/detail")
     public String detail(){
         return "user/production/detail";
