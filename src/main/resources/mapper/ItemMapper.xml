@@ -6,11 +6,15 @@
         SELECT i.item_id, i.item_name, i.item_brand, i.item_price,
         i.item_category, i.item_type, ii.item_url
         FROM item i
-        LEFT JOIN item_img ii ON i.item_id = ii.item_id
-        WHERE ii.is_main = 'Y'
+        LEFT JOIN item_img ii ON i.item_id = ii.item_id AND ii.is_main = 'Y'
+        WHERE 1=1
         <if test="type != null">
             AND i.item_type = #{type}
         </if>
-    </select>
 
+        <choose>
+            <when test="sort == 'price_desc'">ORDER BY i.item_price DESC</when>
+            <when test="sort == 'price_asc'">ORDER BY i.item_price ASC</when>
+            <otherwise>ORDER BY i.item_id DESC</otherwise> </choose>
+    </select>
 </mapper>
