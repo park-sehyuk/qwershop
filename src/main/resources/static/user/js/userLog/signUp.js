@@ -6,11 +6,8 @@ const phoneInput = document.getElementById('user-phone');
 const emailIdInput = document.getElementById('user-email-id');
 const emailDomainInput = document.getElementById('user-email-domain');
 const userBirthdateInput = document.getElementById('user-birthdate');
-
-// [수정] HTML의 id="address"와 일치시킴
 const addressInput = document.getElementById('address');
 const detailAddressInput = document.getElementById('detailAddress');
-
 const checkIdButton = document.querySelector('.btn-inline');
 const submitButton = document.querySelector('.btn-primary');
 const cancelButton = document.querySelector('.btn-secondary');
@@ -81,16 +78,13 @@ function emailFormat() {
 
 submitButton.addEventListener('click', function (event) {
   event.preventDefault();
-
   if (!required()) return;
   if (!pwRules()) return;
   if (!pwMatch()) return;
   if (!emailFormat()) return;
 
-  // --- [추가] 날짜 형식 변환 (19990101 -> 1999-01-01) ---
-  let birthVal = userBirthdateInput.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+  let birthVal = userBirthdateInput.value.replace(/[^0-9]/g, '');
   if (birthVal.length === 8) {
-    // 8자리 숫자를 yyyy-MM-dd 형식으로 변환
     birthVal = birthVal.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     userBirthdateInput.value = birthVal;
   } else {
@@ -98,9 +92,7 @@ submitButton.addEventListener('click', function (event) {
     userBirthdateInput.focus();
     return;
   }
-  // ----------------------------------------------------
 
-  // 이메일 합치기
   const fullEmail = emailIdInput.value + "@" + emailDomainInput.value;
   let hiddenEmail = document.createElement('input');
   hiddenEmail.type = 'hidden';
@@ -108,7 +100,6 @@ submitButton.addEventListener('click', function (event) {
   hiddenEmail.value = fullEmail;
   signUpForm.appendChild(hiddenEmail);
 
-  // 주소 합치기
   const fullAddress = addressInput.value + " " + detailAddressInput.value;
   let hiddenAddr = document.createElement('input');
   hiddenAddr.type = 'hidden';
@@ -116,7 +107,6 @@ submitButton.addEventListener('click', function (event) {
   hiddenAddr.value = fullAddress;
   signUpForm.appendChild(hiddenAddr);
 
-  alert('회원가입이 완료되었습니다!');
   signUpForm.submit();
 });
 

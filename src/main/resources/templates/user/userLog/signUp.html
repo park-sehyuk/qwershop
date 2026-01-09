@@ -44,11 +44,6 @@
           <input type="tel" id="user-phone" name="phone" placeholder="'-' 제외 11자리" required />
         </div>
 
-<!--        <div class="form-group">-->
-<!--          <label for="user-address">주소</label>-->
-<!--          <input type="text" id="user-address" name="address" placeholder="주소를 입력해주세요." required />-->
-<!--        </div>-->
-
         <div class="form-group">
           <label for="postcode">주소</label>
           <div class="input-with-button">
@@ -79,12 +74,12 @@
           <label>성별</label>
           <div class="radio-group">
             <p>
-            <input type="radio" id="male" name="gender" value="MALE" checked />
-            <label for="male">남</label>
+              <input type="radio" id="male" name="gender" value="MALE" checked />
+              <label for="male">남</label>
             </p>
             <p>
-            <input type="radio" id="female" name="gender" value="FEMALE" />
-            <label for="female">여</label>
+              <input type="radio" id="female" name="gender" value="FEMALE" />
+              <label for="female">여</label>
             </p>
           </div>
         </div>
@@ -98,5 +93,16 @@
   </div>
 
   <script th:src="@{/user/js/userLog/signUp.js}"></script>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    // [수정] 아래 문법으로 적으면 인텔리제이 빨간 줄이 사라집니다.
+    var errorMessage = /*[[${errorMessage}]]*/ null;
+
+    if (errorMessage !== null && errorMessage !== "") {
+      alert(errorMessage);
+    }
+    /*]]>*/
+  </script>
 </div>
 </html>

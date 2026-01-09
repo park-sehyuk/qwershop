@@ -20,6 +20,10 @@
         SELECT member_id FROM member WHERE id = #{id}
     </select>
 
+    <select id="findByPhone" resultType="com.example.qwershop.user.member.dto.MemberDto">
+        SELECT * FROM member WHERE phone = #{phone}
+    </select>
+
     <select id="selectMemberId" resultType="int">
         SELECT member_id
         FROM   member
