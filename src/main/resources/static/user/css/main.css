@@ -49,7 +49,9 @@
 /* 추천 상품 아이템 */
 #suggList {
   width: 1440px;
+  margin: 0 auto;
   margin-bottom: 160px;
+  overflow: hidden;
 }
 #suggList h1 {
   text-align: center;
@@ -98,7 +100,9 @@
 /* 이달의 상품 */
 #productList {
   width: 1440px;
+  margin: 0 auto;
   margin-bottom: 160px;
+  overflow: hidden;
 
 }
 #productList h1 {

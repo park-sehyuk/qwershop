@@ -4,6 +4,9 @@
       layout:decorate="~{layouts/layout}">
 
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" th:href="@{/user/css/base.css}">
   <link rel="stylesheet" th:href="@{/user/css/production/detail.css}">
