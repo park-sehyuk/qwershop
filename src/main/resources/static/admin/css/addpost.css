@@ -1,48 +1,28 @@
 @charset "utf-8";
 
-/* ===============================
-   1. 기본 레이아웃 (기존 유지)
-================================ */
-* { box-sizing: border-box; }
-
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #f8f9fa;
-}
-
+/* 전체 레이아웃 */
 #scale {
     width: 1920px;
     margin: 0 auto;
     display: flex;
     min-height: 1080px;
-    border: 1px solid black;
-    background-color: #fff;
+    background-color: #f4f7f6; /* 배경색을 주어 흰색 카드가 돋보이게 함 */
 }
 
-/* ===============================
-   2. 사이드바 (완전 원복)
-================================ */
+/* [원본 복구] 사이드바 디자인 */
 .left-side {
     width: 200px;
-    background-color: rgb(117, 117, 117);
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-}
-
-.text-border {
-    text-decoration: none;
-    width: 100%;
+    background-color: rgb(117, 117, 117);
+    flex-shrink: 0;
 }
 
 .left-side button {
     font-size: 14px;
     color: white;
     width: 100%;
-    height: 100px;
+    height: 100px; /* 원본 높이 100px */
     background-color: transparent;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -50,332 +30,73 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     gap: 10px;
-}
-
-.userimg,
-.userimg2,
-.userimg3 {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.userimg img,
-.userimg2 img,
-.userimg3 img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.left-side button:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .left-side .postList {
-    color: yellow;
+    color: yellow; /* 게시물 관리 노란색 강조 */
     background-color: rgba(0, 0, 0, 0.4);
     font-weight: bold;
 }
 
-/* ===============================
-   3. 메인 영역 (기존 유지)
-================================ */
-.main-content {
-    width: 1720px;
+.userimg, .userimg2, .userimg3 {
+    width: 40px; height: 40px;
+    display: flex; justify-content: center; align-items: center;
+}
+.userimg img, .userimg2 img, .userimg3 img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.text-border { text-decoration: none; }
+
+/* 본문 영역 */
+.top-right {
+    flex: 1;
+    padding: 60px 80px;
     display: flex;
     flex-direction: column;
 }
 
-.top-right {
+.right-Title1 { font-size: 40px; font-weight: bolder; color: #333; margin-bottom: 5px; }
+.right-Title2 { font-size: 20px; color: #777; margin-bottom: 40px; }
+
+/* 카드 레이어 박스 */
+.form-wrapper {
+    display: flex;
+    justify-content: center; /* 가로 중앙 */
     width: 100%;
-    padding: 60px 80px;
 }
 
-.right-Title {
-    margin-left: 50px;
-    margin-top: 30px;
-    width: 100%;
-    margin-bottom: 40px;
-}
-
-.right-Title1 {
-    font-size: 40px;
-    font-weight: bolder;
-    margin: 0 0 10px 0;
-    margin-bottom: 30px;
-}
-
-.right-Title2 {
-    font-size: 20px;
-    opacity: 0.5;
-    margin: 0;
-}
-
-/* ===============================
-   4. 폼 컨테이너
-================================ */
-.form-container {
+.form-card {
+    width: 900px;
     background: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #e3e6f0;
-    width: 100%;
-    max-width: 1000px;
-    margin-top: 50px;
-    margin-left: 200px;
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
 }
 
-/* ===============================
-   5. 폼 그룹
-================================ */
-.form-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-.form-group label {
-    width: 160px;
-    flex-shrink: 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: #4e73df;
-}
-
-/* ⭐ 핵심: flex overflow 방지 */
-.form-group > input,
-.form-group > select,
-.form-group > textarea,
-.form-group > div {
-    flex: 1;
-    min-width: 0;
-}
-
-/* ===============================
-   6. 입력 공통
-================================ */
-.form-group input,
-.form-group select,
-.form-group textarea {
-    padding: 12px;
-    border: 1px solid #d1d3e2;
-    border-radius: 6px;
-    font-size: 14px;
-    outline: none;
-}
-
-.form-group textarea {
-    height: 150px;
-    resize: none;
-}
-
-/* ===============================
-   7. 이미지 업로드
-================================ */
-.image-upload-wrapper {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    flex-grow: 1;
-    padding: 5px 0;
-}
-
-.preview-container {
-    display: flex;
-    gap: 10px;
-}
-
-.image-box {
-    width: 100px;
-    height: 100px;
-    position: relative;
+/* 입력 필드 배치 */
+.input-row { display: flex; gap: 30px; margin-bottom: 25px; }
+.input-group { flex: 1; display: flex; flex-direction: column; }
+.input-group label { font-weight: bold; margin-bottom: 10px; color: #444; }
+.input-group input, .input-group select {
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    flex-shrink: 0;
+    font-size: 15px;
+    background-color: #fafafa;
 }
 
-.image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+/* 이미지 섹션 */
+.image-section { margin-top: 30px; border-top: 1px dashed #eee; padding-top: 30px; }
+.preview-wrap { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+.image-box { width: 120px; height: 120px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+
+.img-add-btn {
+    width: 100%; padding: 15px; background: #fff;
+    border: 2px dashed #ccc; border-radius: 8px; cursor: pointer; color: #888;
 }
 
-.img-btn.plus {
-    width: 100px;
-    height: 100px;
-    flex-shrink: 0;
-    border: 2px dashed #d1d3e2;
-    background: #fff;
-    font-size: 24px;
-    color: #d1d3e2;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-/* ===============================
-   8. ⭐ 사이즈 선택 (문제 해결)
-================================ */
-.size-checkbox-group {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 100%;
-
-    background: #f8f9fc;
-    border: 1px solid #e3e6f0;
-    border-radius: 8px;
-    padding: 6px 8px;
-}
-
-.check-label {
-    flex: 1;                    /* ⭐ 핵심 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #4e5e7a;
-
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.check-label input {
-    margin: 0;
-}
-
-/* ===============================
-   9. 판매 상태
-================================ */
-.status-radio-group {
-    display: flex;
-    gap: 20px;
-    padding: 8px 15px;
-    background: #f8f9fc;
-    border: 1px solid #e3e6f0;
-    border-radius: 8px;
-    width: fit-content;
-}
-
-.radio-label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-/* ===============================
-   10. 하단 버튼
-================================ */
-.form-actions {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.save-btn {
-    background: #4e73df;
-    color: #fff;
-    padding: 14px 60px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.cancel-btn {
-    background: #858796;
-    color: #fff;
-    padding: 14px 60px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* ===============================
-   색상 선택
-================================ */
-.color-radio-group {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    border: 1px solid #e3e6f0;
-    border-radius: 8px;
-    background: #f8f9fc;
-    padding: 6px;
-}
-
-.color-label {
-    flex: 1;                         /* ⭐ 한 줄 균등 분할 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-
-    font-size: 14px;
-    font-weight: 600;
-    color: #4e5e7a;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-/* 라디오 숨기기 */
-.color-label input {
-    display: none;
-}
-
-/* 색상 원 */
-.color-swatch {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-}
-
-/* 색상 정의 */
-.color-swatch.red { background: #e74c3c; }
-.color-swatch.black { background: #2c2c2c; }
-.color-swatch.white {
-    background: #fff;
-    border: 1px solid #aaa;
-}
-.color-swatch.blue { background: #3498db; }
-.color-swatch.green { background: #2ecc71; }
-
-/* 선택 시 효과 */
-.color-label input:checked + .color-swatch {
-    outline: 2px solid #4e73df;
-    outline-offset: 2px;
-}
-
-
-/* 공통 (기존 유지) */
-.input-name {
-    max-width: 400px;
-}
-
-.input-brand {
-    max-width: 300px;
-}
-
-/* ⭐ 더 좁게 */
-.input-price {
-    max-width: 200px;   /* 판매가 */
-}
-
-.input-category {
-    max-width: 200px;   /* 카테고리 */
-}
-
+/* 하단 버튼 */
+.submit-area { display: flex; justify-content: center; gap: 20px; margin-top: 50px; }
+.submit-btn { padding: 18px 80px; background: #28a745; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; }
+.cancel-btn { padding: 18px 80px; background: #6c757d; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; }

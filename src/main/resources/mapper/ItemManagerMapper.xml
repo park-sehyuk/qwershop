@@ -2,33 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.qwershop.admin.itemManagement.mapper.ItemManagerMapper">
 
-    <insert id="insertItem" parameterType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto"
-            useGeneratedKeys="true" keyProperty="itemId" keyColumn="item_id">
-        INSERT INTO item (item_name, item_type, item_brand, item_price, item_stock, item_category, reg_time, update_time)
-        VALUES (#{itemName}, #{dbType}, #{itemBrand}, #{itemPrice}, #{itemStock}, #{dbCategory}, NOW(), NOW())
-    </insert>
-
-    <insert id="insertImg">
-        INSERT INTO item_img (item_id, item_url, img_name, is_main, reg_time, update_time)
-        VALUES (#{itemId}, #{url}, #{imgName}, #{isMain}, NOW(), NOW())
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemId">
+        INSERT INTO item (
+            item_name,
+            item_brand,
+            item_price,
+            item_stock,
+            item_category,
+            item_type,
+            reg_time
+        ) VALUES (
+                     #{itemName},
+                     #{itemBrand},
+                     #{itemPrice},
+                     #{itemStock},
+                     #{dbCategory},
+                     #{dbType},
+                     NOW()
+                 )
     </insert>
 
     <select id="findAllItems" resultType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto">
-        SELECT item_id as itemId, item_name as itemName, item_stock as itemStock,
-               item_category as itemCategory, reg_time as regTime
-        FROM item ORDER BY item_id DESC
+        SELECT i.item_id AS itemId, i.item_name AS itemName, i.item_brand AS itemBrand,
+               i.item_price AS itemPrice, i.item_stock AS itemStock,
+               i.item_category AS dbCategory, i.item_type AS dbType,
+               i.reg_time AS regTime, img.item_url AS itemUrl
+        FROM item i
+                 LEFT JOIN item_img img ON i.item_id = img.item_id AND img.is_main = 'Y'
+        ORDER BY i.item_id DESC
     </select>
 
-    <update id="updateItemName">
-        UPDATE item SET item_name = #{itemName}, update_time = NOW() WHERE item_id = #{itemId}
+    <update id="updateItemFull">
+        UPDATE item
+        SET item_name = #{itemName},
+            item_brand = #{itemBrand},
+            item_price = #{itemPrice},
+            item_category = #{dbCategory},
+            item_type = #{dbType},
+            item_stock = #{itemStock},
+            update_time = NOW()
+        WHERE item_id = #{itemId}
     </update>
 
-    <delete id="deleteItemImgs">
-        DELETE FROM item_img WHERE item_id = #{itemId}
-    </delete>
-
-    <delete id="deleteItem">
-        DELETE FROM item WHERE item_id = #{itemId}
-    </delete>
+    <delete id="deleteItemImgs">DELETE FROM item_img WHERE item_id = #{itemId}</delete>
+    <delete id="deleteItem">DELETE FROM item WHERE item_id = #{itemId}</delete>
 
 </mapper>

@@ -1,97 +1,71 @@
-// 1. 이미지 업로드 관련 로직
-const addImgBtn = document.getElementById('add-img-btn');
-const fileInput = document.getElementById('p-image-file');
-const previewContainer = document.getElementById('image-preview-container');
+document.addEventListener('DOMContentLoaded', function() {
+    const addImgBtn = document.getElementById('add-img-btn');
+    const fileInput = document.getElementById('p-image-file');
+    const previewContainer = document.getElementById('image-preview-container');
+    const productForm = document.getElementById('add-product-form');
+    let selectedImages = [];
 
-let selectedImages = []; // 선택된 이미지의 Base64 데이터 저장
+    if (addImgBtn) addImgBtn.onclick = () => fileInput.click();
 
-if (addImgBtn) addImgBtn.onclick = () => fileInput.click();
-
-if (fileInput) {
     fileInput.onchange = (e) => {
-        const files = Array.from(e.target.files);
-        files.forEach(file => {
+        Array.from(e.target.files).forEach(file => {
             const reader = new FileReader();
-            reader.onload = (event) => {
-                selectedImages.push(event.target.result);
+            reader.onload = (ev) => {
+                selectedImages.push(ev.target.result);
                 renderPreviews();
             };
             reader.readAsDataURL(file);
         });
         fileInput.value = "";
     };
-}
 
-function renderPreviews() {
-    if(!previewContainer) return;
-    previewContainer.innerHTML = "";
-    selectedImages.forEach((src, index) => {
-        const div = document.createElement('div');
-        div.className = 'image-box';
-        const badge = (index === 0) ? '<span class="main-badge" style="position:absolute; background:red; color:white; font-size:10px; padding:2px 5px; z-index:10;">대표</span>' : '';
-        div.style.position = 'relative';
-        div.innerHTML = `
-            ${badge}
-            <img src="${src}" style="width:100px; height:100px; object-fit:cover; border-radius:5px;">
-            <button type="button" class="remove-img-btn" onclick="removeImage(${index})" style="position:absolute; top:0; right:0; cursor:pointer;">×</button>
-        `;
-        previewContainer.appendChild(div);
-    });
-}
-
-window.removeImage = function(index) {
-    selectedImages.splice(index, 1);
-    renderPreviews();
-};
-
-// 2. 폼 제출 로직 (JSON 전송 방식으로 변경)
-const productForm = document.getElementById('add-product-form');
-
-if (productForm) {
-    productForm.onsubmit = async function(e) {
-        e.preventDefault(); // 기본 폼 제출(새로고침) 방지
-
-        if (selectedImages.length === 0) {
-            alert('최소 하나 이상의 이미지를 등록해주세요.');
-            return;
-        }
-
-        if(!confirm('제품을 등록하시겠습니까?')) return;
-
-        // 폼 데이터를 JSON 객체로 생성
-        const formData = new FormData(productForm);
-        const data = {};
-
-        // 일반 필드들을 객체에 담기
-        formData.forEach((value, key) => {
-            // itemUrls[0] 형태의 키는 제외 (따로 처리)
-            if(!key.includes('itemUrls')) {
-                data[key] = value;
-            }
+    function renderPreviews() {
+        previewContainer.innerHTML = "";
+        selectedImages.forEach((src, index) => {
+            const div = document.createElement('div');
+            div.className = 'image-box';
+            div.style.position = 'relative';
+            const mainBadge = (index === 0) ? `<span style="position:absolute; top:5px; left:5px; background:rgba(0,0,0,0.7); color:yellow; font-size:11px; padding:2px 6px; border-radius:3px; font-weight:bold; z-index:5;">대표</span>` : "";
+            div.innerHTML = `${mainBadge}<img src="${src}" style="width:100%; height:100%; object-fit:cover;"><button type="button" onclick="removeImage(${index})" style="position:absolute; top:0; right:0; background:rgba(0,0,0,0.5); color:white; border:none; cursor:pointer; width:20px; height:20px;">×</button>`;
+            previewContainer.appendChild(div);
         });
+    }
 
-        // 이미지(Base64 리스트) 추가
-        data.itemUrls = selectedImages;
+    window.removeImage = (index) => {
+        selectedImages.splice(index, 1);
+        renderPreviews();
+    };
+
+    productForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const token = document.querySelector('meta[name="_csrf"]').content;
+        const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+        const data = {
+            itemName: document.getElementById('itemName').value,
+            itemBrand: document.getElementById('itemBrand').value,
+            itemPrice: parseInt(document.getElementById('itemPrice').value) || 0,
+            itemStock: parseInt(document.getElementById('itemStock').value) || 0,
+            dbCategory: parseInt(document.getElementById('itemCategory').value),
+            dbType: parseInt(document.getElementById('itemTypeSelect').value),
+            itemUrls: selectedImages
+        };
 
         try {
-            const response = await fetch('/admin/addpost', {
+            const res = await fetch('/admin/addpost', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // 서버에 JSON임을 알림
-                },
-                body: JSON.stringify(data) // JSON 문자열로 변환
+                headers: { 'Content-Type': 'application/json', [header]: token },
+                body: JSON.stringify(data)
             });
 
-            if (response.ok) {
-                alert("상품이 성공적으로 등록되었습니다.");
-                location.href = "/admin/itemList"; // 등록 후 목록 페이지로 이동
+            if (res.ok) {
+                alert("제품이 성공적으로 등록되었습니다!");
+                location.href = "/admin/itemList";
             } else {
-                const errorText = await response.text();
-                alert("등록 실패: " + errorText);
+                alert("등록 실패: 데이터 형식을 확인하세요.");
             }
         } catch (error) {
-            console.error('전송 에러:', error);
-            alert("서버 통신 중 오류가 발생했습니다.");
+            alert("통신 오류 발생");
         }
     };
-}
+});
