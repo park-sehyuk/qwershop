@@ -16,11 +16,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         String ajaxRequest = request.getHeader("x-requested-with");
 
+
         if ("XMLHttpRequest".equals(ajaxRequest)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
-//        } else {
-//            response.sendRedirect("/members/login");
-//        }
+         else {
+            response.sendRedirect("/user/login");
+        }
     }
 }
