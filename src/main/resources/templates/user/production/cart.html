@@ -7,10 +7,9 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>장바구니 - QWER SHOP</title>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<link rel="stylesheet" th:href="@{/user/css/production/cart.css}" />
-	<style>
-
-	</style>
 </head>
 
 <body>
@@ -47,19 +46,23 @@
 						<span class="price-text" th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}">0</span>원
 					</td>
 					<td class="col-qty text-center">
-						<input type="number" class="qty-input" th:value="${item.count}" min="1" />
+						<input type="number" class="qty-input"
+							   th:value="${item.count}" min="1"
+							   th:data-id="${item.cartId}"
+							   onchange="changeCount(this)" />
 					</td>
 					<td class="col-sub text-center">
 						<span class="price-text" th:text="${#numbers.formatInteger(item.price * item.count, 0, 'COMMA')}">0</span>원
 					</td>
 					<td class="col-act text-center">
-						<button class="btn-remove" th:onclick="'deleteCartItem(' + ${item.cartId} + ')'">삭제</button>
+						<button type="button" class="btn-remove"
+								th:data-id="${item.cartId}"
+								onclick="deleteItem(this)">삭제</button>
 					</td>
 				</tr>
 
 				<tr th:if="${#lists.isEmpty(cartItems)}">
 					<td colspan="5" style="text-align: center; padding: 100px 0; color: #999;">
-						<i class="fas fa-shopping-cart" style="font-size: 40px; margin-bottom: 20px; display: block;"></i>
 						장바구니가 비어 있습니다.
 					</td>
 				</tr>
@@ -70,20 +73,64 @@
 				<div class="total-price-area">
 					<span class="total-label">총 결제 금액</span>
 					<span class="total-amount">
-            <span id="total-price" th:text="${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">0</span>원
-        </span>
+                        <span id="total-price" th:text="${#numbers.formatInteger(totalPrice, 0, 'COMMA')}">0</span>원
+                    </span>
 				</div>
-
 				<div class="button-area">
 					<button type="button" class="btn-order" onclick="location.href='/order'">주문하기</button>
 				</div>
 			</div>
 		</section>
 	</main>
+
+	<script th:inline="javascript">
+		// 1. 삭제 함수 (전역 window 객체에 할당)
+		window.deleteItem = function(obj) {
+			const cartId = obj.getAttribute('data-id');
+			const token = document.querySelector('meta[name="_csrf"]').content;
+			const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+			if(!confirm("삭제하시겠습니까?")) return;
+
+			fetch("/cartItem/" + cartId, {
+				method: 'DELETE',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest',
+					[header]: token
+				}
+			}).then(res => {
+				if (res.ok) {
+					alert("삭제되었습니다.");
+					location.reload();
+				} else {
+					alert("삭제 실패");
+				}
+			}).catch(err => console.error(err));
+		};
+
+		// 2. 수량 변경 함수 (전역 window 객체에 할당)
+		window.changeCount = function(obj) {
+			const count = obj.value;
+			const cartId = obj.getAttribute('data-id');
+			const token = document.querySelector('meta[name="_csrf"]').content;
+			const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+			const url = "/cartItem/" + cartId + "?count=" + count;
+
+			fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest',
+					[header]: token
+				}
+			}).then(res => {
+				if (res.ok) location.reload();
+			}).catch(err => console.error(err));
+		};
+	</script>
 </div>
 
 <th:block layout:fragment="script">
-	<script th:src="@{/user/js/production/cart.js}"></script>
 	<script th:src="@{/user/js/common.js}"></script>
 </th:block>
 </body>
