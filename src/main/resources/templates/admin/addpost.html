@@ -14,11 +14,10 @@
         <div>회원관리</div>
       </button>
     </a>
-    <a th:href="@{/admin/postlist}" class="text-border">
-      <button class="postList">
-        <div class="userimg2"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
-        <div>게시물 관리</div>
-      </button>
+    <a th:href="@{/admin/itemList}" class="text-border"> <button class="postList">
+      <div class="userimg2"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
+      <div>게시물 관리</div>
+    </button>
     </a>
     <a th:href="@{/admin/categorylist}" class="text-border">
       <button class="categoryList">
@@ -37,7 +36,7 @@
     </div>
 
     <div class="form-container">
-      <form id="add-product-form" th:action="@{/admin/addpost}" method="post">
+      <form id="add-product-form">
 
         <div class="form-group">
           <label for="itemName">상품명</label>

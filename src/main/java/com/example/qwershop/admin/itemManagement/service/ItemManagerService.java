@@ -23,15 +23,12 @@ public class ItemManagerService {
 
     @Transactional
     public void registerItem(ItemManagerDto itemDto) {
-        // 1. 공통 코드 매핑
-        itemDto.setDbType("AVAILABLE".equals(itemDto.getItemType()) ? 18 : 18);
-        itemDto.setDbCategory("남성상의-반팔".equals(itemDto.getItemCategory()) ? 14 : 14);
+        itemDto.setDbType(18); // 기본 공통코드 설정
+        itemDto.setDbCategory(14);
 
-        // 2. 상품 저장
         itemManagerMapper.insertItem(itemDto);
         Long generatedId = itemDto.getItemId();
 
-        // 3. 이미지 처리
         List<String> base64Images = itemDto.getItemUrls();
         if (base64Images != null && !base64Images.isEmpty()) {
             File uploadDir = new File(uploadPath);
@@ -39,24 +36,29 @@ public class ItemManagerService {
 
             for (int i = 0; i < base64Images.size(); i++) {
                 try {
-                    String base64Str = base64Images.get(i);
-                    // 파일명 생성 (예: 550e8400-e29b-41d4-a716-446655440000.jpg)
                     String fileName = UUID.randomUUID().toString() + ".jpg";
-                    String fullPath = uploadPath + fileName;
-                    String dbPath = "/upload/items/" + fileName;
-
-                    // 실제 파일 저장
-                    saveBase64ToFile(base64Str, fullPath);
-
-                    // DB 저장 (파일명인 fileName을 세 번째 인자로 전달)
-                    String isMain = (i == 0) ? "Y" : "N";
-                    itemManagerMapper.insertImg(generatedId, dbPath, fileName, isMain);
-
+                    saveBase64ToFile(base64Images.get(i), uploadPath + fileName);
+                    itemManagerMapper.insertImg(generatedId, "/upload/items/" + fileName, fileName, (i == 0) ? "Y" : "N");
                 } catch (IOException e) {
-                    throw new RuntimeException("이미지 저장 중 오류 발생", e);
+                    throw new RuntimeException("이미지 저장 실패", e);
                 }
             }
         }
+    }
+
+    public List<ItemManagerDto> getAllItems() {
+        return itemManagerMapper.findAllItems();
+    }
+
+    @Transactional
+    public void modifyItemName(Long itemId, String newName) {
+        itemManagerMapper.updateItemName(itemId, newName);
+    }
+
+    @Transactional
+    public void removeItem(Long itemId) {
+        itemManagerMapper.deleteItemImgs(itemId); // 자식 테이블(이미지) 먼저 삭제
+        itemManagerMapper.deleteItem(itemId);     // 부모 테이블(상품) 삭제
     }
 
     private void saveBase64ToFile(String base64, String filePath) throws IOException {
