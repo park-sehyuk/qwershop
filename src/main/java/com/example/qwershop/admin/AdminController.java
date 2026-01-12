@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AdminController {
 
-    @GetMapping("/admin/itemList")
-    public String itemLlist(){
-        return "admin/post";
-    }
-
+//    @GetMapping("/admin/itemList")
+//    public String itemLlist(){
+//        return "admin/post";
+//    }
+//
 
     @GetMapping("/admin/category")
     public String category(){

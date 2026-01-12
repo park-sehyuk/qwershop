@@ -1,7 +1,9 @@
 package com.example.qwershop.config;
 
+
 import com.example.qwershop.user.member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +16,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+tructor
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -32,6 +34,7 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/", "/main", "/signUp", "/find/**", "/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
                         .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
                         .requestMatchers("/admin/**").permitAll()
@@ -44,6 +47,7 @@ public class SecurityConfig {
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
+
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/user/login")
                         .userInfoEndpoint(userInfo -> userInfo
@@ -51,10 +55,10 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true))
 
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
+                        .logoutUrl("/logout") // [수정] HTML의 th:action="@{/logout}"과 일치시킴
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID"))
+                        .deleteCookies("JSESSIONID")) // 로그아웃 시 쿠키 삭제 추가
 
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));

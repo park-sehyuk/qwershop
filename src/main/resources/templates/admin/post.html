@@ -1,74 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <title>게시물 관리</title>
+    <title>게시물 관리 - 관리자 모드</title>
     <link rel="stylesheet" th:href="@{/admin/css/post.css}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
-
 <body>
-    <div id="scale">
-        <div class="left-side">
+<div id="scale">
+    <div class="left-side">
+        <a th:href="@{/admin/userList}" class="text-border">
+            <button class="userList">
+                <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}"></div>
+                <div>회원관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/itemList}" class="text-border">
+            <button class="postList">
+                <div class="userimg2"><img th:src="@{/admin/img/menu-colorbar.png}"></div>
+                <div>게시물 관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/category}" class="text-border">
+            <button class="categoryList">
+                <div class="userimg3"><img th:src="@{/admin/img/blogging.png}"></div>
+                <div>카테고리 리스트</div>
+            </button>
+        </a>
+    </div>
 
-            <a th:href="@{/admin/userList}" class="text-border">
-                <button class="userList">
-                    <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
-                    <div>회원관리</div>
-                </button>
-            </a>
-
-            <a th:href="@{/admin/itemList}" class="text-border">
-                <button class="postList">
-                    <div class="userimg2"><img th:src="@{/admin/img/menu-colorbar.png}" alt=""></div>
-                    <div>게시물 관리</div>
-                </button>
-            </a>
-
-            <a th:href="@{/admin/category}" class="text-border">
-                <button class="categoryList">
-                    <div class="userimg3"><img th:src="@{/admin/img/blogging.png}" alt=""></div>
-                    <div>카테고리 리스트</div>
-                </button>
-            </a>
-        </div>
-        <div class="top-right">
-            <div class="right-side">
-                <div class="right-Title">
-                    <p class="right-Title1">게시물 관리</p>
-                    <p class="right-Title2">게시물은 상품순으로 정렬됩니다.</p>
-                </div>
-                <div class="category-search-area">
-                    <p class="search-text">종류 검색</p>
-                    <div class="search-input-group">
-                        <input type="text" placeholder="제품명 입력" class="category-search-input">
-                        <button class="search">검색</button>
-                    </div>
-                </div>
-                <div class="button-tap">
-                    <div class="startsearch">
-                        <button class="starline">초기화</button>
-                    </div>
-                    <button class="add-category">제품 추가</button>
-                </div>
+    <div class="top-right">
+        <div class="right-side">
+            <div class="right-Title">
+                <p class="right-Title1">게시물 관리</p>
+                <p class="right-Title2">등록된 상품 정보를 리스트에서 즉시 수정할 수 있습니다.</p>
             </div>
+            <div class="button-tap">
+                <button class="add-category" onclick="location.href='/admin/addpost'">제품 추가</button>
+            </div>
+        </div>
 
-<table class="category-data-table">
-    <thead>
-        <tr>
-            <th>수량</th>
-            <th>상품명</th>
-            <th>분류</th>
-            <th>등록일</th>
-            <th>관리</th>
-        </tr>
-    </thead>
-    <tbody>
-        </tbody>
-</table>
+        <div class="table-container">
+            <table class="category-data-table">
+                <thead>
+                <tr>
+                    <th style="width: 100px;">대표이미지</th>
+                    <th>상품명 / 브랜드</th>
+                    <th>판매가</th>
+                    <th style="width: 200px;">카테고리 / 타입</th>
+                    <th style="width: 80px;">재고</th>
+                    <th>등록일</th>
+                    <th style="width: 150px;">관리</th>
+                </tr>
+                </thead>
+                <tbody id="product-list-body">
+                </tbody>
+            </table>
         </div>
     </div>
-    <script th:src="@{/admin/js/post.js}"></script>
+</div>
+<script th:src="@{/admin/js/post.js}"></script>
 </body>
-
 </html>

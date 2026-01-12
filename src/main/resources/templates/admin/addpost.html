@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <title>제품 등록</title>
+</head>
+<body>
+<h2>새 제품 등록</h2>
+<form id="addForm">
+  제품명: <input type="text" id="itemName"><br>
+  브랜드: <input type="text" id="itemBrand"><br>
+  가격: <input type="number" id="itemPrice"><br>
+  재고: <input type="number" id="itemStock"><br>
+  카테고리:
+  <select id="dbCategory">
+    <option value="13">BEST</option>
+    <option value="14">추천상품</option>
+    <option value="15">이달의 상품</option>
+  </select><br>
+  타입:
+  <select id="dbType">
+  </select><br>
+  이미지: <input type="file" id="itemFiles" multiple><br><br>
+  <button type="button" onclick="saveItem()">제품 등록</button>
+</form>
+
+<script>
+  const typeMap = {
+    16: "New", 17: "Best", 75: "Men (종합)", 76: "Men-상의", 18: "남성상의-반팔", 19: "남성상의-긴팔",
+    20: "남성상의-셔츠", 21: "남성상의-니트/스웨터", 22: "남성상의-후드", 23: "남성상의-맨투맨",
+    24: "남성상의-민소매", 25: "남성상의-기능성", 26: "Men-하의", 27: "남성하의-데님",
+    28: "남성하의-슬랙스", 29: "남성하의-면바지", 30: "남성하의-반바지", 31: "남성하의-트레이닝",
+    32: "남성하의-조거", 33: "Men-아우터", 34: "남성아우터-코트", 35: "남성아우터-자켓",
+    36: "남성아우터-점퍼", 37: "남성아우터-가디건", 38: "남성아우터-패딩", 39: "남성아우터-베스트",
+    40: "Women (종합)", 41: "Women-상의", 42: "여성상의-반팔", 43: "여성상의-긴팔",
+    44: "여성상의-셔츠/블라우스", 45: "여성상의-니트/스웨터", 46: "여성상의-후드", 47: "여성상의-맨투맨",
+    48: "여성상의-민소매", 49: "여성상의-기능성", 50: "Women-하의", 51: "여성하의-데님",
+    52: "여성하의-슬랙스", 53: "여성하의-면바지", 54: "여성하의-반바지", 55: "여성하의-트레이닝",
+    56: "여성하의-조거", 57: "여성하의-치마/스커트", 58: "Women-아우터", 59: "여성아우터-코트",
+    60: "여성아우터-자켓", 61: "여성아우터-점퍼", 62: "여성아우터-가디건", 63: "여성아우터-패딩",
+    64: "여성아우터-베스트", 65: "Women-원피스", 66: "여성원피스-미니", 67: "여성원피스-미디",
+    68: "여성원피스-롱", 69: "Unisex (종합)", 70: "Acc (종합)", 71: "악세서리-모자",
+    72: "악세서리-가방", 73: "악세서리-양말", 74: "악세서리-기타"
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const typeSelect = document.getElementById('dbType');
+    Object.entries(typeMap).forEach(([v, n]) => {
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = n;
+      typeSelect.appendChild(opt);
+    });
+  });
+
+  async function saveItem() {
+    const token = document.querySelector('meta[name="_csrf"]').content;
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const formData = new FormData();
+
+    const itemData = {
+      itemName: document.getElementById('itemName').value,
+      itemBrand: document.getElementById('itemBrand').value,
+      itemPrice: parseInt(document.getElementById('itemPrice').value),
+      dbCategory: parseInt(document.getElementById('dbCategory').value),
+      dbType: parseInt(document.getElementById('dbType').value),
+      itemStock: parseInt(document.getElementById('itemStock').value)
+    };
+
+    formData.append("itemData", new Blob([JSON.stringify(itemData)], {type: "application/json"}));
+    const files = document.getElementById('itemFiles').files;
+    for(let f of files) formData.append("files", f);
+
+    const res = await fetch('/admin/api/items', {
+      method: 'POST',
+      headers: { [header]: token },
+      body: formData
+    });
+
+    if(res.ok) { alert("등록 완료"); location.href="/admin/itemList"; }
+  }
+</script>
+</body>
+</html>
