@@ -19,9 +19,5 @@ public class MainController {
         return "user/userLog/findPw";
     }
 
-
-    @GetMapping("/detail")
-    public String detail(){
-        return "user/production/detail";
-    }
+    
 }
