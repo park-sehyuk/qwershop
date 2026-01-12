@@ -16,8 +16,11 @@
         SELECT * FROM member WHERE id = #{id}
     </select>
 
-    <select id="findMemberId" resultType="long">
-        SELECT member_id FROM member WHERE id = #{id}
+
+    <select id="findMemberIdById" resultType="long">
+        SELECT member_id
+        FROM member
+        WHERE id = #{id}
     </select>
 
     <select id="findByPhone" resultType="com.example.qwershop.user.member.dto.MemberDto">
@@ -28,4 +31,17 @@
         SELECT member_id
         FROM   member
         WHERE  email = #{email}  </select>
+
+    <update id="updateMember" parameterType="com.example.qwershop.user.member.dto.MemberDto">
+        UPDATE member
+        SET
+            name = #{name},
+            pw = #{pw},
+            phone = #{phone},
+            email = #{email},
+            address = #{address},
+            gender = #{gender},
+            birth = #{birth},
+            update_Time = NOW()  WHERE id = #{id}        </update>
+
 </mapper>
