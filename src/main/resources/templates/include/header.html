@@ -155,34 +155,25 @@
         </th:block>
 
         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+          <li class="mypage-container" style="position: relative; display: inline-block;">
+            <a href="javascript:void(0);" class="mypage-link" th:text="${#authentication.name} + '님 ▼'">마이페이지</a>
+            <ul class="mypage-dropdown">
+              <li><a th:href="@{/userUpdate}">내 정보 수정</a></li>
+              <li><a th:href="@{/order/list}">주문 내역</a></li>
+              <li><a th:href="@{/cart}">장바구니</a></li>
+            </ul>
+          </li>
           <li class="logout">
             <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
             <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
           </li>
-          <li class="cart"><a th:href="@{/cart}">장바구니<span>0</span></a></li>
+
         </th:block>
       </ul>
       <button id="searchBtn">검색</button>
     </div>
   </div>
-  <div id="searchResult">
-    <div id="srTop">
-      <div id="searchDiv">
-        <p><button id="srBtn">돋보기</button></p>
-        <input type="text" name="search" id="search" />
-        <button id="clear">지우기</button>
-      </div>
-    </div>
-    <div id="srMid">
-      <p>인기 검색어</p>
-      <ul>
-        <li><button>상품1</button></li>
-        <li><button>상품12</button></li>
-        <li><button>상품123</button></li>
-        <li><button>상품1234</button></li>
-        <li><button>상품12345</button></li>
-      </ul>
-    </div>
-  </div>
+
+  <div id="searchResult">...</div>
 </div>
 </html>
