@@ -3,23 +3,13 @@
 <mapper namespace="com.example.qwershop.admin.itemManagement.mapper.ItemManagerMapper">
 
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemId">
-        INSERT INTO item (
-            item_name,
-            item_brand,
-            item_price,
-            item_stock,
-            item_category,
-            item_type,
-            reg_time
-        ) VALUES (
-                     #{itemName},
-                     #{itemBrand},
-                     #{itemPrice},
-                     #{itemStock},
-                     #{dbCategory},
-                     #{dbType},
-                     NOW()
-                 )
+        INSERT INTO item (item_name, item_brand, item_price, item_stock, item_category, item_type, reg_time)
+        VALUES (#{itemName}, #{itemBrand}, #{itemPrice}, #{itemStock}, #{dbCategory}, #{dbType}, NOW())
+    </insert>
+
+    <insert id="insertItemImage">
+        INSERT INTO item_img (item_id, item_url, is_main, reg_time)
+        VALUES (#{itemId}, #{itemUrl}, #{isMain}, NOW())
     </insert>
 
     <select id="findAllItems" resultType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto">
@@ -44,7 +34,12 @@
         WHERE item_id = #{itemId}
     </update>
 
-    <delete id="deleteItemImgs">DELETE FROM item_img WHERE item_id = #{itemId}</delete>
-    <delete id="deleteItem">DELETE FROM item WHERE item_id = #{itemId}</delete>
+    <delete id="deleteItemImgs">
+        DELETE FROM item_img WHERE item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteItem">
+        DELETE FROM item WHERE item_id = #{itemId}
+    </delete>
 
 </mapper>

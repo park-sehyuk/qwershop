@@ -1,79 +1,91 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('product-list-body');
+    let selectedFiles = [];
 
-    // 화면 표시용 역매핑 테이블
     const categoryMap = { 13: "BEST", 14: "추천상품", 15: "이달의 상품" };
     const typeMap = {
-        76: "Men-상의", 77: "Men-하의", 78: "Men-신발", 79: "Men-그 외",
-        81: "Women-상의", 82: "Women-하의", 83: "Women-신발", 84: "Women-그 외"
+        16: "New", 17: "Best", 75: "Men (종합)", 76: "Men-상의", 18: "남성상의-반팔", 19: "남성상의-긴팔",
+        20: "남성상의-셔츠", 21: "남성상의-니트/스웨터", 22: "남성상의-후드", 23: "남성상의-맨투맨",
+        24: "남성상의-민소매", 25: "남성상의-기능성", 26: "Men-하의", 27: "남성하의-데님",
+        28: "남성하의-슬랙스", 29: "남성하의-면바지", 30: "남성하의-반바지", 31: "남성하의-트레이닝",
+        32: "남성하의-조거", 33: "Men-아우터", 34: "남성아우터-코트", 35: "남성아우터-자켓",
+        36: "남성아우터-점퍼", 37: "남성아우터-가디건", 38: "남성아우터-패딩", 39: "남성아우터-베스트",
+        40: "Women (종합)", 41: "Women-상의", 42: "여성상의-반팔", 43: "여성상의-긴팔",
+        44: "여성상의-셔츠/블라우스", 45: "여성상의-니트/스웨터", 46: "여성상의-후드", 47: "여성상의-맨투맨",
+        48: "여성상의-민소매", 49: "여성상의-기능성", 50: "Women-하의", 51: "여성하의-데님",
+        52: "여성하의-슬랙스", 53: "여성하의-면바지", 54: "여성하의-반바지", 55: "여성하의-트레이닝",
+        56: "여성하의-조거", 57: "여성하의-치마/스커트", 58: "Women-아우터", 59: "여성아우터-코트",
+        60: "여성아우터-자켓", 61: "여성아우터-점퍼", 62: "여성아우터-가디건", 63: "여성아우터-패딩",
+        64: "여성아우터-베스트", 65: "Women-원피스", 66: "여성원피스-미니", 67: "여성원피스-미디",
+        68: "여성원피스-롱", 69: "Unisex (종합)", 70: "Acc (종합)", 71: "악세서리-모자",
+        72: "악세서리-가방", 73: "악세서리-양말", 74: "악세서리-기타"
     };
 
-    // 1. 목록 로드
     window.loadProductData = function() {
-        fetch('/admin/api/items')
-            .then(res => res.json())
-            .then(data => {
-                tableBody.innerHTML = '';
-                data.forEach(p => renderRow(p));
-            });
+        fetch('/admin/api/items').then(res => res.json()).then(data => {
+            tableBody.innerHTML = '';
+            data.forEach(p => renderRow(p));
+        });
     };
 
-    // 2. 일반 행 출력
     function renderRow(p) {
-        const imgUrl = p.itemUrl ? p.itemUrl : '/admin/img/no-image.png';
-        const catName = categoryMap[p.dbCategory] || "일반";
-        const typeName = typeMap[p.dbType] || "미지정";
-
         const row = document.createElement('tr');
         row.id = `row-${p.itemId}`;
         row.innerHTML = `
-            <td><img src="${imgUrl}" style="width:60px; height:60px; object-fit:cover;"></td>
-            <td><strong>${p.itemName}</strong><br><small>${p.itemBrand}</small></td>
+            <td><img src="${p.itemUrl || '/admin/img/no-image.png'}" style="width:60px; height:60px; object-fit:cover;"></td>
+            <td style="text-align:left;"><strong>${p.itemName}</strong><br><small>${p.itemBrand}</small></td>
             <td>${p.itemPrice.toLocaleString()}원</td>
-            <td>${catName} / ${typeName}</td>
+            <td>${categoryMap[p.dbCategory] || "일반"} / ${typeMap[p.dbType] || "미지정"}</td>
             <td>${p.itemStock}개</td>
             <td>${p.regTime ? p.regTime.split('T')[0] : '-'}</td>
             <td>
-                <button class="edit-btn" onclick='toggleEditMode(${p.itemId}, ${JSON.stringify(p).replace(/'/g, "\\'")})'>수정</button>
-                <button class="delete-btn" onclick="deleteItem(${p.itemId})">삭제</button>
-            </td>
-        `;
+                <button onclick='toggleEditMode(${p.itemId}, ${JSON.stringify(p).replace(/'/g, "\\'")})'>수정</button>
+            </td>`;
         tableBody.appendChild(row);
     }
 
-    // 3. 수정 모드 전환
     window.toggleEditMode = function(id, p) {
+        selectedFiles = [];
         const row = document.getElementById(`row-${id}`);
         row.innerHTML = `
-            <td><img src="${p.itemUrl || '/admin/img/no-image.png'}" style="width:60px; height:60px; opacity:0.5;"></td>
             <td>
-                <input type="text" id="edit-name-${id}" value="${p.itemName}" style="width:90%;"><br>
-                <input type="text" id="edit-brand-${id}" value="${p.itemBrand}" style="width:90%; margin-top:5px;">
+                <div id="edit-img-preview-${id}"><img src="${p.itemUrl || '/admin/img/no-image.png'}" style="width:60px; height:60px;"></div>
+                <input type="file" id="edit-file-${id}" multiple style="display:none;" onchange="handleEditImageSelect(event, ${id})">
+                <button type="button" onclick="document.getElementById('edit-file-${id}').click()">변경</button>
             </td>
-            <td><input type="number" id="edit-price-${id}" value="${p.itemPrice}" style="width:100px;"></td>
             <td>
-                <select id="edit-category-${id}" style="margin-bottom:5px; width:100%;">
-                    ${Object.entries(categoryMap).map(([val, name]) => `<option value="${val}" ${p.dbCategory == val ? 'selected' : ''}>${name}</option>`).join('')}
+                <input type="text" id="edit-name-${id}" value="${p.itemName}"><br>
+                <input type="text" id="edit-brand-${id}" value="${p.itemBrand}">
+            </td>
+            <td><input type="number" id="edit-price-${id}" value="${p.itemPrice}"></td>
+            <td>
+                <select id="edit-category-${id}">
+                    ${Object.entries(categoryMap).map(([v, n]) => `<option value="${v}" ${p.dbCategory == v ? 'selected' : ''}>${n}</option>`).join('')}
                 </select>
-                <select id="edit-type-${id}" style="width:100%;">
-                    ${Object.entries(typeMap).map(([val, name]) => `<option value="${val}" ${p.dbType == val ? 'selected' : ''}>${name}</option>`).join('')}
+                <select id="edit-type-${id}">
+                    ${Object.entries(typeMap).map(([v, n]) => `<option value="${v}" ${p.dbType == v ? 'selected' : ''}>${n}</option>`).join('')}
                 </select>
             </td>
-            <td><input type="number" id="edit-stock-${id}" value="${p.itemStock}" style="width:60px;"></td>
+            <td><input type="number" id="edit-stock-${id}" value="${p.itemStock}"></td>
             <td>-</td>
             <td>
-                <button class="save-btn" onclick="saveEdit(${id})" style="background-color:#28a745; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">저장</button>
-                <button class="cancel-btn" onclick="loadProductData()" style="background-color:#6c757d; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-left:5px;">취소</button>
-            </td>
-        `;
+                <button onclick="saveEdit(${id})">저장</button>
+                <button onclick="loadProductData()">취소</button>
+            </td>`;
     };
 
-    // 4. 즉석 수정 저장 (PATCH 메서드 사용)
+    window.handleEditImageSelect = function(e, id) {
+        selectedFiles = Array.from(e.target.files);
+        // 미리보기 로직 (생략 가능)
+    };
+
     window.saveEdit = async function(id) {
         const token = document.querySelector('meta[name="_csrf"]').content;
         const header = document.querySelector('meta[name="_csrf_header"]').content;
+        const formData = new FormData();
 
-        const updateData = {
+        const itemData = {
+            itemId: id,
             itemName: document.getElementById(`edit-name-${id}`).value,
             itemBrand: document.getElementById(`edit-brand-${id}`).value,
             itemPrice: parseInt(document.getElementById(`edit-price-${id}`).value),
@@ -82,30 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
             itemStock: parseInt(document.getElementById(`edit-stock-${id}`).value)
         };
 
-        const res = await fetch(`/admin/api/items/${id}`, {
+        formData.append("itemData", new Blob([JSON.stringify(itemData)], {type: "application/json"}));
+        selectedFiles.forEach(file => formData.append("files", file));
+
+        await fetch(`/admin/api/items/${id}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', [header]: token },
-            body: JSON.stringify(updateData)
+            headers: { [header]: token },
+            body: formData
         });
-
-        if (res.ok) {
-            alert("수정되었습니다.");
-            loadProductData();
-        } else {
-            alert("수정 실패");
-        }
-    };
-
-    // 5. 삭제
-    window.deleteItem = function(id) {
-        if (!confirm("정말 삭제하시겠습니까?")) return;
-        const token = document.querySelector('meta[name="_csrf"]').content;
-        const header = document.querySelector('meta[name="_csrf_header"]').content;
-
-        fetch(`/admin/api/items/${id}`, {
-            method: 'DELETE',
-            headers: { [header]: token }
-        }).then(res => { if (res.ok) loadProductData(); });
+        loadProductData();
     };
 
     loadProductData();
