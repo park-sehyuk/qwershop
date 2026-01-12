@@ -53,6 +53,24 @@
           AND c.selected_color = #{dto.color}
           AND c.selected_size = #{dto.size}
     </update>
+
+    <update id="updateCount">
+        UPDATE cart
+        SET count = #{count}
+        WHERE cart_id = #{cartId}
+    </update>
+
+    <delete id="deleteCartItem">
+        DELETE FROM cart
+        WHERE cart_id = #{cartId}
+    </delete>
+
+    <select id="checkCartOwner" resultType="int">
+        SELECT COUNT(*)
+        FROM cart c
+                 JOIN member m ON c.member_id = m.member_id
+        WHERE c.cart_id = #{cartId} AND m.id = #{userId}
+    </select>
   
 <!--    <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">-->
 <!--        SELECT-->

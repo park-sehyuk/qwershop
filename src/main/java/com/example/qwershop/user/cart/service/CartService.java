@@ -6,6 +6,8 @@ import com.example.qwershop.user.cart.dto.CartItemDto;
 import com.example.qwershop.user.cart.mapper.CartMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -26,6 +28,22 @@ public class CartService {
             // 3. 존재하지 않으면 신규 추가
             cartMapper.insertCartItem(cartItemDto, userId);
         }
+    }
+
+    public void updateCartItemCount(Long cartId, int count) {
+        cartMapper.updateCount(cartId, count);
+    }
+
+    // 삭제 로직
+    public void deleteCartItem(Long cartId) {
+        cartMapper.deleteCartItem(cartId);
+    }
+
+    // 장바구니 아이템 소유자 확인 (보안)
+    @Transactional(readOnly = true)
+    public boolean validateCartItem(Long cartId, String userId) {
+        int count = cartMapper.checkCartOwner(cartId, userId);
+        return count > 0;
     }
 
     public List<CartDetailDto> getCartList(String userId) {
