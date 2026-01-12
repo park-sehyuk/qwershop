@@ -37,10 +37,9 @@
       <th:block th:each="item : ${itemList}">
         <div class="product-item">
           <div class="imges-wrapper">
-            <a th:href="@{/item/detail(itemId=${item.itemId})}">
+            <a th:href="'/detail?itemId=' + ${item.itemId}">
               <img th:src="${item.itemUrl}" alt="상품 이미지">
             </a>
-            <button class="wish-button">♥</button>
           </div>
 
           <div class="info">

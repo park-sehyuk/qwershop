@@ -31,7 +31,7 @@
     <div id="product-grid" class="product-grid">
       <div th:each="item : ${searchResults}" class="product-item">
         <div class="img-wrapper">
-          <a th:href="@{/detail(id=${item.itemId})}">
+          <a th:href="'/detail?itemId=' + ${item.itemId}">
             <img th:src="${item.itemUrl}" th:alt="${item.itemName}"
                  onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23aaa%22>No Image</text></svg>';">
           </a>

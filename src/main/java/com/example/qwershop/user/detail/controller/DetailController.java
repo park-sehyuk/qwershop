@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class DetailController {
 
     private final Detailservice detailservice;
 
-    @GetMapping(value="/detail/{itemId}")
-    public String detail(@PathVariable Long itemId
+    @GetMapping(value="/detail")
+    public String detail(@RequestParam Long itemId
                         , Model model){
 
         DetailDto item = detailservice.viewItem(itemId);

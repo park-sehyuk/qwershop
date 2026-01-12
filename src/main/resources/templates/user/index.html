@@ -57,7 +57,7 @@
           <div id="bestItemList">
             <th:block th:each="bestItem : ${bestItems}">
             <div class="item">
-            <a th:href="'/detail/'+ ${bestItem.itemId}">
+            <a th:href="'/detail?itemId=' + ${bestItem.itemId}">
               <img th:src="${bestItem.itemUrl}" th:alt="${bestItem.itemName}">
               <p class="title">[[${bestItem.itemName}]]</p>
               <p class="price">[[${bestItem.itemPrice}]]원</p>
@@ -86,7 +86,7 @@
           <div id="suggItemList">
             <th:block th:each="suggItem : ${suggItems}">
               <div class="item">
-                <a th:href="'/detail/'+ ${suggItem.itemId}">
+                <a th:href="'/detail?ItemId='+${suggItem.itemId}">
                   <img th:src="${suggItem.itemUrl}" th:alt="${suggItem.itemName}">
                   <p class="title">[[${suggItem.itemName}]]</p>
                   <p class="price">[[${suggItem.itemPrice}]]원</p>
@@ -105,7 +105,7 @@
           <div id="productItemList">
             <th:block th:each="mtItem : ${monthlyItems}">
               <div class="item">
-                <a th:href="'/detail/'+ ${mtItem.itemId}">
+                <a th:href="'/detail?itemId=' + ${mtItem.itemId}">
                   <img th:src="${mtItem.itemUrl}" th:alt="${mtItem.itemName}">
                   <p class="title">[[${mtItem.itemName}]]</p>
                   <p class="price">[[${mtItem.itemPrice}]]원</p>
