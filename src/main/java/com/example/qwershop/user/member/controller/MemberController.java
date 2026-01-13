@@ -6,16 +6,21 @@ import com.example.qwershop.user.member.form.MemberJoinForm;
 import com.example.qwershop.user.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -100,4 +105,28 @@ public class MemberController {
             return "user/userLog/signUp";
         }
     }
+
+    @GetMapping("/findpw")
+    public String findPw (){
+        return "user/userLog/findpw";
+    }
+
+    @PostMapping("/user/find-pw")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> data) {
+        String userId = data.get("userId");
+        String userName = data.get("userName");
+        String userPhone = data.get("userPhone");
+        String newPw = data.get("newPw");
+
+        // 서비스에서 해당 정보가 일치하는지 확인하고 업데이트 로직 수행
+        boolean isUpdated = memberService.updatePasswordIfMatch(userId, userName, userPhone, newPw);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("입력하신 정보가 일치하지 않습니다.");
+        }
+    }
+
+
 }

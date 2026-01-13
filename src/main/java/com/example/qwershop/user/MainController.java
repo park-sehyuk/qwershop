@@ -11,10 +11,6 @@ public class MainController {
 
  
 
-    @GetMapping("/findpw")
-    public String findPw (){
-        return "user/userLog/findPw";
-    }
 
     
 }

@@ -103,4 +103,14 @@ public class MemberService implements UserDetailsService {
         }
         return memberId;
     }
+
+    public boolean updatePasswordIfMatch(String userId, String userName, String userPhone, String newPw) {
+        String encodedPassword = passwordEncoder.encode(newPw);
+
+        // 1. 매퍼를 호출하여 업데이트 실행
+        int result = memberMapper.updatePasswordIfMatch(userId, userName, userPhone, encodedPassword);
+
+        // 2. 결과값이 1이면 업데이트 성공(사용자 정보 일치), 0이면 실패(정보 불일치)
+        return result > 0;
+    }
 }
