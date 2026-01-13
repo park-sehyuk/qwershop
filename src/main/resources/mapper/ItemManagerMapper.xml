@@ -8,8 +8,8 @@
     </insert>
 
     <insert id="insertItemImage">
-        INSERT INTO item_img (item_id, item_url, is_main, reg_time)
-        VALUES (#{itemId}, #{itemUrl}, #{isMain}, NOW())
+        INSERT INTO item_img (item_id, item_url, img_name, is_main, reg_time)
+        VALUES (#{itemId}, #{itemUrl}, #{imgName}, #{isMain}, NOW())
     </insert>
 
     <select id="findAllItems" resultType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto">
@@ -33,6 +33,14 @@
             update_time = NOW()
         WHERE item_id = #{itemId}
     </update>
+
+    <delete id="deleteCartItems">
+        DELETE FROM cart WHERE item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteItemOrders">
+        DELETE FROM item_order WHERE item_id = #{itemId}
+    </delete>
 
     <delete id="deleteItemImgs">
         DELETE FROM item_img WHERE item_id = #{itemId}

@@ -7,17 +7,24 @@ import java.util.List;
 
 @Mapper
 public interface ItemManagerMapper {
-    // 상품 기본 정보 관련
-    void insertItem(ItemManagerDto itemDto);
-    List<ItemManagerDto> findAllItems();
-    void updateItemFull(ItemManagerDto itemDto);
-    void deleteItem(Long itemId);
+    // 상품 기본 정보 저장
+    void insertItem(ItemManagerDto dto);
 
-    // 이미지 관련 (기존 DTO 활용 방식)
-    void deleteItemImgs(Long itemId);
-
-    // 개별 파라미터로 처리하여 추가 DTO 생성을 방지
+    // [중요] 파라미터 4개 (itemId, itemUrl, imgName, isMain)
     void insertItemImage(@Param("itemId") Long itemId,
                          @Param("itemUrl") String itemUrl,
+                         @Param("imgName") String imgName,
                          @Param("isMain") String isMain);
+
+    // 전체 목록 조회
+    List<ItemManagerDto> findAllItems();
+
+    // 상품 정보 수정
+    void updateItemFull(ItemManagerDto dto);
+
+    // 외래키 삭제 로직
+    void deleteCartItems(Long itemId);
+    void deleteItemOrders(Long itemId);
+    void deleteItemImgs(Long itemId);
+    void deleteItem(Long itemId);
 }

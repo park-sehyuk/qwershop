@@ -3,6 +3,8 @@ package com.example.qwershop.admin.itemManagement.controller;
 import com.example.qwershop.admin.itemManagement.dto.ItemManagerDto;
 import com.example.qwershop.admin.itemManagement.service.ItemManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,27 +25,48 @@ public class ItemManagerController {
 
     @GetMapping("/admin/api/items")
     @ResponseBody
-    public List<ItemManagerDto> getItemsApi() { return itemManagerService.getAllItems(); }
-
-    // [추가] 제품 등록 API
-    @PostMapping(value = "/admin/api/items", consumes = {"multipart/form-data"})
-    @ResponseBody
-    public ResponseEntity<String> addItem(
-            @RequestPart("itemData") ItemManagerDto itemDto,
-            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        itemManagerService.saveItemWithFiles(itemDto, files);
-        return ResponseEntity.ok("success");
+    public List<ItemManagerDto> getItemsApi() {
+        return itemManagerService.getAllItems();
     }
 
-    // [수정] 제품 수정 API
-    @PatchMapping(value = "/admin/api/items/{id}", consumes = {"multipart/form-data"})
+    @PostMapping(value = "/admin/api/items", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public ResponseEntity<String> updateItem(
+    public ResponseEntity<String> addItem(
+            @RequestPart("itemData") ItemManagerDto dto,
+            @RequestPart(value="files", required=false) List<MultipartFile> files) {
+        try {
+            itemManagerService.saveItemWithFiles(dto, files);
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("등록 실패: " + e.getMessage());
+        }
+    }
+
+    @PatchMapping(value = "/admin/api/items/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> updateItemJson(
             @PathVariable("id") Long id,
-            @RequestPart("itemData") ItemManagerDto itemDto,
-            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        itemDto.setItemId(id);
-        itemManagerService.updateItemWithFiles(itemDto, files);
-        return ResponseEntity.ok("success");
+            @RequestBody ItemManagerDto dto) {
+        try {
+            dto.setItemId(id);
+            itemManagerService.updateItemWithFiles(dto, null);
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 실패: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/admin/api/items/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteItem(@PathVariable("id") Long id) {
+        try {
+            itemManagerService.deleteItemCompletely(id);
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패: " + e.getMessage());
+        }
     }
 }
