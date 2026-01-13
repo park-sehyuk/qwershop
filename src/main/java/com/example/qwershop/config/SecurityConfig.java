@@ -1,5 +1,9 @@
 package com.example.qwershop.config;
 
+
+import com.example.qwershop.user.member.service.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,12 +16,15 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/css/**", "/js/**", "/img/**", "/images/**", "/favicon.ico", "/error");
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/images/**", "/favicon.ico", "/error", "/include/**", "/layouts/**");
     }
 
     @Bean
@@ -27,9 +34,10 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/main", "/signUp", "/find/**", "/search", "/itemList", "/detail", "/user/**").permitAll()
-                        .requestMatchers("/members/**", "/item/**", "/detail/**").permitAll()
-                        //.requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .requestMatchers("/", "/main", "/signUp", "/find/**", "/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
+                        .requestMatchers("/order/**").authenticated()
+                        .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
                         .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated())
 
@@ -40,6 +48,13 @@ public class SecurityConfig {
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
+
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/user/login")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/", true))
+
                 .logout(logout -> logout
                         .logoutUrl("/logout") // [수정] HTML의 th:action="@{/logout}"과 일치시킴
                         .logoutSuccessUrl("/")
@@ -48,6 +63,7 @@ public class SecurityConfig {
 
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+
 
         return http.build();
     }

@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const ITEMS_PER_PAGE = 12;
-
-    let currentPage = parseInt(localStorage.getItem('currentPage') || '1');
-    let currentSort = localStorage.getItem('currentSort') || 'popular';
+    let currentPage = 1;
+    let currentSort = new URLSearchParams(window.location.search).get('sort') || 'latest';
     let wishList = new Set(JSON.parse(localStorage.getItem('wishList') || '[]'));
-
 
     const grid = document.getElementById('product-grid');
     const totalItemsEl = document.getElementById('total-items');
@@ -14,107 +12,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortButton = document.querySelector('.sort-button');
     const sortText = document.getElementById('sort-text');
 
-
     function render() {
-        localStorage.setItem('currentPage', currentPage);
-        localStorage.setItem('currentSort', currentSort);
-        localStorage.setItem('wishList', JSON.stringify([...wishList]));
-
-        let sortedProducts = [...productData];
-        switch (currentSort) {
-            case 'price_desc':
-                sortedProducts.sort((a, b) => b.price - a.price);
-                break;
-            case 'price_asc':
-                sortedProducts.sort((a, b) => a.price - b.price);
-                break;
+        if (!productData || productData.length === 0) {
+            grid.innerHTML = '<p>상품이 없습니다.</p>';
+            return;
         }
 
+        let sortedProducts = [...productData];
         const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
         const endIndex = startIndex + ITEMS_PER_PAGE;
         const itemsForPage = sortedProducts.slice(startIndex, endIndex);
 
         grid.innerHTML = itemsForPage.map(product => {
-            const isWished = wishList.has(product.name);
+            const isWished = wishList.has(product.itemName);
+            const price = product.itemPrice ? parseFloat(product.itemPrice).toLocaleString() : '0';
+
+            // 이미지 주소가 http로 시작하는지 철저히 검사
+            let imgSrc = product.itemUrl;
+
+            if (imgSrc && imgSrc.includes('http')) {
+                // 외부 주소인 경우 그대로 사용 (공백 제거 포함)
+                imgSrc = imgSrc.trim();
+            } else if (imgSrc) {
+                // 로컬 주소인 경우 / 붙여주기
+                imgSrc = imgSrc.startsWith('/') ? imgSrc : '/' + imgSrc;
+            } else {
+                // 주소가 아예 없을 때
+                imgSrc = '/user/imges/no-image.png';
+            }
+
             return `
                 <div class="product-item">
                     <div class="imges-wrapper">
-                        <a href="../production/detail.html?productName=${encodeURIComponent(product.name)}">
-                            <imges src="${product.imageUrl}" alt="${product.name}">
+                        <a href="/detail?itemId=${product.itemId}">
+                            <img src="${imgSrc}" alt="${product.itemName}">
                         </a>
-                        <button class="wish-button ${isWished ? 'active' : ''}" data-product-name="${product.name}">
+                        <button class="wish-button ${isWished ? 'active' : ''}" data-product-name="${product.itemName}">
                             ♥
                         </button>
                     </div>
                     <div class="info">
-                        <div class="brand">${product.content}</div>
-                        <a href="../production/detail.html?productName=${encodeURIComponent(product.name)}">
-                            <div class="name">${product.name}</div>
+                        <div class="brand">${product.itemBrand || ''}</div>
+                        <a href="/detail?itemId=${product.itemId}">
+                            <div class="name">${product.itemName}</div>
                         </a>
-                        <div class="price">${parseFloat(product.price).toLocaleString()}원</div>
+                        <div class="price">${price}원</div>
                     </div>
                 </div>
             `;
         }).join('');
 
         renderPagination(sortedProducts.length);
-
-        totalItemsEl.textContent = `${productData.length} Item`;
-        const sortOptionText = document.querySelector(`.sort-dropdown a[data-sort="${currentSort}"]`).textContent;
-        sortText.textContent = sortOptionText;
+        if(totalItemsEl) totalItemsEl.textContent = `${productData.length} Item`;
     }
 
     function renderPagination(totalItems) {
+        if(!paginationEl) return;
         const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
         paginationEl.innerHTML = '';
+        if (totalPages <= 1) return;
 
-        Array.from({ length: totalPages }, (_, i) => i + 1).forEach(page => {
+        for (let i = 1; i <= totalPages; i++) {
             const li = document.createElement('li');
             const button = document.createElement('button');
-            button.className = 'page-link';
-            button.textContent = page;
-            if (page === currentPage) {
-                button.classList.add('active');
-            }
+            button.className = i === currentPage ? 'page-link active' : 'page-link';
+            button.textContent = i;
             button.addEventListener('click', () => {
-                currentPage = page;
+                currentPage = i;
                 render();
+                window.scrollTo(0, 0);
             });
             li.appendChild(button);
             paginationEl.appendChild(li);
-        });
+        }
     }
 
-
     function setupEventListeners() {
-        sortButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sortContainer.classList.toggle('active');
-        });
-
-        document.querySelector('.sort-dropdown').addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                currentSort = e.target.dataset.sort;
-                currentPage = 1;
-                render();
-            }
-        });
-
+        if(sortButton) {
+            sortButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if(sortContainer) sortContainer.classList.toggle('active');
+            });
+        }
         window.addEventListener('click', () => {
-            sortContainer.classList.remove('active');
-        });
-
-        grid.addEventListener('click', (e) => {
-            const wishButton = e.target.closest('.wish-button');
-            if (wishButton) {
-                const productName = wishButton.dataset.productName;
-                if (wishList.has(productName)) {
-                    wishList.delete(productName);
-                } else {
-                    wishList.add(productName);
-                }
-                render();
-            }
+            if(sortContainer) sortContainer.classList.remove('active');
         });
     }
 

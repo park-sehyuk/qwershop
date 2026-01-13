@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div id="header" th:fragment="header">
   <div id="header-top">
-    <h1 class="title"><a th:href="@{/main}" id="title">QWER</a></h1>
+    <h1 class="title"><a th:href="@{/}" id="title">QWER</a></h1>
   </div>
   <div id="header-mid">
     <div class="midLeft">
@@ -155,11 +155,18 @@
         </th:block>
 
         <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+          <li class="mypage-container" style="position: relative; display: inline-block;">
+            <a href="javascript:void(0);" class="mypage-link" th:text="${#authentication.name} + '님 ▼'">마이페이지</a>
+            <ul class="mypage-dropdown">
+              <li><a th:href="@{/userUpdate}">내 정보 수정</a></li>
+              <li><a th:href="@{/orderList}">주문 내역</a></li>
+              <li><a th:href="@{/cart}">장바구니</a></li>
+            </ul>
+          </li>
           <li class="logout">
             <a href="javascript:void(0);" onclick="document.getElementById('logout-form').submit();">로그아웃</a>
             <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;"></form>
           </li>
-          <li class="cart"><a th:href="@{/cart}">장바구니<span>0</span></a></li>
         </th:block>
       </ul>
       <button id="searchBtn">검색</button>
