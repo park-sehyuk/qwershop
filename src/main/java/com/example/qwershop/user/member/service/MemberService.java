@@ -19,6 +19,7 @@ public class MemberService implements UserDetailsService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         MemberDto member = memberMapper.loginMember(id);
@@ -87,6 +88,12 @@ public class MemberService implements UserDetailsService {
     public Long findMemberId(String id) {
 
         return memberMapper.findMemberIdById(id);
+    }
+
+    public String findIdByNameAndPhone(String name, String phone) {
+        MemberDto member = memberMapper.findByNameAndPhone(name, phone);
+        // 결과가 있으면 id 반환, 없으면 빈 값 반환
+        return (member != null) ? member.getId() : "";
     }
 
     public int getMemberId(String email) {

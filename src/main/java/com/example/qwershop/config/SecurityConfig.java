@@ -1,9 +1,7 @@
 package com.example.qwershop.config;
 
-
 import com.example.qwershop.user.member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,19 +33,18 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/", "/main", "/signUp", "/find/**","/findpw/**","/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
+                        .requestMatchers("/", "/main", "/signUp", "/find/**","/findpw/**" , "/search/**", "/itemList", "/detail/**", "/user/**", "/members/**", "/item/**", "/include/**", "/layouts/**", "/admin/**").permitAll()
+
                         .requestMatchers("/order/**").authenticated()
-                        .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/user/login")
+                        .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/", true)
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
-
 
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/user/login")
@@ -56,14 +53,13 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true))
 
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // [수정] HTML의 th:action="@{/logout}"과 일치시킴
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")) // 로그아웃 시 쿠키 삭제 추가
+                        .deleteCookies("JSESSIONID"))
 
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
-
 
         return http.build();
     }

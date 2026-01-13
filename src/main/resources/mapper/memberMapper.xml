@@ -44,6 +44,7 @@
             birth = #{birth},
             update_Time = NOW()  WHERE id = #{id}        </update>
 
+
     <update id="updatePasswordIfMatch">
         UPDATE member
         SET pw = #{newPw}
@@ -51,4 +52,9 @@
           AND name = #{userName}
           AND phone = #{userPhone}
     </update>
+
+    <select id="findByNameAndPhone" resultType="com.example.qwershop.user.member.dto.MemberDto">
+        SELECT * FROM member WHERE name = #{name} AND phone = #{phone}
+    </select>
+
 </mapper>

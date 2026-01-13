@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -24,6 +27,8 @@ import java.util.Map;
 public class MemberController {
 
     private final MemberService memberService;
+
+    // [/user/login/error] 메서드도 삭제했습니다. LoginController와 중복되면 안 됩니다.
 
     @GetMapping("/userUpdate")
     public String userUpdatePage(Principal principal, Model model) {
@@ -60,6 +65,18 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/user/find-id")
+    @ResponseBody
+    public String findId(@RequestParam("name") String name,
+                         @RequestParam("phone") String phone) {
+        return memberService.findIdByNameAndPhone(name, phone);
+    }
+
+    @GetMapping("/find")
+    public String find(){
+        return "user/userLog/find";
+    }
+
     @PostMapping("/new")
     public String newMember(@Valid MemberJoinForm memberJoinForm,
                             BindingResult bindingResult,
@@ -81,7 +98,7 @@ public class MemberController {
 
             memberService.insertMember(dto);
             rttr.addFlashAttribute("resultMessage", "회원가입을 환영합니다.");
-            return "redirect:/";
+            return "redirect:/user/login";
 
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
