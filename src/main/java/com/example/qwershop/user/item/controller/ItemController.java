@@ -21,11 +21,11 @@ public class ItemController {
                            @RequestParam(name = "sort", required = false, defaultValue = "latest") String sort,
                            Model model) {
 
-        List<ItemDto> list = itemService.getItemList(type, sort); // sort 추가 전달
+        List<ItemDto> list = itemService.getItemList(type, sort);
 
         model.addAttribute("itemList", list);
         model.addAttribute("selectedType", type);
-        model.addAttribute("currentSort", sort); // 현재 정렬 상태 보존
+        model.addAttribute("currentSort", sort);
 
         return "user/production/itemList";
     }

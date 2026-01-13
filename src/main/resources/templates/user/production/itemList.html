@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      xmlns:layout="http://www.ultreq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -26,35 +26,14 @@
         </button>
 
         <div class="sort-dropdown">
-          <a th:href="@{/itemList(type=${selectedType}, sort='latest')}">최신순</a>
-          <a th:href="@{/itemList(type=${selectedType}, sort='price_desc')}">높은가격순</a>
-          <a th:href="@{/itemList(type=${selectedType}, sort='price_asc')}">낮은가격순</a>
+          <a th:href="@{/itemList(type=${selectedType}, sort='latest')}" data-sort="latest">최신순</a>
+          <a th:href="@{/itemList(type=${selectedType}, sort='price_desc')}" data-sort="price_desc">높은가격순</a>
+          <a th:href="@{/itemList(type=${selectedType}, sort='price_asc')}" data-sort="price_asc">낮은가격순</a>
         </div>
       </div>
     </div>
 
     <main id="product-grid" class="product-grid">
-      <th:block th:each="item : ${itemList}">
-        <div class="product-item">
-          <div class="imges-wrapper">
-            <a th:href="'/detail?itemId=' + ${item.itemId}">
-              <img th:src="${item.itemUrl}" alt="상품 이미지">
-            </a>
-          </div>
-
-          <div class="info">
-            <div class="brand" th:text="${item.itemBrand}">브랜드</div>
-
-            <a th:href="@{/item/detail(itemId=${item.itemId})}">
-              <div class="name" th:text="${item.itemName}">상품명</div>
-            </a>
-
-            <div class="price">
-              <span th:text="${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}">0</span>원
-            </div>
-          </div>
-        </div>
-      </th:block>
     </main>
 
     <nav class="pagination-container">
@@ -62,6 +41,10 @@
     </nav>
   </div>
 
+  <script th:inline="javascript">
+    var productData = [[${itemList}]];
+    var selectedType = [[${selectedType}]];
+  </script>
   <script th:src="@{/user/js/production/itemLIst.js}"></script>
   <script th:src="@{/user/js/common.js}"></script>
 </div>
