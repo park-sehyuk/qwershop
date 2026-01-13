@@ -16,7 +16,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-tructor
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
