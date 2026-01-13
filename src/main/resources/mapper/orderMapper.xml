@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.user.order.mapper.OrderMapper">
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orderId" keyColumn="order_id">
+        INSERT INTO orders (member_id, order_date, order_status, total_price, delivery_addr)
+        VALUES (#{memberId}, NOW(), #{orderStatus}, #{totalPrice}, #{deliveryAddr})
+    </insert>
+
+    <insert id="insertOrderItem">
+        INSERT INTO item_order (order_id, item_id, order_price, count, selected_color, selected_size)
+        VALUES (#{orderId}, #{itemId}, #{orderPrice}, #{count}, #{selectedColor}, #{selectedSize})
+    </insert>
+
+    <select id="getOrderHistory" resultType="orderHistDto">
+        SELECT
+        order_id as orderId,
+        DATE_FORMAT(order_date, '%Y-%m-%d %H:%i') as orderDate,
+        total_price as totalPrice,
+        order_status as orderStatus,
+        (SELECT item_name FROM item i   JOIN item_order io ON i.item_id = io.item_id
+        WHERE io.order_id = o.order_id LIMIT 1) as itemNm
+        FROM orders o
+        WHERE member_id = #{memberId}
+        ORDER BY order_date DESC
+    </select>
+
+    <select id="getOrderMaster" resultType="ordersDto">
+        SELECT
+        order_id as orderId,
+        member_id as memberId,
+        order_date as orderDate,
+        order_status as orderStatus,
+        total_price as totalPrice,
+        delivery_addr as deliveryAddr
+        FROM orders
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="getOrderItemList" resultType="orderItemHistDto">
+        SELECT
+        i.item_name as itemNm,
+        oi.count,
+        oi.order_price as orderPrice,
+        ii.item_url as imgUrl,  oi.selected_color as selectedColor,
+        oi.selected_size as selectedSize
+        FROM item_order oi
+        JOIN item i ON oi.item_id = i.item_id
+        JOIN item_img ii ON i.item_id = ii.item_id  WHERE oi.order_id = #{orderId}
+        AND ii.is_main = 'Y'
+    </select>
+</mapper>

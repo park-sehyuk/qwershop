@@ -16,7 +16,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-tructor
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/", "/main", "/signUp", "/find/**", "/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
+                        .requestMatchers("/order/**").authenticated()
                         .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
                         .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated())

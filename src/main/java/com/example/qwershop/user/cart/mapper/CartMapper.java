@@ -30,4 +30,7 @@ public interface CartMapper {
 
     // 3. 권한 체크 (내 장바구니가 맞는지 확인)
     int checkCartOwner(@Param("cartId") Long cartId, @Param("userId") String userId);
+
+    // CartMapper 인터페이스 내
+    void deleteAllCartItems(@Param("memberId") Long memberId);
 }
