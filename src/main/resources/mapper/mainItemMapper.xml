@@ -25,4 +25,21 @@
         WHERE item_category = 14     <!-- 추천 아이템 -->
         AND item_brand = #{brand}
     </select>
+
+    <select id="searchItems" resultType="com.example.qwershop.user.main.dto.MainItemDto">
+        SELECT
+        i.item_id as itemId,
+        i.item_name as itemName,
+        i.item_brand as itemBrand,
+        i.item_price as itemPrice,
+        i.item_category as itemCategory,
+        img.item_url as itemUrl
+        FROM item i
+        LEFT JOIN item_img img ON i.item_id = img.item_id
+        WHERE (img.is_main = '1' OR img.is_main IS NULL)
+        AND (i.item_name LIKE CONCAT('%', #{query}, '%')
+        OR i.item_brand LIKE CONCAT('%', #{query}, '%'))
+        ORDER BY i.reg_time DESC
+    </select>
+
 </mapper>

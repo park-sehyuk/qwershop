@@ -3,13 +3,13 @@
 
 <mapper namespace="com.example.qwershop.admin.usermanagement.mapper.UserManagerMapper">
 
-    <select id="getAllUsers" resultType="com.example.qwershop.admin.usermanagement.dto.SelectUsersDto">
+    <select id="getAllUsers" resultType="selectUserDto">
         SELECT 
             member_id, id, pw, name, phone, email, address, gender, birth, status, req_time
         FROM member
     </select>
 
-    <select id="getUserById" resultType="com.example.qwershop.user.member.dto.MemberDto">
+    <select id="getUserById" parameterType="String" resultType="memberDto" >
         SELECT 
             member_id, id, pw, name, phone, email, address, gender, birth, status
         FROM member 

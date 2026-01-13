@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.user.item.mapper.ItemMapper">
+
+    <select id="getItemList" resultType="com.example.qwershop.user.item.dto.ItemDto">
+        SELECT
+        i.item_id AS itemId,
+        i.item_name AS itemName,
+        i.item_brand AS itemBrand,
+        i.item_price AS itemPrice,
+        i.item_category AS itemCategory,
+        i.item_type AS itemType,
+        ii.item_url AS itemUrl
+        FROM item i
+        LEFT JOIN item_img ii ON i.item_id = ii.item_id
+        WHERE 1=1
+        <if test="type != null">
+            AND i.item_type = #{type}
+        </if>
+        AND (ii.is_main = 'Y' OR ii.is_main IS NULL)
+        <choose>
+            <when test="sort == 'price_desc'">ORDER BY i.item_price DESC</when>
+            <when test="sort == 'price_asc'">ORDER BY i.item_price ASC</when>
+            <otherwise>ORDER BY i.item_id DESC</otherwise>
+        </choose>
+    </select>
+
+</mapper>

@@ -11,7 +11,11 @@ public interface MemberMapper {
 
     MemberDto loginMember(String id);
 
-    Long findMemberId(String id);
+    Long findMemberIdById(String id);
+
+    MemberDto findByPhone(String phone);
+
+    int updateMember(MemberDto memberDto);
 
     // 사용자의 아이디(문자열)로 고유 식별 번호(int)를 조회
     Integer selectMemberId(String email);

@@ -18,6 +18,9 @@ public class MainItemService {
     public List<MainItemDto> findItemCategory(int itemCategory) {
         return mainItemMapper.selectItemCategory(itemCategory);
     }
+    public List<MainItemDto> searchItems(String query) {
+        return mainItemMapper.searchItems(query);
+    }
 
     // 읽기 좋은 별칭 메서드
     public List<MainItemDto> findBestItems() {

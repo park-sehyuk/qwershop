@@ -14,8 +14,12 @@
         <typeAlias alias="mainItemDto" type="com.example.qwershop.user.main.dto.MainItemDto" />
         <typeAlias alias="detailDto" type="com.example.qwershop.user.detail.dto.DetailDto" />
         <typeAlias alias="groupDto" type="com.example.qwershop.user.detail.dto.GroupDto" />
-
         <typeAlias alias="cartDetailDto" type="com.example.qwershop.user.cart.dto.CartDetailDto" />
         <typeAlias alias="cartDto" type="com.example.qwershop.user.cart.dto.CartDto" />
+        <typeAlias alias="orderHistDto" type="com.example.qwershop.user.order.dto.OrderHistDto" />
+        <typeAlias alias="ordersDto" type="com.example.qwershop.user.order.dto.OrdersDto" />
+        <typeAlias alias="orderItemHistDto" type="com.example.qwershop.user.order.dto.OrderItemHistDto" />
+        <typeAlias alias="selectUserDto" type="com.example.qwershop.admin.usermanagement.dto.SelectUsersDto" />
+
     </typeAliases>
 </configuration>

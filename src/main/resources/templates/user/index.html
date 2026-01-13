@@ -1,145 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="~{layouts/layout}">
-  <head>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-    />-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script
-      type="text/javascript"
-      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
-    ></script>
-
-
-    <script>
-      $(document).ready(function () {
-        $("#suggItemList").slick({
-          slidesToShow: 4,      // 한 번에 보이는 개수
-          slidesToScroll: 3,
-          autoplay: true,
-          autoplaySpeed: 2500,
-          arrows: false,
-          dots: false,
-        });
-
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#suggItemList").slick({
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        autoplay: true,
+        autoplaySpeed: 2500,
+        arrows: false,
+        dots: false,
       });
-    </script>
+    });
+  </script>
+  <link th:href="@{/user/css/base.css}" rel="stylesheet"/>
+  <link th:href="@{/user/css/main.css}" rel="stylesheet"/>
+</head>
 
-    <!-- CSS -->
-    <link th:href="@{/user/css/base.css}" rel="stylesheet"/>
-    <link th:href="@{/user/css/main.css}" rel="stylesheet"/>
-
-    <!-- jQuery / slick -->
-<!--    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>-->
-<!--    <link th:href="@{//cdn.jsdelivr.net/npm/slick-carousel/1.8.1/slick/slick.css}" rel="stylesheet"/>-->
-<!--    <script th:src="@{//cdn.jsdelivr.net/npm/slick-carousel/1.8.1/slick/slick.min.js}"></script>-->
-
-  </head>
-  <div layout:fragment="content">
-    <div id="main-wrapper">
-      <!-- 메인 슬라이더 -->
-      <div id="mainslider">
-        <div class="slick-slider">
-          <div class="sliderImg"><img th:src="@{/user/imges/han1.jpg}" alt=""></div>
-          <div class="sliderImg"><img th:src="@{/user/imges/han2.jpg}" alt=""></div>
-          <div class="sliderImg"><img th:src="@{/user/imges/han3.jpg}" alt=""></div>
-        </div>
+<div layout:fragment="content">
+  <div id="main-wrapper">
+    <div id="mainslider">
+      <div class="slick-slider">
+        <div class="sliderImg"><img th:src="@{/user/imges/han1.jpg}" alt=""></div>
+        <div class="sliderImg"><img th:src="@{/user/imges/han2.jpg}" alt=""></div>
+        <div class="sliderImg"><img th:src="@{/user/imges/han3.jpg}" alt=""></div>
       </div>
-
-      <!-- BEST -->
-      <div id="bestList">
-        <h1>BEST</h1>
-        <div id="bestItem">
-          <div id="bestItemList">
-            <th:block th:each="bestItem : ${bestItems}">
-            <div class="item">
-            <a th:href="'/detail/'+ ${bestItem.itemId}">
-              <img th:src="${bestItem.itemUrl}" th:alt="${bestItem.itemName}">
-              <p class="title">[[${bestItem.itemName}]]</p>
-              <p class="price">[[${bestItem.itemPrice}]]원</p>
-              <p class="content">[[${bestItem.itemBrand}]]</p>
-            </a>
-          </div>
-          </th:block>
-          </div>
-        </div>
-      </div>
-
-      <!-- 추천 상품 -->
-      <div id="suggList">
-        <h1>추천 상품</h1>
-
-        <div id="hash">
-          <form th:action="@{/main}" method="get" id="hashList">
-            <button id="gucciBtn" type="submit" name="suggBrand" value="구찌">#구찌</button>
-            <button id="poloBtn" type="submit" name="suggBrand" value="랄프로렌">#랄프로렌</button>
-            <button id="maisonBtn" type="submit" name="suggBrand" value="메종키츠네">#메종 키츠네</button>
-            <button id="balBtn" type="submit" name="suggBrand" value="발렌시아가">#발렌시아가</button>
-          </form>
-        </div>
-
-        <div id="suggItem">
-          <div id="suggItemList">
-            <th:block th:each="suggItem : ${suggItems}">
-              <div class="item">
-                <a th:href="'/detail/'+ ${suggItem.itemId}">
-                  <img th:src="${suggItem.itemUrl}" th:alt="${suggItem.itemName}">
-                  <p class="title">[[${suggItem.itemName}]]</p>
-                  <p class="price">[[${suggItem.itemPrice}]]원</p>
-                  <p class="content">[[${suggItem.itemBrand}]]</p>
-                </a>
-              </div>
-            </th:block>
-          </div>
-        </div>
-      </div>
-
-      <!-- 이달의 상품 -->
-      <div id="productList">
-        <h1>이달의 상품</h1>
-        <div id="productItem">
-          <div id="productItemList">
-            <th:block th:each="mtItem : ${monthlyItems}">
-              <div class="item">
-                <a th:href="'/detail/'+ ${mtItem.itemId}">
-                  <img th:src="${mtItem.itemUrl}" th:alt="${mtItem.itemName}">
-                  <p class="title">[[${mtItem.itemName}]]</p>
-                  <p class="price">[[${mtItem.itemPrice}]]원</p>
-                  <p class="content">[[${mtItem.itemBrand}]]</p>
-                </a>
-              </div>
-            </th:block>
-          </div>
-        </div>
-      </div>
-
-      <!-- SNS -->
-      <div id="snsImgList">
-        <h1>sns</h1>
-        <div id="imgList">
-          <ul>
-            <li><img th:src="@{/user/imges/sns1.jpg}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns2.png}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns3.jpeg}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns4.jpeg}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns5.avif}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns6.jpg}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns7.avif}" alt=""></li>
-            <li><img th:src="@{/user/imges/sns8.jpg}" alt=""></li>
-          </ul>
-        </div>
-      </div>
-
     </div>
 
+    <div id="bestList">
+      <h1>BEST</h1>
+      <div id="bestItem">
+        <div id="bestItemList">
+          <th:block th:each="bestItem : ${bestItems}">
+            <div class="item">
+              <a th:href="'/detail?itemId=' + ${bestItem.itemId}">
+                <img th:src="${bestItem.itemUrl}" th:alt="${bestItem.itemName}">
+                <p class="title">[[${bestItem.itemName}]]</p>
+                <p class="price">[[${bestItem.itemPrice}]]원</p>
+                <p class="content">[[${bestItem.itemBrand}]]</p>
+              </a>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </div>
 
-    <!-- JS -->
-    <script th:src="@{/user/js/index.js}"></script>
-    <script th:src="@{/user/js/common.js}"></script>
+    <div id="suggList">
+      <h1>추천 상품</h1>
+      <div id="hash">
+        <form th:action="@{/}" method="get" id="hashList">
+          <button id="gucciBtn" type="submit" name="suggBrand" value="구찌">#구찌</button>
+          <button id="poloBtn" type="submit" name="suggBrand" value="랄프로렌">#랄프로렌</button>
+          <button id="maisonBtn" type="submit" name="suggBrand" value="메종키츠네">#메종 키츠네</button>
+          <button id="balBtn" type="submit" name="suggBrand" value="발렌시아가">#발렌시아가</button>
+        </form>
+      </div>
+      <div id="suggItem">
+        <div id="suggItemList">
+          <th:block th:each="suggItem : ${suggItems}">
+            <div class="item">
+              <a th:href="'/detail?ItemId='+${suggItem.itemId}">
+                <img th:src="${suggItem.itemUrl}" th:alt="${suggItem.itemName}">
+                <p class="title">[[${suggItem.itemName}]]</p>
+                <p class="price">[[${suggItem.itemPrice}]]원</p>
+                <p class="content">[[${suggItem.itemBrand}]]</p>
+              </a>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </div>
 
+    <div id="productList">
+      <h1>이달의 상품</h1>
+      <div id="productItem">
+        <div id="productItemList">
+          <th:block th:each="mtItem : ${monthlyItems}">
+            <div class="item">
+              <a th:href="'/detail?itemId=' + ${mtItem.itemId}">
+                <img th:src="${mtItem.itemUrl}" th:alt="${mtItem.itemName}">
+                <p class="title">[[${mtItem.itemName}]]</p>
+                <p class="price">[[${mtItem.itemPrice}]]원</p>
+                <p class="content">[[${mtItem.itemBrand}]]</p>
+              </a>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </div>
+
+    <div id="snsImgList">
+      <h1>sns</h1>
+      <div id="imgList">
+        <ul>
+          <li><img th:src="@{/user/imges/sns1.jpg}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns2.png}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns3.jpeg}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns4.jpeg}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns5.avif}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns6.jpg}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns7.avif}" alt=""></li>
+          <li><img th:src="@{/user/imges/sns8.jpg}" alt=""></li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <script th:src="@{/user/js/index.js}"></script>
+
+  <script th:inline="javascript">
+    window.onload = function() {
+      var resultMessage = [[${resultMessage}]];
+      if (resultMessage) {
+        alert(resultMessage);
+      }
+    };
+  </script>
+</div>
 </html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.admin.itemManagement.mapper.ItemManagerMapper">
+
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemId">
+        INSERT INTO item (item_name, item_brand, item_price, item_stock, item_category, item_type, reg_time)
+        VALUES (#{itemName}, #{itemBrand}, #{itemPrice}, #{itemStock}, #{dbCategory}, #{dbType}, NOW())
+    </insert>
+
+    <insert id="insertItemImage">
+        INSERT INTO item_img (item_id, item_url, is_main, reg_time)
+        VALUES (#{itemId}, #{itemUrl}, #{isMain}, NOW())
+    </insert>
+
+    <select id="findAllItems" resultType="com.example.qwershop.admin.itemManagement.dto.ItemManagerDto">
+        SELECT i.item_id AS itemId, i.item_name AS itemName, i.item_brand AS itemBrand,
+               i.item_price AS itemPrice, i.item_stock AS itemStock,
+               i.item_category AS dbCategory, i.item_type AS dbType,
+               i.reg_time AS regTime, img.item_url AS itemUrl
+        FROM item i
+                 LEFT JOIN item_img img ON i.item_id = img.item_id AND img.is_main = 'Y'
+        ORDER BY i.item_id DESC
+    </select>
+
+    <update id="updateItemFull">
+        UPDATE item
+        SET item_name = #{itemName},
+            item_brand = #{itemBrand},
+            item_price = #{itemPrice},
+            item_category = #{dbCategory},
+            item_type = #{dbType},
+            item_stock = #{itemStock},
+            update_time = NOW()
+        WHERE item_id = #{itemId}
+    </update>
+
+    <delete id="deleteItemImgs">
+        DELETE FROM item_img WHERE item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteItem">
+        DELETE FROM item WHERE item_id = #{itemId}
+    </delete>
+
+</mapper>

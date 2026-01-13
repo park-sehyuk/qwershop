@@ -1,53 +1,50 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      xmlns:layout="http://www.ultreq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" th:href="@{/user/css/base.css}" />
+  <link rel="stylesheet" th:href="@{/user/css/production/itemList.css}" />
+</head>
 
-    <link rel="stylesheet" th:href="@{/user/css/base.css}" />
-    <link rel="stylesheet" th:href="@{/user/css/production/itemList.css}" />
-  </head>
-
-  <div id="itemList" layout:fragment="content">
-
-    <div class="container">
-      <div class="main-banner">
-        <img th:src="@{/user/imges/itemlistmain.jpg}" alt="Main Banner Image" />
-      </div>
-
-      <div class="filter-bar">
-        <div class="item-count">
-          <span id="total-items">0 Item</span>
-        </div>
-
-        <div class="sort-container">
-          <button class="sort-button">
-            <span id="sort-text">정렬 기준</span>
-
-            <span class="arrow">▼</span>
-          </button>
-
-          <div class="sort-dropdown">
-            <a href="#" data-sort="popular">인기순</a>
-
-            <a href="#" data-sort="price_desc">높은가격순</a>
-
-            <a href="#" data-sort="price_asc">낮은가격순</a>
-          </div>
-        </div>
-      </div>
-
-      <main id="product-grid" class="product-grid"></main>
-
-      <nav class="pagination-container">
-        <ul id="pagination" class="pagination"></ul>
-      </nav>
+<div id="itemList" layout:fragment="content">
+  <div class="container">
+    <div class="main-banner">
+      <img th:src="@{/user/imges/itemlistmain.jpg}" alt="Main Banner Image" />
     </div>
 
-    <script th:src="@{/user/js/production/itemLIst.js}"></script>
+    <div class="filter-bar">
+      <div class="item-count">
+        <span id="total-items" th:text="${#lists.size(itemList)} + ' Item'">0 Item</span>
+      </div>
 
-    <script th:src="@{/user/js/common.js}"></script>
+      <div class="sort-container">
+        <button class="sort-button">
+          <span id="sort-text" th:text="${currentSort == 'price_desc' ? '높은가격순' : (currentSort == 'price_asc' ? '낮은가격순' : '최신순')}">정렬 기준</span>
+          <span class="arrow">▼</span>
+        </button>
+
+        <div class="sort-dropdown">
+          <a th:href="@{/itemList(type=${selectedType}, sort='latest')}" data-sort="latest">최신순</a>
+          <a th:href="@{/itemList(type=${selectedType}, sort='price_desc')}" data-sort="price_desc">높은가격순</a>
+          <a th:href="@{/itemList(type=${selectedType}, sort='price_asc')}" data-sort="price_asc">낮은가격순</a>
+        </div>
+      </div>
+    </div>
+
+    <main id="product-grid" class="product-grid">
+    </main>
+
+    <nav class="pagination-container">
+      <ul id="pagination" class="pagination"></ul>
+    </nav>
   </div>
+
+  <script th:inline="javascript">
+    var productData = [[${itemList}]];
+    var selectedType = [[${selectedType}]];
+  </script>
+  <script th:src="@{/user/js/production/itemLIst.js}"></script>
+</div>
 </html>

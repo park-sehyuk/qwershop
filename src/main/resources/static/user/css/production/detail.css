@@ -19,11 +19,17 @@
 
 .left-image {
     width: 100%;
-    aspect-ratio: 1 / 1; /* 정정사각형 유지 */
+    aspect-ratio: 1 / 1; /* 정사각형 유지 */
     background-color: #f8f8f8;
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 30px;
+}
+
+.left-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* 오른쪽 정보 사이드바 */
@@ -52,10 +58,10 @@
     margin-bottom: 4px;
 }
 
-.brand-hagul {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 20px;
+.product-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 15px;
 }
 
 /* 선택 요소 (수량, 컬러, 사이즈) */
@@ -80,10 +86,6 @@ select, input[type="number"] {
     transition: border-color 0.2s;
 }
 
-select:focus {
-    border-color: #222;
-}
-
 /* 총 결제 금액 */
 .total-price-area {
     margin: 25px 0;
@@ -97,7 +99,7 @@ select:focus {
 #totalPrice {
     font-size: 22px;
     font-weight: 800;
-    color: #f33; /* 강조색 */
+    color: #f33;
 }
 
 /* 버튼 디자인 */
@@ -122,21 +124,13 @@ select:focus {
     color: #222;
 }
 
-.Buy:hover {
-    background: #f8f8f8;
-}
-
 .Cart { /* 구매하기 */
     background: #222;
     border: none;
     color: #fff;
 }
 
-.Cart:hover {
-    background: #444;
-}
-
-/* 왼쪽 탭 메뉴 스타일 */
+/* 탭 메뉴 스타일 */
 .tabs {
     display: flex;
     border-bottom: 1px solid #eee;
@@ -161,11 +155,48 @@ select:focus {
 .tab-panel {
     display: none;
     padding: 20px 0;
-    line-height: 1.6;
 }
 
 .tab-panel.active {
     display: block;
+}
+
+/* ★ 사이즈 테이블 추가 ★ */
+.size-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.size-table th, .size-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+/* ★ 별점 시스템 전용 스타일 ★ */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
+    transition: 0.2s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f39c12;
 }
 
 /* 반응형 처리 */
@@ -176,5 +207,6 @@ select:focus {
     .right-Side {
         position: static;
         width: 100%;
+        margin-top: 30px;
     }
 }

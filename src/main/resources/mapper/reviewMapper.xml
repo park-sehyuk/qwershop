@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.qwershop.user.detail.mapper.ReviewMapper">
+
+    <insert id="insertReview">
+        INSERT INTO item_review (
+            item_id,
+            member_id,
+            item_review_content,
+            item_star,
+            reg_time
+        ) VALUES (
+                     #{itemId},
+                     #{memberId},
+                     #{content},
+                     #{star},
+                     NOW()
+                 )
+    </insert>
+
+    <select id="getReviewList" resultType="com.example.qwershop.user.detail.dto.ReviewDto">
+        SELECT
+            r.item_review_id AS reviewId,
+            r.item_review_content AS content,
+            r.item_star AS star,
+            m.id AS createdBy,
+            DATE_FORMAT(r.reg_time, '%Y-%m-%d %H:%i') AS regTime
+        FROM item_review r
+                 JOIN member m ON r.member_id = m.member_id
+        WHERE r.item_id = #{itemId}
+        ORDER BY r.item_review_id DESC
+    </select>
+
+    <delete id="deleteReview">
+        DELETE FROM item_review WHERE item_review_id = #{reviewId}
+    </delete>
+
+</mapper>

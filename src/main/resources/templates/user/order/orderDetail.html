@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultreq.net.nz/thymleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>나의 주문 내역</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/user/css/base.css}">
+  <link rel="stylesheet" th:href="@{/user/css/order/orderDetail.css}">
+</head>
+
+<div class="container mt-5" layout:fragment="content">
+  <h3 class="mb-4">주문 상세 정보</h3>
+
+  <div class="card mb-4">
+    <div class="card-order bg-dark text-white">주문 정보</div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>주문번호:</strong> <span th:text="${order.orderId}"></span></p>
+          <p><strong>주문일자:</strong> <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p><strong>상태:</strong> <span class="badge bg-primary" th:text="${order.orderStatus}"></span></p>
+          <p><strong>배송지:</strong> <span th:text="${order.deliveryAddr}"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="mb-3">주문 상품 정보</h5>
+  <table class="table align-middle">
+    <thead class="table-light">
+    <tr>
+      <th>상품명</th>
+      <th>옵션</th>
+      <th class="text-center">수량</th>
+      <th class="text-end">금액</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${orderItems}">
+      <td>
+        <img th:src="${item.imgUrl}" style="width: 50px; margin-right: 10px;">
+        <span th:text="${item.itemNm}" class="fw-bold"></span>
+      </td>
+      <td>
+        <small class="text-muted">
+          색상: [[${item.selectedColor}]] / 사이즈: [[${item.selectedSize}]]
+        </small>
+      </td>
+      <td class="text-center" th:text="${item.count} + '개'"></td>
+      <td class="text-end" th:text="${#numbers.formatInteger(item.orderPrice, 3, 'COMMA')} + '원'"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="text-end mt-4">
+    <h4>총 결제금액: <span class="text-danger" th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></span>원</h4>
+    <hr>
+    <button onclick="location.href='/orderList'" class="btn btn-secondary px-4">목록으로</button>
+  </div>
+</div>
+
+<script th:src="@{/user/js/order/orderDetail.js}"></script>
+</html>

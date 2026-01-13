@@ -19,18 +19,5 @@ public class MainController {
         return "user/userLog/findPw";
     }
 
-    @GetMapping("/search")
-    public String search(){
-        return "user/search/searchResult";
-    }
-
-    @GetMapping("/itemList")
-    public String itemList(){
-        return "user/production/itemList";
-    }
-
-    @GetMapping("/detail")
-    public String detail(){
-        return "user/production/detail";
-    }
+    
 }
