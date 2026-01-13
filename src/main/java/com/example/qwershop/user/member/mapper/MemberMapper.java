@@ -2,6 +2,7 @@ package com.example.qwershop.user.member.mapper;
 
 import com.example.qwershop.user.member.dto.MemberDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MemberMapper {
@@ -19,4 +20,6 @@ public interface MemberMapper {
 
     // 사용자의 아이디(문자열)로 고유 식별 번호(int)를 조회
     Integer selectMemberId(String email);
+
+    MemberDto findByNameAndPhone(@Param("name") String name, @Param("phone") String phone);
 }

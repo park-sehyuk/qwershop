@@ -9,10 +9,7 @@ public class MainController {
 
     // [이동됨] /user/login -> LoginController로 이동
 
-    @GetMapping("/find")
-    public String find(){
-        return "user/userLog/find";
-    }
+ 
 
     @GetMapping("/findpw")
     public String findPw (){
