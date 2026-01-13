@@ -44,4 +44,11 @@
             birth = #{birth},
             update_Time = NOW()  WHERE id = #{id}        </update>
 
+    <update id="updatePasswordIfMatch">
+        UPDATE member
+        SET pw = #{newPw}
+        WHERE id = #{userId}
+          AND name = #{userName}
+          AND phone = #{userPhone}
+    </update>
 </mapper>
