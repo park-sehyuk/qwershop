@@ -6,6 +6,7 @@
     <select id="getCartList" resultType="cartDetailDto">
         SELECT
             c.cart_id AS cartId,
+            i.item_id as itemId,
             i.item_name AS itemNm,
             i.item_price AS price,
             c.count AS count,
@@ -71,7 +72,11 @@
                  JOIN member m ON c.member_id = m.member_id
         WHERE c.cart_id = #{cartId} AND m.id = #{userId}
     </select>
-  
+
+    <delete id="deleteAllCartItems">
+        DELETE FROM cart WHERE member_id = #{memberId}
+    </delete>
+
 <!--    <select id="getCartList" resultType="com.example.qwershop.user.cart.dto.CartDetailDto">-->
 <!--        SELECT-->
 <!--            c.cart_id AS cartId,-->

@@ -10,6 +10,7 @@
 	<meta name="_csrf" th:content="${_csrf.token}"/>
 	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<link rel="stylesheet" th:href="@{/user/css/production/cart.css}" />
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 
 <body>
@@ -77,14 +78,73 @@
                     </span>
 				</div>
 				<div class="button-area">
-					<button type="button" class="btn-order" onclick="location.href='/order'">주문하기</button>
+					<button type="button" class="btn-order" onclick="order()">주문하기</button>
 				</div>
 			</div>
 		</section>
 	</main>
+</div>
 
+<th:block layout:fragment="script">
 	<script th:inline="javascript">
-		// 1. 삭제 함수 (전역 window 객체에 할당)
+		// 결제 함수
+		function order() {
+			console.log("결제 시작...");
+
+			if (!window.IMP) {
+				alert("결제 라이브러리가 로드되지 않았습니다.");
+				return;
+			}
+
+			const IMP = window.IMP;
+			IMP.init("imp45123642");
+
+			const cartRows = document.querySelectorAll("#cart-items tr");
+			if (cartRows.length === 0 || cartRows[0].querySelector(".item-title") === null) {
+				alert("결제할 상품이 없습니다.");
+				return;
+			}
+
+			const firstItemName = cartRows[0].querySelector(".item-title").innerText;
+			const totalCount = cartRows.length;
+			const paymentName = totalCount > 1 ? firstItemName + " 외 " + (totalCount - 1) + "건" : firstItemName;
+			const totalAmount = parseInt(document.getElementById("total-price").innerText.replace(/,/g, ''));
+
+			IMP.request_pay({
+				pg: "kakaopay.TC0ONETIME",
+				pay_method: "card",
+				merchant_uid: "ORD_" + new Date().getTime(),
+				name: paymentName,
+				amount: totalAmount,
+				buyer_name: "구매자",
+				buyer_tel: "010-0000-0000"
+			}, function (rsp) {
+				if (rsp.success) {
+					const token = document.querySelector('meta[name="_csrf"]').content;
+					const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+					fetch("/order/payment-complete", {
+						method: "POST",
+						headers: { "Content-Type": "application/json", [header]: token },
+						body: JSON.stringify({
+							imp_uid: rsp.imp_uid,
+							merchant_uid: rsp.merchant_uid,
+							paid_amount: rsp.paid_amount,
+							status: "paid"
+						})
+					}).then(res => {
+						if (res.ok) {
+							alert("주문이 완료되었습니다.");
+							location.href = "/";
+						}
+					});
+				} else {
+					alert("결제 실패: " + rsp.error_msg);
+				}
+			});
+		}
+
+		// 삭제 함수
 		window.deleteItem = function(obj) {
 			const cartId = obj.getAttribute('data-id');
 			const token = document.querySelector('meta[name="_csrf"]').content;
@@ -94,44 +154,28 @@
 
 			fetch("/cartItem/" + cartId, {
 				method: 'DELETE',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest',
-					[header]: token
-				}
+				headers: { 'X-Requested-With': 'XMLHttpRequest', [header]: token }
 			}).then(res => {
-				if (res.ok) {
-					alert("삭제되었습니다.");
-					location.reload();
-				} else {
-					alert("삭제 실패");
-				}
-			}).catch(err => console.error(err));
+				if (res.ok) location.reload();
+			});
 		};
 
-		// 2. 수량 변경 함수 (전역 window 객체에 할당)
+		// 수량 변경 함수
 		window.changeCount = function(obj) {
 			const count = obj.value;
 			const cartId = obj.getAttribute('data-id');
 			const token = document.querySelector('meta[name="_csrf"]').content;
 			const header = document.querySelector('meta[name="_csrf_header"]').content;
 
-			const url = "/cartItem/" + cartId + "?count=" + count;
-
-			fetch(url, {
+			fetch("/cartItem/" + cartId + "?count=" + count, {
 				method: 'PATCH',
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest',
-					[header]: token
-				}
+				headers: { 'X-Requested-With': 'XMLHttpRequest', [header]: token }
 			}).then(res => {
 				if (res.ok) location.reload();
-			}).catch(err => console.error(err));
+			});
 		};
-	</script>
-</div>
 
-<th:block layout:fragment="script">
-	<script th:src="@{/user/js/common.js}"></script>
+	</script>
 </th:block>
 </body>
 </html>
