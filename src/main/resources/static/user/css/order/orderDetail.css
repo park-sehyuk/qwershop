@@ -87,3 +87,7 @@
     background-color: #5a6268;
     transform: translateY(-2px);
 }
+
+ul{
+    padding: 0;
+}
