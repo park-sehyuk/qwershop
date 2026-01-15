@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.qwershop.admin.itemManagement.mapper.CodeMapper">
+
+    <select id="selectGroupList" resultType="com.example.qwershop.admin.itemManagement.dto.CommonCodeDto">
+        SELECT DISTINCT group_code, group_name
+        FROM group_code
+        WHERE use_yn = 'Y'
+    </select>
+
+<!--   // 디테일 관련 이거 건드림될듯  흰거랑 보라색 글자 소문자로 반드시   -->
+    <select id="selectDetailList" resultType="com.example.qwershop.admin.itemManagement.dto.CommonCodeDto">
+        SELECT DETAIL_CODE, CODE_NAME, SORT_ORDER, USE_YN
+        FROM COMMON_CODE_TABLE
+        WHERE GROUP_CODE = #{groupCode}
+        ORDER BY SORT_ORDER ASC
+    </select>
+
+</mapper>
