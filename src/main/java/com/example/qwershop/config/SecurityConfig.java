@@ -17,7 +17,8 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+    // [주석 처리] OAuth2 설정이 없으면 이 서비스 빈을 불러오다가 에러가 날 수 있습니다.
+    // private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -31,10 +32,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
-                .authorizeHttpRequests(auth -> auth
-
+                .authorizeHttpRequests(auth -> auth                      
                         .requestMatchers("/", "/main", "/signUp", "/find/**","/findpw/**" , "/search/**", "/itemList", "/detail/**", "/user/**", "/members/**", "/item/**", "/include/**", "/layouts/**", "/admin/**").permitAll()
-
+                        .requestMatchers("/*.png", "/*.jpg").permitAll()
                         .requestMatchers("/order/**").authenticated()
                         .anyRequest().authenticated())
 
@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
+
 
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/user/login")
