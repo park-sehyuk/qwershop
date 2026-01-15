@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('product-list-body');
 
-    // 카테고리 맵 (기존 유지)
     const categoryMap = { 13: "BEST", 14: "추천상품", 15: "이달의 상품" };
-
-    // [수정됨] 워크벤치 기반 전체 아이템 타입 맵
     const typeMap = {
         16: "New", 17: "Best", 18: "남성상의-반팔", 19: "남성상의-긴팔",
         20: "남성상의-맨투맨", 21: "남성상의-니트", 22: "남성상의-아우터",
@@ -33,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentItems = [];
 
-    // 제품 목록 불러오기
     window.loadProductData = function() {
         fetch('/admin/api/items').then(res => res.json()).then(data => {
             currentItems = data;
@@ -42,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // 테이블 행 렌더링
     function renderRow(p) {
         const row = document.createElement('tr');
         row.id = `row-${p.itemId}`;
@@ -60,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tableBody.appendChild(row);
     }
 
-    // 수정 모드 전환
     window.toggleEditMode = function(id) {
         const p = currentItems.find(i => i.itemId === id);
         const row = document.getElementById(`row-${id}`);
@@ -72,7 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
             `<option value="${v}" ${p.dbType==v?'selected':''}>${n}</option>`).join('');
 
         row.innerHTML = `
-            <td><img src="${p.itemUrl || ''}" style="width:60px; opacity:0.5;"></td>
+            <td>
+                <img src="${p.itemUrl || ''}" style="width:50px; display:block; margin-bottom:5px;">
+                <input type="file" id="edit-file-${id}" multiple style="width:70px; font-size:10px;">
+            </td>
             <td>
                 <input type="text" id="edit-name-${id}" value="${p.itemName}" style="width:90%"><br>
                 <input type="text" id="edit-brand-${id}" value="${p.itemBrand}" style="width:90%">
@@ -90,11 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </td>`;
     };
 
-    // 수정 저장
     window.saveEdit = async function(id) {
         const token = document.querySelector('meta[name="_csrf"]').content;
         const header = document.querySelector('meta[name="_csrf_header"]').content;
 
+        const formData = new FormData();
+
+        // 1. 텍스트 데이터 (Blob으로 감싸서 JSON으로 전달)
         const updateData = {
             itemName: document.getElementById(`edit-name-${id}`).value,
             itemBrand: document.getElementById(`edit-brand-${id}`).value,
@@ -103,14 +102,23 @@ document.addEventListener('DOMContentLoaded', function() {
             dbType: parseInt(document.getElementById(`edit-type-${id}`).value),
             itemStock: parseInt(document.getElementById(`edit-stock-${id}`).value)
         };
+        formData.append("itemData", new Blob([JSON.stringify(updateData)], {type: "application/json"}));
 
+        // 2. 이미지 파일 추가
+        const fileInput = document.getElementById(`edit-file-${id}`);
+        if (fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append("files", fileInput.files[i]);
+            }
+        }
+
+        // 3. 서버 전송 (이미지 포함 시 Multipart 전송을 위해 POST 사용)
         const res = await fetch(`/admin/api/items/${id}`, {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 [header]: token
             },
-            body: JSON.stringify(updateData)
+            body: formData
         });
 
         if (res.ok) {
@@ -121,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // 제품 삭제 (장바구니 로직 반영됨)
     window.deleteItem = function(id) {
         if (!confirm("정말 삭제하시겠습니까?")) return;
         const token = document.querySelector('meta[name="_csrf"]').content;

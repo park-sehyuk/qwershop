@@ -10,7 +10,7 @@ public interface ItemManagerMapper {
     // 상품 기본 정보 저장
     void insertItem(ItemManagerDto dto);
 
-    // [중요] 파라미터 4개 (itemId, itemUrl, imgName, isMain)
+    // 이미지 저장 (파라미터 4개 일치 확인)
     void insertItemImage(@Param("itemId") Long itemId,
                          @Param("itemUrl") String itemUrl,
                          @Param("imgName") String imgName,
@@ -22,9 +22,10 @@ public interface ItemManagerMapper {
     // 상품 정보 수정
     void updateItemFull(ItemManagerDto dto);
 
-    // 외래키 삭제 로직
+    // [삭제 로직] 자식 테이블들 순차 삭제
     void deleteCartItems(Long itemId);
     void deleteItemOrders(Long itemId);
+    void deleteItemReviews(Long itemId); // 리뷰 삭제 추가
     void deleteItemImgs(Long itemId);
     void deleteItem(Long itemId);
 }

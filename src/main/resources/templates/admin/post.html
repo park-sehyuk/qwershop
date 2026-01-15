@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>게시물 관리 - 관리자 모드</title>
     <link rel="stylesheet" th:href="@{/admin/css/post.css}">
+
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
@@ -45,8 +46,7 @@
             <table class="category-data-table">
                 <thead>
                 <tr>
-                    <th style="width: 100px;">대표이미지</th>
-                    <th>상품명 / 브랜드</th>
+                    <th style="width: 120px;">대표이미지 / 파일</th> <th>상품명 / 브랜드</th>
                     <th>판매가</th>
                     <th style="width: 200px;">카테고리 / 타입</th>
                     <th style="width: 80px;">재고</th>
@@ -60,6 +60,7 @@
         </div>
     </div>
 </div>
+
 <script th:src="@{/admin/js/post.js}"></script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 package com.example.qwershop.config;
 
-
 import com.example.qwershop.user.member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +17,8 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+    // [주석 처리] OAuth2 설정이 없으면 이 서비스 빈을 불러오다가 에러가 날 수 있습니다.
+    // private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -34,10 +33,10 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers("/", "/main", "/signUp", "/find/**", "/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
                         .requestMatchers("/order/**").authenticated()
                         .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
+                        .requestMatchers("/*.png", "/*.jpg").permitAll()
                         .requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated())
 
@@ -48,22 +47,23 @@ public class SecurityConfig {
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
-
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/user/login")
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("/", true))
+                /* [주석 처리] OAuth2 클라이언트 설정(구글/네이버 ID 등)이 없어서 발생하는 부팅 에러 해결 */
+                // .oauth2Login(oauth2 -> oauth2
+                //         .loginPage("/user/login")
+                //         .userInfoEndpoint(userInfo -> userInfo
+                //                 .userService(customOAuth2UserService))
+                //         .defaultSuccessUrl("/", true))
 
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // [수정] HTML의 th:action="@{/logout}"과 일치시킴
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")) // 로그아웃 시 쿠키 삭제 추가
+                        .deleteCookies("JSESSIONID"))
 
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
-
+        /* [주석 처리] CustomAuthenticationEntryPoint 클래스가 없거나 설정이 미비할 경우 에러 방지 */
+        // .exceptionHandling(exception -> exception
+        //         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+        ;
 
         return http.build();
     }

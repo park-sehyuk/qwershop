@@ -42,6 +42,10 @@
         DELETE FROM item_order WHERE item_id = #{itemId}
     </delete>
 
+    <delete id="deleteItemReviews">
+        DELETE FROM item_review WHERE item_id = #{itemId}
+    </delete>
+
     <delete id="deleteItemImgs">
         DELETE FROM item_img WHERE item_id = #{itemId}
     </delete>
