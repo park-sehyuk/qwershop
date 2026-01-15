@@ -2,84 +2,184 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <title>제품 등록 - 관리자 모드</title>
+  <link rel="stylesheet" th:href="@{/admin/css/addpost.css}">
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <title>제품 등록</title>
 </head>
 <body>
-<h2>새 제품 등록</h2>
-<form id="addForm">
-  제품명: <input type="text" id="itemName"><br>
-  브랜드: <input type="text" id="itemBrand"><br>
-  가격: <input type="number" id="itemPrice"><br>
-  재고: <input type="number" id="itemStock"><br>
-  카테고리:
-  <select id="dbCategory">
-    <option value="13">BEST</option>
-    <option value="14">추천상품</option>
-    <option value="15">이달의 상품</option>
-  </select><br>
-  타입:
-  <select id="dbType">
-  </select><br>
-  이미지: <input type="file" id="itemFiles" multiple><br><br>
-  <button type="button" onclick="saveItem()">제품 등록</button>
-</form>
+<div id="scale">
+  <div class="left-side">
+    <a th:href="@{/admin/userList}" class="text-border">
+      <button class="userList">
+        <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}"></div>
+        <div>회원관리</div>
+      </button>
+    </a>
+    <a th:href="@{/admin/itemList}" class="text-border">
+      <button class="postList">
+        <div class="userimg2"><img th:src="@{/admin/img/menu-colorbar.png}"></div>
+        <div>게시물 관리</div>
+      </button>
+    </a>
+    <a th:href="@{/admin/category}" class="text-border">
+      <button class="categoryList">
+        <div class="userimg3"><img th:src="@{/admin/img/blogging.png}"></div>
+        <div>카테고리 리스트</div>
+      </button>
+    </a>
+  </div>
 
-<script>
-  const typeMap = {
-    16: "New", 17: "Best", 75: "Men (종합)", 76: "Men-상의", 18: "남성상의-반팔", 19: "남성상의-긴팔",
-    20: "남성상의-셔츠", 21: "남성상의-니트/스웨터", 22: "남성상의-후드", 23: "남성상의-맨투맨",
-    24: "남성상의-민소매", 25: "남성상의-기능성", 26: "Men-하의", 27: "남성하의-데님",
-    28: "남성하의-슬랙스", 29: "남성하의-면바지", 30: "남성하의-반바지", 31: "남성하의-트레이닝",
-    32: "남성하의-조거", 33: "Men-아우터", 34: "남성아우터-코트", 35: "남성아우터-자켓",
-    36: "남성아우터-점퍼", 37: "남성아우터-가디건", 38: "남성아우터-패딩", 39: "남성아우터-베스트",
-    40: "Women (종합)", 41: "Women-상의", 42: "여성상의-반팔", 43: "여성상의-긴팔",
-    44: "여성상의-셔츠/블라우스", 45: "여성상의-니트/스웨터", 46: "여성상의-후드", 47: "여성상의-맨투맨",
-    48: "여성상의-민소매", 49: "여성상의-기능성", 50: "Women-하의", 51: "여성하의-데님",
-    52: "여성하의-슬랙스", 53: "여성하의-면바지", 54: "여성하의-반바지", 55: "여성하의-트레이닝",
-    56: "여성하의-조거", 57: "여성하의-치마/스커트", 58: "Women-아우터", 59: "여성아우터-코트",
-    60: "여성아우터-자켓", 61: "여성아우터-점퍼", 62: "여성아우터-가디건", 63: "여성아우터-패딩",
-    64: "여성아우터-베스트", 65: "Women-원피스", 66: "여성원피스-미니", 67: "여성원피스-미디",
-    68: "여성원피스-롱", 69: "Unisex (종합)", 70: "Acc (종합)", 71: "악세서리-모자",
-    72: "악세서리-가방", 73: "악세서리-양말", 74: "악세서리-기타"
-  };
+  <div class="top-right">
+    <div class="right-Title">
+      <p class="right-Title1">제품 등록</p>
+      <p class="right-Title2">새로운 상품 정보를 입력하여 데이터베이스에 저장합니다.</p>
+    </div>
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const typeSelect = document.getElementById('dbType');
-    Object.entries(typeMap).forEach(([v, n]) => {
-      const opt = document.createElement('option');
-      opt.value = v; opt.textContent = n;
-      typeSelect.appendChild(opt);
-    });
-  });
+    <div class="form-wrapper">
+      <div class="form-card">
+        <form id="add-product-form">
+          <div class="input-row">
+            <div class="input-group">
+              <label>상품명</label>
+              <input type="text" id="itemName" required placeholder="상품명 입력">
+            </div>
+            <div class="input-group">
+              <label>브랜드</label>
+              <input type="text" id="itemBrand" required placeholder="브랜드명">
+            </div>
+          </div>
 
-  async function saveItem() {
-    const token = document.querySelector('meta[name="_csrf"]').content;
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const formData = new FormData();
+          <div class="input-row">
+            <div class="input-group">
+              <label>판매가 (원)</label>
+              <input type="number" id="itemPrice" required placeholder="0">
+            </div>
+            <div class="input-group">
+              <label>재고수량 (EA)</label>
+              <input type="number" id="itemStock" required placeholder="0">
+            </div>
+          </div>
 
-    const itemData = {
-      itemName: document.getElementById('itemName').value,
-      itemBrand: document.getElementById('itemBrand').value,
-      itemPrice: parseInt(document.getElementById('itemPrice').value),
-      dbCategory: parseInt(document.getElementById('dbCategory').value),
-      dbType: parseInt(document.getElementById('dbType').value),
-      itemStock: parseInt(document.getElementById('itemStock').value)
-    };
+          <div class="input-row">
+            <div class="input-group">
+              <label>카테고리 설정</label>
+              <select id="itemCategory">
+                <option value="13">BEST</option>
+                <option value="14">추천상품</option>
+                <option value="15">이달의 상품</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>상세 상품 타입</label>
+              <select id="itemTypeSelect" required>
+                <option value="">타입을 선택하세요</option>
 
-    formData.append("itemData", new Blob([JSON.stringify(itemData)], {type: "application/json"}));
-    const files = document.getElementById('itemFiles').files;
-    for(let f of files) formData.append("files", f);
+                <optgroup label="공통/메인">
+                  <option value="16">New</option>
+                  <option value="17">Best</option>
+                </optgroup>
 
-    const res = await fetch('/admin/api/items', {
-      method: 'POST',
-      headers: { [header]: token },
-      body: formData
-    });
+                <optgroup label="남성 (Men)">
+                  <option value="75">Men (종합)</option>
+                  <option value="76">Men-상의 (기본)</option>
+                  <option value="18">└ 남성상의-반팔</option>
+                  <option value="19">└ 남성상의-긴팔</option>
+                  <option value="20">└ 남성상의-맨투맨</option>
+                  <option value="21">└ 남성상의-니트</option>
+                  <option value="22">└ 남성상의-아우터</option>
+                  <option value="77">Men-하의 (기본)</option>
+                  <option value="23">└ 남성하의-반바지</option>
+                  <option value="24">└ 남성하의-슬랙스</option>
+                  <option value="25">└ 남성하의-청바지</option>
+                  <option value="26">└ 남성하의-면바지</option>
+                  <option value="27">└ 남성하의-트랙팬츠</option>
+                  <option value="78">Men-신발 (기본)</option>
+                  <option value="28">└ 남성신발-러닝화</option>
+                  <option value="29">└ 남성신발-스니커즈</option>
+                  <option value="30">└ 남성신발-구두</option>
+                  <option value="31">└ 남성신발-샌들</option>
+                  <option value="32">└ 남성신발-슬리퍼</option>
+                  <option value="79">Men-그 외 (기본)</option>
+                  <option value="33">└ 남성그 외-양말</option>
+                  <option value="34">└ 남성그 외-가방</option>
+                  <option value="35">└ 남성그 외-악세사리</option>
+                  <option value="36">└ 남성그 외-모자</option>
+                </optgroup>
 
-    if(res.ok) { alert("등록 완료"); location.href="/admin/itemList"; }
-  }
-</script>
+                <optgroup label="여성 (Women)">
+                  <option value="80">Women (종합)</option>
+                  <option value="81">Women-상의 (기본)</option>
+                  <option value="37">└ 여성상의-반팔</option>
+                  <option value="38">└ 여성상의-긴팔</option>
+                  <option value="39">└ 여성상의-맨투맨</option>
+                  <option value="40">└ 여성상의-니트</option>
+                  <option value="41">└ 여성상의-아우터</option>
+                  <option value="82">Women-하의 (기본)</option>
+                  <option value="42">└ 여성하의-반바지</option>
+                  <option value="43">└ 여성하의-슬랙스</option>
+                  <option value="44">└ 여성하의-청바지</option>
+                  <option value="45">└ 여성하의-면바지</option>
+                  <option value="46">└ 여성하의-트랙팬츠</option>
+                  <option value="83">Women-신발 (기본)</option>
+                  <option value="47">└ 여성신발-러닝화</option>
+                  <option value="48">└ 여성신발-스니커즈</option>
+                  <option value="49">└ 여성신발-구두</option>
+                  <option value="50">└ 여성신발-샌들</option>
+                  <option value="51">└ 여성신발-슬리퍼</option>
+                  <option value="84">Women-그 외 (기본)</option>
+                  <option value="52">└ 여성그 외-양말</option>
+                  <option value="53">└ 여성그 외-가방</option>
+                  <option value="54">└ 여성그 외-악세사리</option>
+                  <option value="55">└ 여성그 외-모자</option>
+                </optgroup>
+
+                <optgroup label="아동 (Kids)">
+                  <option value="85">Kids (종합)</option>
+                  <option value="86">Kids-상의 (기본)</option>
+                  <option value="56">└ 아동상의-반팔</option>
+                  <option value="57">└ 아동상의-긴팔</option>
+                  <option value="58">└ 아동상의-맨투맨</option>
+                  <option value="59">└ 아동상의-니트</option>
+                  <option value="60">└ 아동상의-아우터</option>
+                  <option value="87">Kids-하의 (기본)</option>
+                  <option value="61">└ 아동하의-반바지</option>
+                  <option value="62">└ 아동하의-슬랙스</option>
+                  <option value="63">└ 아동하의-청바지</option>
+                  <option value="64">└ 아동하의-면바지</option>
+                  <option value="65">└ 아동하의-트랙팬츠</option>
+                  <option value="88">Kids-신발 (기본)</option>
+                  <option value="66">└ 아동신발-러닝화</option>
+                  <option value="67">└ 아동신발-스니커즈</option>
+                  <option value="68">└ 아동신발-구두</option>
+                  <option value="69">└ 아동신발-샌들</option>
+                  <option value="70">└ 아동신발-슬리퍼</option>
+                  <option value="89">Kids-그 외 (기본)</option>
+                  <option value="71">└ 아동그 외-양말</option>
+                  <option value="72">└ 아동그 외-가방</option>
+                  <option value="73">└ 아동그 외-악세사리</option>
+                  <option value="74">└ 아동그 외-모자</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="image-section">
+            <label>상품 이미지</label>
+            <div id="image-preview-container" class="preview-wrap"></div>
+            <button type="button" id="add-img-btn" class="img-add-btn">+ 이미지 추가하기</button>
+            <input type="file" id="p-image-file" multiple accept="image/*" style="display: none;">
+          </div>
+
+          <div class="submit-area">
+            <button type="submit" class="submit-btn">등록하기</button>
+            <button type="button" class="cancel-btn" onclick="history.back()">돌아가기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:src="@{/admin/js/addpost.js}"></script>
 </body>
 </html>
