@@ -83,54 +83,38 @@
           <span class="close-button">&times;</span>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label for="modal-name">이름:</label>
-            <input type="text" id="modal-name" value="김사과" />
-          </div>
-          <div class="form-group">
-            <label for="modal-id">아이디:</label>
-            <input type="text" id="modal-id" value="apple" readonly />
-          </div>
-          <div class="form-group">
-            <label>비밀번호:</label>
-            <button class="change-password">비밀번호 변경</button>
-          </div>
-          <div class="form-group">
-            <label for="modal-phone">연락처:</label>
-            <input type="text" id="modal-phone" value="010-1234-5678" />
-          </div>
-          <div class="form-group">
-            <label for="modal-email">이메일:</label>
-            <input type="email" id="modal-email" value="apple@email.com" />
-          </div>
-          <div class="form-group">
-            <label for="modal-address">주소:</label>
-            <input type="text" id="modal-address" value="(12345) 서울시 ..." />
-            <button>주소검색</button>
-          </div>
-          <div class="form-group">
-            <label for="modal-grade">회원등급:</label>
-            <select id="modal-grade">
-              <option value="VIP">VIP</option>
-              <option value="VVIP">VVIP</option>
-              <option value="일반회원">일반회원</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="modal-points">보유 적립금:</label>
-            <input type="text" id="modal-points" value="15,000" /> P
-          </div>
-          <div class="form-group">
-            <label for="modal-memo">메모:</label>
-            <textarea id="modal-memo" rows="3">7/15 배송 문의 전화 옴. 친절하게 응대함.</textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
+              <div class="form-group">
+                <label for="modal-name">이름:</label>
+                <input type="text" id="modal-name" value="김사과" />
+              </div>
+              <div class="form-group">
+                <label for="modal-id">아이디:</label>
+                <input type="text" id="modal-id" value="apple" readonly />
+              </div>
+              <div class="form-group">
+                <label for="modal-phone">연락처:</label>
+                <input type="text" id="modal-phone" value="010-1234-5678" />
+              </div>
+              <div class="form-group">
+                <label for="modal-email">이메일:</label>
+                <input type="email" id="modal-email" value="apple@email.com" />
+              </div>
+              <div class="form-group">
+                <label for="modal-address">주소:</label>
+                <input type="text" id="modal-address" value="(12345) 서울시 ..." />
+                <button>주소검색</button>
+              </div>
+              <div class="form-group">
+                <label for="modal-memo">메모:</label>
+                <textarea id="modal-memo" rows="3">7/15 배송 문의 전화 옴. 친절하게 응대함.</textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
           <button class="save-button">저장</button>
           <button class="close-button-footer">닫기</button>
         </div>
       </div>
     </div>
-    <script th:src="@{/admin/js/userList.js}"></script>
+    <script th:src="@{/admin/js/userList.js}"></script>-
   </body>
 </html>
