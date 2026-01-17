@@ -1,5 +1,10 @@
 package com.example.qwershop.admin.itemManagement.mapper;
 
+import com.example.qwershop.admin.itemManagement.dto.ItemManagerDto;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 public interface ItemManagerMapper {
 
     // 상품 기본 정보 저장

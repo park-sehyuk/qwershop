@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/admin/css/orderList.css}">
+    <title>주문 관리</title>
+</head>
+<body id="category">
+<div id="scale">
+    <div class="left-side">
+        <a th:href="@{/admin/userList}" class="text-border">
+            <button class="userList">
+                <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
+                <div>회원관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/itemList}" class="text-border">
+            <button class="postList">
+                <div class="userimg"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
+                <div>게시물 관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/category}" class="text-border">
+            <button class="categoryList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+                <div>카테고리 리스트</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/orderList}" class="text-border">
+            <button class="orderList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+                <div>주문 리스트</div>
+            </button>
+        </a>
+    </div>
+
+    <div class="top-right">
+        <div class="container">
+            <div class="content-header">
+                <h2>주문 관리 리스트</h2>
+                <p>고객님이 주문하신 최근 내역을 확인할 수 있습니다.</p>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="order-table">
+                    <thead>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>주문자</th>
+                        <th>상품명</th>
+                        <th>주문금액</th>
+                        <th>주문일자</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td class="order-id" th:text="'#' + ${order.orderId}">#20240501</td>
+                        <td>
+                            <span th:text="${order.memberName}">홍길동</span>
+                            <small style="color: #888;" th:text="'(' + ${order.memberLoginId} + ')'">(user01)</small>
+                        </td>
+                        <td>
+                            <span th:text="${order.firstItemName}">상품명</span>
+                            <span th:if="${order.itemCount > 1}" th:text="' 외 ' + (${order.itemCount} - 1) + '건'"></span>
+                        </td>
+                        <td class="price" th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')} + '원'">45,000원</td>
+                        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">2024-05-20</td>
+                        <td>
+                            <span class="badge"
+                            th:classappend="${order.orderStatus == '배송중' ? 'shipping' : (order.orderStatus == '배송완료' ? 'completed' : 'pending')}"
+                            th:text="${order.orderStatus}">배송중</span>
+                        </td>
+                        <td><button class="btn-view" th:onclick="|location.href='/admin/orderDetail/${order.orderId}'|">상세보기</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/admin/js/orderList.js}"></script>
+</body>
+</html>
