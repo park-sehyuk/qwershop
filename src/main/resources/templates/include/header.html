@@ -144,7 +144,7 @@
           </ul>
         </li>
         <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-          <a th:href="@{/admin/main}">관리자 페이지 이동</a>
+          <a th:href="@{/admin/userList}">관리자 페이지 이동</a>
         </li>
       </ul>
     </div>

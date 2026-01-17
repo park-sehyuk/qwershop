@@ -18,7 +18,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
 
     // [주석 처리] OAuth2 설정이 없으면 이 서비스 빈을 불러오다가 에러가 날 수 있습니다.
-    // private final CustomOAuth2UserService customOAuth2UserService;
+     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
