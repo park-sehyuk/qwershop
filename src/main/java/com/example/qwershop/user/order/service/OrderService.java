@@ -1,7 +1,9 @@
 package com.example.qwershop.user.order.service;
 
+import com.example.qwershop.admin.orderManagement.dto.OrderItemDto;
 import com.example.qwershop.user.cart.dto.CartDetailDto;
 import com.example.qwershop.user.cart.mapper.CartMapper;
+import com.example.qwershop.user.member.mapper.MemberMapper;
 import com.example.qwershop.user.order.dto.*;
 import com.example.qwershop.user.order.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ public class OrderService {
 
     private final OrderMapper orderMapper;
     private final CartMapper cartMapper;
+    private final MemberMapper memberMapper;
 
     public void processOrder(String userId, Long memberId, PaymentDto paymentDto) {
 
@@ -62,5 +65,32 @@ public class OrderService {
 
     public List<OrderItemHistDto> getOrderItemList(Long orderId) {
         return orderMapper.getOrderItemList(orderId);
+    }
+
+    public Long createDirectOrder(OrderDirectDto dto, Long memberId) {
+
+        // 1. OrdersDto 생성 (주문 마스터)
+        OrdersDto ordersDto = new OrdersDto();
+        ordersDto.setMemberId(memberId);
+        ordersDto.setOrderStatus("PAID"); // 결제 완료 상태
+        ordersDto.setTotalPrice(dto.getTotalPrice());
+        ordersDto.setDeliveryAddr(dto.getDeliveryAddr());
+
+        // MyBatis의 useGeneratedKeys에 의해 orderId가 ordersDto에 자동으로 채워집니다.
+        orderMapper.insertOrder(ordersDto);
+
+        // 2. OrderDto 생성 (주문 상세 상품)
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(ordersDto.getOrderId()); // 생성된 주문번호 연결
+        orderDto.setItemId(dto.getItemId());
+        orderDto.setCount(dto.getCount());
+        // 개당 가격 계산
+        orderDto.setOrderPrice(dto.getTotalPrice() / dto.getCount());
+        orderDto.setSelectedColor(dto.getSelectedColor());
+        orderDto.setSelectedSize(dto.getSelectedSize());
+
+        orderMapper.insertOrderItem(orderDto);
+
+        return ordersDto.getOrderId();
     }
 }

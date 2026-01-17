@@ -1,17 +1,17 @@
 package com.example.qwershop.user.order.controller;
 
 import com.example.qwershop.user.member.mapper.MemberMapper;
+import com.example.qwershop.user.member.service.MemberService;
+import com.example.qwershop.user.order.dto.OrderDirectDto;
 import com.example.qwershop.user.order.dto.OrderHistDto;
 import com.example.qwershop.user.order.dto.PaymentDto;
 import com.example.qwershop.user.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -22,6 +22,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final MemberMapper memberMapper;
+    private final MemberService memberService;
 
     @GetMapping("/orderList")
     public String orderList(Principal principal, Model model) {
@@ -42,5 +43,23 @@ public class OrderController {
         model.addAttribute("order", orderService.getOrderMaster(orderId));
         model.addAttribute("orderItems", orderService.getOrderItemList(orderId));
         return "user/order/orderDetail";
+    }
+
+    @PostMapping("/order/direct")
+    @ResponseBody
+    public ResponseEntity<?> directOrder(@RequestBody OrderDirectDto dto, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+
+            Long memberId = memberService.findMemberId(principal.getName()); // 테스트용 고정값
+
+            Long orderId = orderService.createDirectOrder(dto, memberId);
+            return new ResponseEntity<>(orderId, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

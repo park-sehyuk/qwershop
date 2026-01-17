@@ -87,10 +87,15 @@
         function order() {
             if (!window.IMP) { alert("결제 라이브러리가 로드되지 않았습니다."); return; }
             const IMP = window.IMP;
-            IMP.init("imp45123642");
+            IMP.init("imp45123642"); // 가맹점 식별코드
 
             const color = $("#colorSelect").val();
             const size = $("#sizeSelect").val();
+            const itemId = $("#itemId").val();
+            const count = $("#count").val();
+            const price = $("#price").val();
+            const totalPrice = parseInt(price) * parseInt(count);
+
             if(!color || !size) { alert("옵션을 선택해주세요."); return; }
 
             IMP.request_pay({
@@ -98,14 +103,46 @@
                 pay_method: "card",
                 merchant_uid: "ORD_" + new Date().getTime(),
                 name: $(".product-title").text(),
-                amount: parseInt($("#price").val()) * parseInt($("#count").val()),
-                buyer_name: "테스터",
-                buyer_tel: "010-1234-5678"
+                amount: totalPrice,
+                buyer_name: "구매자", // 실제로는 로그인 유저 정보 연동 권장
+                buyer_tel: "010-0000-0000"
             }, function (rsp) {
                 if (rsp.success) {
-                    alert("결제 성공!");
+                    // 결제 성공 시 서버로 주문 정보 전송
+                    saveDirectOrder(itemId, count, color, size, totalPrice);
                 } else {
                     alert("결제 실패: " + rsp.error_msg);
+                }
+            });
+        }
+
+        // 결제 성공 후 DB 저장을 위한 함수
+        function saveDirectOrder(itemId, count, color, size, totalPrice) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            // DTO 필드명과 일치하게 구성
+            var paramData = {
+                itemId: parseInt(itemId),
+                count: parseInt(count),
+                selectedColor: color,
+                selectedSize: size,
+                totalPrice: parseInt(totalPrice),
+                deliveryAddr: "기본 배송지 정보" // 필요시 주소 입력값 연동
+            };
+
+            $.ajax({
+                url: "/order/direct",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(paramData),
+                beforeSend: function(xhr) { xhr.setRequestHeader(header, token); },
+                success: function(orderId) {
+                    alert("주문이 완료되었습니다!");
+                    location.href = "/orderList";
+                },
+                error: function(xhr) {
+                    alert("처리 중 오류가 발생했습니다: " + xhr.responseText);
                 }
             });
         }
