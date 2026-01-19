@@ -19,10 +19,14 @@ public class ItemManagerController {
 
     // 관리자 페이지 매핑
     @GetMapping("/admin/itemList")
-    public String postListPage() { return "admin/post"; }
+    public String postListPage() {
+        return "admin/post";
+    }
 
     @GetMapping("/admin/addpost")
-    public String addPostPage() { return "admin/addpost"; }
+    public String addPostPage() {
+        return "admin/addpost";
+    }
 
     /**
      * 전체 상품 목록 조회 API
@@ -43,6 +47,9 @@ public class ItemManagerController {
             @RequestPart(value="files", required=false) List<MultipartFile> files) {
         try {
             System.out.println(">>> 상품 등록 요청 수신: " + dto.getItemName());
+            // 대표 이미지 인덱스 확인 로그
+            System.out.println(">>> 선택된 대표 이미지 번호: " + dto.getMainImageIdx());
+
             itemManagerService.saveItemWithFiles(dto, files);
             return ResponseEntity.ok("success");
         } catch (Exception e) {
@@ -52,8 +59,8 @@ public class ItemManagerController {
     }
 
     /**
-     * 상품 수정 API (이미지 포함 시 Multipart 처리를 위해 POST 사용)
-     * post.js의 saveEdit 함수와 매핑됩니다.
+     * 상품 수정 API
+     * post.js의 saveEdit 함수에서 Multipart 전송을 위해 POST를 사용합니다.
      */
     @PostMapping(value = "/admin/api/items/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
@@ -63,9 +70,12 @@ public class ItemManagerController {
             @RequestPart(value="files", required=false) List<MultipartFile> files) {
         try {
             System.out.println(">>> 상품 수정 요청 수신 (ID: " + id + ")");
-            dto.setItemId(id); // URL의 ID를 DTO에 세팅
+            dto.setItemId(id); // URL 경로의 ID를 DTO에 강제 세팅하여 불일치 방지
 
-            // 서비스 계층 호출 (이미지가 있으면 교체, 없으면 정보만 수정)
+            // 대표 이미지 인덱스 확인 로그
+            System.out.println(">>> 수정 시 선택된 대표 이미지 번호: " + dto.getMainImageIdx());
+
+            // 서비스 계층 호출 (이미지가 새로 들어오면 교체, 없으면 텍스트 정보만 수정)
             itemManagerService.updateItemWithFiles(dto, files);
 
             return ResponseEntity.ok("success");
@@ -77,7 +87,7 @@ public class ItemManagerController {
     }
 
     /**
-     * 상품 삭제 API (관련 이미지 기록 및 연관 데이터 전체 삭제)
+     * 상품 삭제 API
      */
     @DeleteMapping("/admin/api/items/{id}")
     @ResponseBody
