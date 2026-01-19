@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>공통 코드 관리</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<div style="display: flex;">
+    <!-- 그룹 코드 목록 -->
+    <div style="width: 30%; border-right: 1px solid #ccc;">
+        <h3>그룹 코드</h3>
+        <ul>
+            <li th:each="group : ${groupList}">
+                <a href="javascript:void(0);"
+                   th:attr="data-group-code=${group.groupCode}"
+                   th:text="|${group.groupName} (${group.groupCode})|"
+                   onclick="loadDetails(this)">
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- 상세 코드 목록 -->
+    <div style="width: 70%; padding-left: 20px;">
+        <h3>상세 코드</h3>
+        <table border="1" id="detailTable">
+            <thead>
+            <tr>
+                <th>코드</th>
+                <th>코드명</th>
+                <th>순서</th>
+                <th>사용여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="4">그룹을 선택해주세요.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function loadDetails(el) {
+        const groupCode = el.dataset.groupCode;
+
+        $.get("/admin/api/codes/" + groupCode, function (data) {
+            let html = "";
+
+            if (data.length === 0) {
+                html = `<tr><td colspan="4">데이터가 없습니다.</td></tr>`;
+            } else {
+                data.forEach(item => {
+                    html += `
+                        <tr>
+                            <td>${item.detailCode}</td>
+                            <td>${item.codeName}</td>
+                            <td>${item.sortOrder}</td>
+                            <td>${item.useYn}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            $("#detailTable tbody").html(html);
+        });
+    }
+</script>
+
+
+</body>
+</html>

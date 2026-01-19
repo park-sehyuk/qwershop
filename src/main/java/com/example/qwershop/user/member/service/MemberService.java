@@ -19,6 +19,7 @@ public class MemberService implements UserDetailsService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         MemberDto member = memberMapper.loginMember(id);
@@ -89,11 +90,27 @@ public class MemberService implements UserDetailsService {
         return memberMapper.findMemberIdById(id);
     }
 
+    public String findIdByNameAndPhone(String name, String phone) {
+        MemberDto member = memberMapper.findByNameAndPhone(name, phone);
+        // 결과가 있으면 id 반환, 없으면 빈 값 반환
+        return (member != null) ? member.getId() : "";
+    }
+
     public int getMemberId(String email) {
         Integer memberId = memberMapper.selectMemberId(email);
         if (memberId == null) {
             throw new RuntimeException("해당 사용자를 찾을 수 없습니다.");
         }
         return memberId;
+    }
+
+    public boolean updatePasswordIfMatch(String userId, String userName, String userPhone, String newPw) {
+        String encodedPassword = passwordEncoder.encode(newPw);
+
+        // 1. 매퍼를 호출하여 업데이트 실행
+        int result = memberMapper.updatePasswordIfMatch(userId, userName, userPhone, encodedPassword);
+
+        // 2. 결과값이 1이면 업데이트 성공(사용자 정보 일치), 0이면 실패(정보 불일치)
+        return result > 0;
     }
 }

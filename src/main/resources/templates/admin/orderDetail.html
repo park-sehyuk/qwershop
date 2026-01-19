@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/admin/css/orderDetail.css}">
+    <title>주문 관리</title>
+</head>
+<body id="category">
+<div id="scale">
+    <div class="left-side">
+        <a th:href="@{/admin/userList}" class="text-border">
+            <button class="userList">
+                <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
+                <div>회원관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/itemList}" class="text-border">
+            <button class="postList">
+                <div class="userimg"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
+                <div>게시물 관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/category}" class="text-border">
+            <button class="categoryList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+                <div>카테고리 리스트</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/orderList}" class="text-border">
+            <button class="orderList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+                <div>주문 리스트</div>
+            </button>
+        </a>
+    </div>
+
+    <div class="top-right">
+        <div class="container">
+            <div class="content-header">
+                <h2>주문 상세 정보 <small th:text="'(번호: #' + ${order.orderId} + ')'"></small></h2>
+                <button class="btn-back" onclick="history.back()">뒤로가기</button>
+            </div>
+
+            <div class="status-control-box">
+                <form th:action="@{/admin/updateOrderStatus}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                    <label>주문 상태 관리: </label>
+                    <select name="status" class="status-select">
+                        <option value="주문접수" th:selected="${order.orderStatus == '주문접수'}">주문접수</option>
+                        <option value="결제완료" th:selected="${order.orderStatus == '결제완료'}">결제완료</option>
+                        <option value="배송중" th:selected="${order.orderStatus == '배송중'}">배송중</option>
+                        <option value="배송완료" th:selected="${order.orderStatus == '배송완료'}">배송완료</option>
+                        <option value="주문취소" th:selected="${order.orderStatus == '주문취소'}">주문취소</option>
+                    </select>
+                    <button type="submit" class="btn-update">변경하기</button>
+                </form>
+            </div>
+
+            <div class="detail-grid">
+                <div class="info-section">
+                    <h3>주문자 정보</h3>
+                    <p><strong>이름:</strong> <span th:text="${order.memberName}"></span></p>
+                    <p><strong>아이디:</strong> <span th:text="${order.memberLoginId}"></span></p>
+                    <p><strong>연락처:</strong> <span th:text="${order.memberPhone}"></span></p>
+                    <p><strong>배송지:</strong> <span th:text="${order.address}"></span></p>
+                </div>
+
+                <div class="item-section">
+                    <h3>주문 상품 목록</h3>
+                    <table class="detail-table">
+                        <thead>
+                        <tr>
+                            <th style="width: 40%;">상품명</th>
+                            <th style="width: 20%;">옵션</th>
+                            <th style="width: 15%;">가격</th>
+                            <th style="width: 10%;">수량</th>
+                            <th style="width: 15%;">소계</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${order.orderItems}">
+                            <td style="text-align: left;" th:text="${item.itemName}">상품명</td>
+                            <td th:text="${item.selectedColor} + ' / ' + ${item.selectedSize}">옵션</td>
+                            <td th:text="${#numbers.formatInteger(item.orderPrice, 0, 'COMMA')} + '원'">가격</td>
+                            <td th:text="${item.count}">1</td>
+                            <td th:text="${#numbers.formatInteger(item.orderPrice * item.count, 0, 'COMMA')} + '원'">소계</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(order.orderItems)}">
+                            <td colspan="5">주문된 상품 정보가 없습니다.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+<script th:src="@{/admin/js/orderDetail.js}"></script>
+</body>
+</html>

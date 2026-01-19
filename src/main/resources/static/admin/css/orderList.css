@@ -1,0 +1,175 @@
+@charset "utf-8";
+
+#scale {
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid black;
+}
+
+#scale .left-side {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: rgb(117, 117, 117);
+}
+
+.userimg {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userimg img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.left-side button {
+    font-size: 14px;
+    color: white;
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    gap: 10px;
+}
+
+.text-border{
+    text-decoration: none;
+}
+
+.left-side button:last-child {
+    border-bottom: none;
+}
+
+.left-side button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.left-side .orderList {
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+/* 기존 스타일 유지 및 보완 */
+#scale {
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh; /* 화면 전체 높이 확보 */
+    border: 1px solid #ddd;
+}
+
+/* 오른쪽 콘텐츠 영역 스타일 */
+.top-right {
+    flex: 1; /* 왼쪽 사이드바 제외 나머지 공간 차지 */
+    background-color: #f9f9f9;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.content-header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.content-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.content-header p {
+    color: #888;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* 테이블 스타일 */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-bottom: 2px solid #dee2e6;
+    color: #555;
+    font-weight: 600;
+}
+
+.order-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    color: #444;
+}
+
+.order-table tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* 주문 상태 배지 스타일 */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge.shipping { background-color: #e3f2fd; color: #1976d2; }    /* 배송중: 파랑 */
+.badge.completed { background-color: #e8f5e9; color: #2e7d32; }   /* 완료: 초록 */
+.badge.pending { background-color: #fff3e0; color: #ef6c00; }     /* 대기: 주황 */
+
+/* 상세 버튼 스타일 */
+.btn-view {
+    background-color: #757575;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+
+.btn-view:hover {
+    background-color: #333;
+}
+
+.order-id {
+    font-weight: bold;
+    color: #1976d2;
+}
+
+.price {
+    font-weight: 600;
+}

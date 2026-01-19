@@ -5,6 +5,7 @@
   <div id="header-top">
     <h1 class="title"><a th:href="@{/}" id="title">QWER</a></h1>
   </div>
+
   <div id="header-mid">
     <div class="midLeft">
       <ul id="category">
@@ -143,7 +144,7 @@
           </ul>
         </li>
         <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-          <a th:href="@{/admin/main}">관리자 페이지 이동</a>
+          <a th:href="@{/admin/userList}">관리자 페이지 이동</a>
         </li>
       </ul>
     </div>

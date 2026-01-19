@@ -20,6 +20,9 @@
         <typeAlias alias="ordersDto" type="com.example.qwershop.user.order.dto.OrdersDto" />
         <typeAlias alias="orderItemHistDto" type="com.example.qwershop.user.order.dto.OrderItemHistDto" />
         <typeAlias alias="selectUserDto" type="com.example.qwershop.admin.usermanagement.dto.SelectUsersDto" />
+        <typeAlias alias="orderListDto" type="com.example.qwershop.admin.orderManagement.dto.OrderListDto" />
+        <typeAlias alias="orderDetailDto" type="com.example.qwershop.admin.orderManagement.dto.OrderDetailDto" />
+        <typeAlias alias="orderItemDto" type="com.example.qwershop.admin.orderManagement.dto.OrderItemDto" />
 
     </typeAliases>
 </configuration>

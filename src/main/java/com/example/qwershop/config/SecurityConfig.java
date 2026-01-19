@@ -18,7 +18,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 public class SecurityConfig {
 
     // [주석 처리] OAuth2 설정이 없으면 이 서비스 빈을 불러오다가 에러가 날 수 있습니다.
-    // private final CustomOAuth2UserService customOAuth2UserService;
+     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -32,27 +32,26 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/main", "/signUp", "/find/**", "/search/**", "/itemList", "/detail/**", "/user/**").permitAll()
-                        .requestMatchers("/order/**").authenticated()
-                        .requestMatchers("/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()
+                .authorizeHttpRequests(auth -> auth                      
+                        .requestMatchers("/", "/main", "/signUp", "/find/**","/findpw/**" , "/search/**", "/itemList", "/detail/**", "/user/**", "/members/**", "/item/**", "/include/**", "/layouts/**", "/admin/**").permitAll()
                         .requestMatchers("/*.png", "/*.jpg").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/order/**").authenticated()
                         .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/user/login")
+                        .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/", true)
                         .usernameParameter("id")
                         .passwordParameter("pw")
                         .failureUrl("/user/login/error"))
 
-                /* [주석 처리] OAuth2 클라이언트 설정(구글/네이버 ID 등)이 없어서 발생하는 부팅 에러 해결 */
-                // .oauth2Login(oauth2 -> oauth2
-                //         .loginPage("/user/login")
-                //         .userInfoEndpoint(userInfo -> userInfo
-                //                 .userService(customOAuth2UserService))
-                //         .defaultSuccessUrl("/", true))
+
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/user/login")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/", true))
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -60,10 +59,8 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID"))
 
-        /* [주석 처리] CustomAuthenticationEntryPoint 클래스가 없거나 설정이 미비할 경우 에러 방지 */
-        // .exceptionHandling(exception -> exception
-        //         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
-        ;
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 
         return http.build();
     }
