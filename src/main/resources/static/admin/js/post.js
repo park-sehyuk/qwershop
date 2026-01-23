@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('product-list-body');
+    const galleryModal = document.getElementById('gallery-modal');
+    const galleryOverlay = document.getElementById('gallery-overlay');
+    const galleryGrid = document.getElementById('gallery-grid');
 
     const categoryMap = { 13: "BEST", 14: "추천상품", 15: "이달의 상품" };
+
+    // 이 부분이 누락되어 에러가 났던 것입니다. 전체 다시 넣어드립니다.
     const typeMap = {
         16: "New", 17: "Best", 18: "남성상의-반팔", 19: "남성상의-긴팔", 20: "남성상의-맨투맨", 21: "남성상의-니트", 22: "남성상의-아우터",
         23: "남성하의-반바지", 24: "남성하의-슬랙스", 25: "남성하의-청바지", 26: "남성하의-면바지", 27: "남성하의-트랙팬츠", 28: "남성신발-러닝화",
@@ -18,13 +23,17 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     let currentItems = [];
+    let selectedImagesForEdit = [];
 
     window.loadProductData = function() {
-        fetch('/admin/api/items').then(res => res.json()).then(data => {
-            currentItems = data;
-            tableBody.innerHTML = '';
-            data.forEach(p => renderRow(p));
-        });
+        fetch('/admin/api/items')
+            .then(res => res.json())
+            .then(data => {
+                currentItems = data;
+                tableBody.innerHTML = '';
+                data.forEach(p => renderRow(p));
+            })
+            .catch(err => console.error("데이터 로드 실패:", err));
     };
 
     function renderRow(p) {
@@ -44,80 +53,97 @@ document.addEventListener('DOMContentLoaded', function() {
         tableBody.appendChild(row);
     }
 
-    // 파일 선택 시 미리보기 (가로 스크롤 대응 디자인)
-    window.previewEditFiles = function(id) {
-        const fileInput = document.getElementById(`edit-file-${id}`);
-        const previewContainer = document.getElementById(`preview-container-${id}`);
-
-        // 새로 파일을 선택하면 기존 미리보기(기존이미지 안내 포함)를 비우고 새로 그림
-        previewContainer.innerHTML = '';
-
-        if (fileInput.files) {
-            Array.from(fileInput.files).forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const div = document.createElement('div');
-                    div.style = "display: inline-flex; flex-direction: column; align-items: center; min-width: 80px; margin-right: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 6px; background: #fff;";
-                    div.innerHTML = `
-                        <img src="${e.target.result}" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
-                        <div style="display: flex; align-items: center; margin-top: 5px; gap: 3px;">
-                            <input type="radio" id="main-${id}-${index}" name="mainImageIdx-${id}" value="${index}" ${index === 0 ? 'checked' : ''} style="cursor:pointer; width:13px; height:13px; margin:0;">
-                            <label for="main-${id}-${index}" style="font-size: 11px; font-weight: bold; cursor:pointer; white-space:nowrap; margin:0;">대표</label>
-                        </div>
-                    `;
-                    previewContainer.appendChild(div);
+    // 수정 시 갤러리 열기
+    window.openGalleryForEdit = async function(id) {
+        try {
+            const res = await fetch('/admin/api/internal-files');
+            const fileList = await res.json();
+            galleryGrid.innerHTML = '';
+            fileList.forEach(fileName => {
+                const img = document.createElement('img');
+                img.src = `/admin/posting/${fileName}`;
+                img.style = "width:100%; height:110px; object-fit:cover; cursor:pointer; border-radius:6px; border:2px solid #eee;";
+                img.onclick = () => {
+                    if (!selectedImagesForEdit.includes(fileName)) {
+                        selectedImagesForEdit.push(fileName);
+                        renderEditPreview(id);
+                    }
+                    closeGallery();
                 };
-                reader.readAsDataURL(file);
+                galleryGrid.appendChild(img);
             });
-        }
+            galleryModal.style.display = 'block';
+            galleryOverlay.style.display = 'block';
+        } catch (e) { alert("갤러리 로딩 실패"); }
     };
+
+    window.closeGallery = function() {
+        galleryModal.style.display = 'none';
+        galleryOverlay.style.display = 'none';
+    };
+
+    function renderEditPreview(id) {
+        const previewContainer = document.getElementById(`preview-container-${id}`);
+        if (!previewContainer) return;
+        previewContainer.innerHTML = '';
+        selectedImagesForEdit.forEach((name, index) => {
+            const div = document.createElement('div');
+            div.style = `display: inline-flex; flex-direction: column; align-items: center; min-width: 80px; margin-right: 10px; padding: 5px; border: 2px solid ${index === 0 ? '#007bff' : '#ddd'}; border-radius: 6px; background: ${index === 0 ? '#f0f7ff' : '#fff'}; position:relative; cursor:pointer;`;
+
+            div.onclick = (e) => {
+                if (e.target.classList.contains('remove-img-btn')) return;
+                if (index !== 0) {
+                    const selected = selectedImagesForEdit.splice(index, 1)[0];
+                    selectedImagesForEdit.unshift(selected);
+                    renderEditPreview(id);
+                }
+            };
+
+            div.innerHTML = `
+                <img src="/admin/posting/${name}" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
+                <div style="display: flex; align-items: center; margin-top: 5px; gap: 3px;">
+                    <span style="font-size: 10px; font-weight: bold; color: ${index === 0 ? '#007bff' : '#666'};">
+                        ${index === 0 ? '★대표' : '[변경]'}
+                    </span>
+                    <button type="button" class="remove-img-btn" style="margin-left:5px; border:none; background:#ff4d4d; color:white; border-radius:50%; width:18px; height:18px; font-size:12px; cursor:pointer;">&times;</button>
+                </div>`;
+
+            div.querySelector('.remove-img-btn').onclick = (e) => {
+                e.stopPropagation();
+                selectedImagesForEdit.splice(index, 1);
+                renderEditPreview(id);
+            };
+            previewContainer.appendChild(div);
+        });
+    }
 
     window.toggleEditMode = function(id) {
         const p = currentItems.find(i => i.itemId === id);
         const row = document.getElementById(`row-${id}`);
+        selectedImagesForEdit = p.itemUrl ? [p.itemUrl.split('/').pop()] : [];
         const catOptions = Object.entries(categoryMap).map(([v,n])=> `<option value="${v}" ${p.dbCategory==v?'selected':''}>${n}</option>`).join('');
         const typeOptions = Object.entries(typeMap).map(([v,n])=> `<option value="${v}" ${p.dbType==v?'selected':''}>${n}</option>`).join('');
 
         row.innerHTML = `
             <td style="padding: 10px; vertical-align: top; width: 300px;">
                 <div style="width: 280px; border: 1px solid #eee; border-radius: 6px; background: #fafafa; padding: 8px; box-sizing: border-box;">
-                    <div id="preview-container-${id}" style="display: flex; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding-bottom: 8px; min-height: 100px; scrollbar-width: thin;">
-                        <div style="display: inline-flex; flex-direction: column; align-items: center; min-width: 80px; margin-right: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 6px; background: #fff;">
-                            <img src="${p.itemUrl || ''}" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
-                            <p style="font-size: 10px; color: #999; margin-top:5px; font-weight:bold;">기존이미지</p>
-                        </div>
-                    </div>
-                    <div style="margin-top: 5px; border-top: 1px solid #eee; padding-top: 8px;">
-                        <input type="file" id="edit-file-${id}" multiple style="font-size: 11px; width: 100%; color: #666;" onchange="previewEditFiles(${id})">
-                    </div>
+                    <div id="preview-container-${id}" style="display: flex; overflow-x: auto; white-space: nowrap; padding-bottom: 8px; min-height: 100px; scrollbar-width: thin;"></div>
+                    <button type="button" onclick="openGalleryForEdit(${id})" style="width:100%; padding:5px; background:#fff; border:1px dashed #007bff; color:#007bff; border-radius:4px; font-size:11px; cursor:pointer; font-weight:bold; margin-top:5px;">+ 추가</button>
                 </div>
             </td>
-            <td style="vertical-align: middle;">
-                <input type="text" id="edit-name-${id}" value="${p.itemName}" style="width:90%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:4px;">
-                <input type="text" id="edit-brand-${id}" value="${p.itemBrand}" style="width:90%; padding:6px; border:1px solid #ddd; border-radius:4px;">
-            </td>
-            <td style="vertical-align: middle;"><input type="number" id="edit-price-${id}" value="${p.itemPrice}" style="width:85px; padding:6px; border:1px solid #ddd; border-radius:4px;"></td>
-            <td style="vertical-align: middle;">
-                <select id="edit-cat-${id}" style="width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:4px;">${catOptions}</select>
-                <select id="edit-type-${id}" style="width:100%; padding:6px; border:1px solid #ddd; border-radius:4px;">${typeOptions}</select>
-            </td>
-            <td style="vertical-align: middle;"><input type="number" id="edit-stock-${id}" value="${p.itemStock}" style="width:65px; padding:6px; border:1px solid #ddd; border-radius:4px;"></td>
-            <td style="vertical-align: middle;">-</td>
-            <td style="vertical-align: middle; text-align: center;">
-                <button onclick="saveEdit(${id})" style="background:#28a745; color:white; border:none; padding:8px 12px; margin-bottom:5px; width:75px; cursor:pointer; border-radius:4px; font-weight:bold;">저장</button>
-                <button onclick="loadProductData()" style="background:#6c757d; color:white; border:none; padding:8px 12px; width:75px; cursor:pointer; border-radius:4px; font-weight:bold;">취소</button>
-            </td>`;
+            <td><input type="text" id="edit-name-${id}" value="${p.itemName}" style="width:90%;"><br><input type="text" id="edit-brand-${id}" value="${p.itemBrand}" style="width:90%;"></td>
+            <td><input type="number" id="edit-price-${id}" value="${p.itemPrice}" style="width:80px;"></td>
+            <td><select id="edit-cat-${id}">${catOptions}</select><br><select id="edit-type-${id}">${typeOptions}</select></td>
+            <td><input type="number" id="edit-stock-${id}" value="${p.itemStock}" style="width:60px;"></td>
+            <td>-</td>
+            <td><button onclick="saveEdit(${id})">저장</button><br><button onclick="loadProductData()">취소</button></td>`;
+        renderEditPreview(id);
     };
 
     window.saveEdit = async function(id) {
-        const token = document.querySelector('meta[name="_csrf"]').content;
-        const header = document.querySelector('meta[name="_csrf_header"]').content;
-        const formData = new FormData();
-
-        // 대표 이미지 인덱스 확보
-        const mainImageRadio = document.querySelector(`input[name="mainImageIdx-${id}"]:checked`);
-        const mainIdx = mainImageRadio ? parseInt(mainImageRadio.value) : 0;
-
+        const csrfToken = document.querySelector('meta[name="_csrf"]');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]');
+        if (selectedImagesForEdit.length === 0) return alert("이미지를 하나 이상 선택하세요.");
         const updateData = {
             itemId: id,
             itemName: document.getElementById(`edit-name-${id}`).value,
@@ -126,52 +152,24 @@ document.addEventListener('DOMContentLoaded', function() {
             dbCategory: parseInt(document.getElementById(`edit-cat-${id}`).value),
             dbType: parseInt(document.getElementById(`edit-type-${id}`).value),
             itemStock: parseInt(document.getElementById(`edit-stock-${id}`).value) || 0,
-            mainImageIdx: mainIdx
+            imageNames: selectedImagesForEdit
         };
-
-        formData.append("itemData", new Blob([JSON.stringify(updateData)], {type: "application/json"}));
-
-        const fileInput = document.getElementById(`edit-file-${id}`);
-        if (fileInput.files.length > 0) {
-            for (let i = 0; i < fileInput.files.length; i++) {
-                formData.append("files", fileInput.files[i]);
-            }
-        }
-
         try {
-            const res = await fetch(`/admin/api/items/${id}`, {
-                method: 'POST',
-                headers: { [header]: token },
-                body: formData
-            });
-
-            if (res.ok) {
-                alert("성공적으로 수정되었습니다.");
-                loadProductData();
-            } else {
-                const errorMsg = await res.text();
-                // 413 에러 등이 발생하면 여기서 메시지를 띄움
-                alert("수정 실패: " + errorMsg);
-            }
-        } catch (err) {
-            alert("서버 통신 오류가 발생했습니다.");
-        }
+            const headers = { 'Content-Type': 'application/json' };
+            if (csrfHeader && csrfToken) headers[csrfHeader.content] = csrfToken.content;
+            const res = await fetch(`/admin/api/items/${id}`, { method: 'PUT', headers: headers, body: JSON.stringify(updateData) });
+            if (res.ok) { alert("수정 완료!"); loadProductData(); }
+        } catch (err) { alert("서버 통신 오류"); }
     };
 
     window.deleteItem = function(id) {
         if (!confirm("정말 삭제하시겠습니까?")) return;
-        const token = document.querySelector('meta[name="_csrf"]').content;
-        const header = document.querySelector('meta[name="_csrf_header"]').content;
-        fetch(`/admin/api/items/${id}`, {
-            method: 'DELETE',
-            headers: { [header]: token }
-        }).then(res => {
-            if (res.ok) {
-                alert("삭제되었습니다.");
-                loadProductData();
-            } else {
-                res.text().then(msg => alert("삭제 실패: " + msg));
-            }
+        const csrfToken = document.querySelector('meta[name="_csrf"]');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]');
+        const headers = {};
+        if (csrfHeader && csrfToken) headers[csrfHeader.content] = csrfToken.content;
+        fetch(`/admin/api/items/${id}`, { method: 'DELETE', headers: headers }).then(res => {
+            if (res.ok) { alert("삭제 성공"); loadProductData(); }
         });
     };
 
