@@ -1,96 +1,80 @@
 package com.example.qwershop.admin.itemManagement.controller;
 
-
 import com.example.qwershop.admin.itemManagement.dto.ItemManagerDto;
 import com.example.qwershop.admin.itemManagement.service.ItemManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class ItemManagerController {
 
     @Autowired
     private ItemManagerService itemManagerService;
 
-    // 관리자 페이지 매핑
-    @GetMapping("/admin/itemList")
-    public String postListPage() { return "admin/post"; }
+    // [화면 매핑] ----------------------------------------------------
 
-    @GetMapping("/admin/addpost")
-    public String addPostPage() { return "admin/addpost"; }
+    // 제품 리스트 페이지 (localhost:8080/admin/itemList)
+    @GetMapping({"/itemList", "/itemlist", ""})
+    public String itemListPage() {
+        return "admin/post"; // templates/admin/post.html
+    }
 
-    /**
-     * 전체 상품 목록 조회 API
-     */
-    @GetMapping("/admin/api/items")
+    // 제품 추가 페이지 (localhost:8080/admin/addpost)
+    @GetMapping("/addpost")
+    public String addPostPage() {
+        return "admin/addpost"; // templates/admin/addpost.html
+    }
+
+    // [API 매핑] ----------------------------------------------------
+
+    @GetMapping("/api/items")
     @ResponseBody
-    public List<ItemManagerDto> getItemsApi() {
+    public List<ItemManagerDto> getItems() {
         return itemManagerService.getAllItems();
     }
 
-    /**
-     * 상품 등록 API (이미지 서버 8081 연동)
-     */
-    @PostMapping(value = "/admin/api/items", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping("/api/internal-files")
     @ResponseBody
-    public ResponseEntity<String> addItem(
-            @RequestPart("itemData") ItemManagerDto dto,
-            @RequestPart(value="files", required=false) List<MultipartFile> files) {
+    public List<String> getInternalFiles() {
+        return itemManagerService.getInternalFileList();
+    }
+
+    @PostMapping("/api/items")
+    @ResponseBody
+    public ResponseEntity<?> addItem(@RequestBody ItemManagerDto dto) {
         try {
-            System.out.println(">>> 상품 등록 요청 수신: " + dto.getItemName());
-            itemManagerService.saveItemWithFiles(dto, files);
-            return ResponseEntity.ok("success");
+            // Service에 아래 메서드가 구현되어 있어야 함
+            itemManagerService.saveItemWithInternalFiles(dto, dto.getImageNames());
+            return ResponseEntity.ok("등록 성공");
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("등록 실패: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("등록 실패: " + e.getMessage());
         }
     }
 
-    /**
-     * 상품 수정 API (이미지 포함 시 Multipart 처리를 위해 POST 사용)
-     * post.js의 saveEdit 함수와 매핑됩니다.
-     */
-    @PostMapping(value = "/admin/api/items/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping("/api/items/{itemId}")
     @ResponseBody
-    public ResponseEntity<String> updateItem(
-            @PathVariable("id") Long id,
-            @RequestPart("itemData") ItemManagerDto dto,
-            @RequestPart(value="files", required=false) List<MultipartFile> files) {
+    public ResponseEntity<?> updateItem(@PathVariable Long itemId, @RequestBody ItemManagerDto dto) {
         try {
-            System.out.println(">>> 상품 수정 요청 수신 (ID: " + id + ")");
-            dto.setItemId(id); // URL의 ID를 DTO에 세팅
-
-            // 서비스 계층 호출 (이미지가 있으면 교체, 없으면 정보만 수정)
-            itemManagerService.updateItemWithFiles(dto, files);
-
-            return ResponseEntity.ok("success");
+            itemManagerService.updateItemWithInternalFiles(itemId, dto);
+            return ResponseEntity.ok("수정 성공");
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(">>> 수정 오류: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 실패: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("수정 실패: " + e.getMessage());
         }
     }
 
-    /**
-     * 상품 삭제 API (관련 이미지 기록 및 연관 데이터 전체 삭제)
-     */
-    @DeleteMapping("/admin/api/items/{id}")
+    @DeleteMapping("/api/items/{itemId}")
     @ResponseBody
-    public ResponseEntity<String> deleteItem(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteItem(@PathVariable Long itemId) {
         try {
-            System.out.println(">>> 상품 삭제 요청 수신 (ID: " + id + ")");
-            itemManagerService.deleteItemCompletely(id);
-            return ResponseEntity.ok("success");
+            itemManagerService.deleteItem(itemId);
+            return ResponseEntity.ok("삭제 성공");
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("삭제 실패");
         }
     }
 }
-

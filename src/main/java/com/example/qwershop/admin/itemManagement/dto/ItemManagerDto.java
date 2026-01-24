@@ -1,18 +1,20 @@
 package com.example.qwershop.admin.itemManagement.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class ItemManagerDto {
     private Long itemId;
     private String itemName;
     private String itemBrand;
     private Integer itemPrice;
     private Integer itemStock;
-    private Integer dbType;     // DB item_type 매핑
-    private Integer dbCategory; // DB item_category 매핑
-    private List<String> itemUrls;
-    private String itemUrl;
+    private Integer dbCategory;
+    private Integer dbType;
     private String regTime;
+    private String itemUrl;
+    private List<String> imageNames; // 갤러리 파일명 담는 리스트
 }
