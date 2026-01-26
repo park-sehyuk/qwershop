@@ -38,7 +38,7 @@
         img.item_url as itemUrl
         FROM item i
         LEFT JOIN item_img img ON i.item_id = img.item_id
-        WHERE (img.is_main = '1' OR img.is_main IS NULL)
+        WHERE (img.is_main = 'Y' OR img.is_main = '1' OR img.is_main IS NULL)
         AND (i.item_name LIKE CONCAT('%', #{query}, '%')
         OR i.item_brand LIKE CONCAT('%', #{query}, '%'))
         ORDER BY i.reg_time DESC

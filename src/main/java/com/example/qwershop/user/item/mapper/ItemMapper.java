@@ -7,5 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ItemMapper {
-    List<ItemDto> getItemList(@Param("type") Integer type, @Param("sort") String sort);
+    List<ItemDto> getItemList(@Param("type") Integer type,
+                              @Param("types") List<Integer> types,
+                              @Param("sort") String sort);
 }

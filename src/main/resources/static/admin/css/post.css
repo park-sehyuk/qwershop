@@ -53,6 +53,38 @@
 .category-data-table th { background-color: #f2f2f2; padding: 12px; border: 1px solid #ddd; }
 .category-data-table td { padding: 12px; border: 1px solid #ddd; text-align: center; vertical-align: middle; }
 
+/* pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 10px;
+}
+.pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+}
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.page-link.active {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+}
+
 /* 즉석 수정 시 입력창 스타일 */
 .category-data-table input, .category-data-table select {
     width: 100%; padding: 5px; border: 1px solid black; border-radius: 4px;

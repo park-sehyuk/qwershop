@@ -47,9 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="/detail?itemId=${product.itemId}">
                             <img src="${imgSrc}" alt="${product.itemName}">
                         </a>
-                        <button class="wish-button ${isWished ? 'active' : ''}" data-product-name="${product.itemName}">
-                            ♥
-                        </button>
                     </div>
                     <div class="info">
                         <div class="brand">${product.itemBrand || ''}</div>
