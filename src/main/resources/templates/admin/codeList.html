@@ -2,28 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>공통 코드 관리</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-</head>
-<body>
 
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" th:href="@{/admin/css/codeList.css}">
+</head>
+<body id="codeList">
+<div id="scale">
+    <div class="left-side">
+        <a th:href="@{/admin/userList}" class="text-border">
+            <button class="userList">
+                <div class="userimg"><img th:src="@{/admin/img/user-nonecolor.png}" alt=""></div>
+                <div>회원관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/itemList}" class="text-border">
+            <button class="postList">
+                <div class="userimg"><img th:src="@{/admin/img/menu-bar.png}" alt=""></div>
+                <div>게시물 관리</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/codeList}" class="text-border">
+            <button class="codeList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+                <div>코드 리스트</div>
+            </button>
+        </a>
+        <a th:href="@{/admin/orderList}" class="text-border">
+            <button class="orderList">
+                <div class="userimg"><img th:src="@{/admin/img/blogging.png}" alt=""></div>
+                <div>주문 리스트</div>
+            </button>
+        </a>
+    </div>
 <div style="display: flex;">
     <!-- 그룹 코드 목록 -->
-    <div style="width: 30%; border-right: 1px solid #ccc;">
+    <div style="width: 30%;" class="card">
         <h3>그룹 코드</h3>
-        <ul>
+        <ul class="group-list">
             <li th:each="group : ${groupList}">
-                <a href="javascript:void(0);"
-                   th:attr="data-group-code=${group.groupCode}"
-                   th:text="|${group.groupName} (${group.groupCode})|"
-                   onclick="loadDetails(this)">
-                </a>
+                <button class="group-btn"
+                        th:data-group-code="${group.groupCode}"
+                        th:text="|${group.groupName} (${group.groupCode})|"
+                        onclick="loadDetails(this)">
+                </button>
             </li>
-
         </ul>
     </div>
 
     <!-- 상세 코드 목록 -->
-    <div style="width: 70%; padding-left: 20px;">
+    <div style="width: 70%; padding-left: 20px;" class="card">
         <h3>상세 코드</h3>
         <table border="1" id="detailTable">
             <thead>
@@ -42,34 +72,72 @@
         </table>
     </div>
 </div>
-
+</div>
 <script>
     function loadDetails(el) {
         const groupCode = el.dataset.groupCode;
 
-        $.get("/admin/api/codes/" + groupCode, function (data) {
-            let html = "";
+        $.ajax({
+            url: `/admin/api/codes/${groupCode}`,
+            type: "GET",
+            success: function (data) {
+                let html = "";
 
-            if (data.length === 0) {
-                html = `<tr><td colspan="4">데이터가 없습니다.</td></tr>`;
-            } else {
-                data.forEach(item => {
-                    html += `
+                if (data.length === 0) {
+                    html = `<tr><td colspan="4">데이터가 없습니다.</td></tr>`;
+                } else {
+                    data.forEach(item => {
+                        html += `
                         <tr>
-                            <td>${item.detailCode}</td>
+                            <td>${item.groupCode}</td>
                             <td>${item.codeName}</td>
                             <td>${item.sortOrder}</td>
-                            <td>${item.useYn}</td>
+                            <td>
+                                <span class="useYn-btn"
+                                  data-group-id="${item.groupId}"
+                                  data-use-yn="${item.useYn}"
+                                  onclick="toggleUseYn(this)">
+                                ${item.useYn}
+                                </span>
+                            </td>
                         </tr>
                     `;
-                });
+                    });
+                }
+                $("#detailTable tbody").html(html);
             }
-
-            $("#detailTable tbody").html(html);
         });
     }
+
+    function toggleUseYn(el) {
+        const groupId = el.dataset.groupId;
+        const currentYn = el.dataset.useYn;
+        const newYn = currentYn === 'Y' ? 'N' : 'Y';
+
+        const token = document.querySelector('meta[name="_csrf"]').content;
+        const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+        $.ajax({
+            url: "/admin/api/code/use-yn",
+            type: "PATCH",
+            contentType: "application/json",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            data: JSON.stringify({
+                groupId: groupId,
+                useYn: newYn
+            }),
+            success: function () {
+                el.dataset.useYn = newYn;
+                el.innerText = newYn;
+            },
+            error: function () {
+                alert("사용여부 변경 실패");
+            }
+        });
+    }
+
 </script>
-
-
 </body>
 </html>

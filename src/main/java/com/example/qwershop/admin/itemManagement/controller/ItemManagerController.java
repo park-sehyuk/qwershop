@@ -1,11 +1,14 @@
 package com.example.qwershop.admin.itemManagement.controller;
 
+import com.example.qwershop.admin.itemManagement.dto.ItemImageRequestDto;
 import com.example.qwershop.admin.itemManagement.dto.ItemManagerDto;
 import com.example.qwershop.admin.itemManagement.service.ItemManagerService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class ItemManagerController {
     // [화면 매핑] ----------------------------------------------------
 
     // 제품 리스트 페이지 (localhost:8080/admin/itemList)
-    @GetMapping({"/itemList", "/itemlist", ""})
+    @GetMapping({"/itemList", ""})
     public String itemListPage() {
         return "admin/post"; // templates/admin/post.html
     }
@@ -45,16 +48,30 @@ public class ItemManagerController {
     }
 
     @PostMapping("/api/items")
-    @ResponseBody
-    public ResponseEntity<?> addItem(@RequestBody ItemManagerDto dto) {
-        try {
-            // Service에 아래 메서드가 구현되어 있어야 함
-            itemManagerService.saveItemWithInternalFiles(dto, dto.getImageNames());
-            return ResponseEntity.ok("등록 성공");
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("등록 실패: " + e.getMessage());
-        }
+    public ResponseEntity<?> addItem(
+            @RequestParam String itemName,
+            @RequestParam String itemBrand,
+            @RequestParam int itemPrice,
+            @RequestParam int itemStock,
+            @RequestParam int dbCategory,
+            @RequestParam int dbType,
+            @RequestParam("images") List<MultipartFile> images,
+            HttpServletRequest request
+    ) {
+        ItemManagerDto dto = new ItemManagerDto();
+        dto.setItemName(itemName);
+        dto.setItemBrand(itemBrand);
+        dto.setItemPrice(itemPrice);
+        dto.setItemStock(itemStock);
+        dto.setDbCategory(dbCategory);
+        dto.setDbType(dbType);
+
+        itemManagerService.saveItemWithFiles(dto, images);
+        // 디버깅용
+        System.out.println(request.getContentType());
+        return ResponseEntity.ok().build();
     }
+
 
     @PutMapping("/api/items/{itemId}")
     @ResponseBody

@@ -11,6 +11,10 @@ public interface ItemManagerMapper {
     void insertItem(ItemManagerDto dto); // 신규 추가
     void updateItem(ItemManagerDto dto);
     void deleteItemImages(Long itemId);
-    void insertItemImage(@Param("itemId") Long itemId, @Param("fileName") String fileName);
+    void insertItemImage(
+            @Param("itemId") Long itemId,
+            @Param("fileName") String fileName,
+            @Param("isMain") String isMain
+    );
     void deleteItem(Long itemId);
 }

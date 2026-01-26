@@ -23,6 +23,8 @@
         <typeAlias alias="orderListDto" type="com.example.qwershop.admin.orderManagement.dto.OrderListDto" />
         <typeAlias alias="orderDetailDto" type="com.example.qwershop.admin.orderManagement.dto.OrderDetailDto" />
         <typeAlias alias="orderItemDto" type="com.example.qwershop.admin.orderManagement.dto.OrderItemDto" />
+        <typeAlias alias="groupCodeDto" type="com.example.qwershop.admin.codeManagement.dto.GroupCodeDto" />
+        <typeAlias alias="DetailCodeDto" type="com.example.qwershop.admin.codeManagement.dto.DetailCodeDto" />
 
     </typeAliases>
 </configuration>

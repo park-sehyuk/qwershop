@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.qwershop.admin.itemManagement.mapper.CodeMapper">
+<mapper namespace="com.example.qwershop.admin.codeManagement.mapper.CodeMapper">
 
-    <select id="selectGroupList" resultType="com.example.qwershop.admin.itemManagement.dto.CommonCodeDto">
-        SELECT DISTINCT group_code, group_name
+    <select id="selectGroupCodeList" resultType="groupCodeDto">
+        SELECT
+            group_code,
+            group_name,
+            note,
+            sort_order,
+            use_yn
         FROM group_code
         WHERE use_yn = 'Y'
+        ORDER BY sort_order
     </select>
 
-<!--   // 디테일 관련 이거 건드림될듯  흰거랑 보라색 글자 소문자로 반드시   -->
-    <select id="selectDetailList" resultType="com.example.qwershop.admin.itemManagement.dto.CommonCodeDto">
-        SELECT DETAIL_CODE, CODE_NAME, SORT_ORDER, USE_YN
-        FROM COMMON_CODE_TABLE
-        WHERE GROUP_CODE = #{groupCode}
-        ORDER BY SORT_ORDER ASC
+    <select id="selectDetailCodeList" resultType="detailCodeDto">
+        SELECT
+            group_id,
+            group_code,
+            code_name,
+            sort_order,
+            use_yn
+        FROM detail_code
+        WHERE group_code = #{groupCode}
+        ORDER BY sort_order
     </select>
 
+    <update id="updateDetailUseYn" parameterType="detailCodeDto">
+        UPDATE detail_code
+        SET use_yn = #{useYn}
+        WHERE group_id = #{groupId}
+    </update>
 </mapper>

@@ -30,7 +30,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/admin/api/**"))
+
 
                 .authorizeHttpRequests(auth -> auth                      
                         .requestMatchers("/", "/main", "/signUp", "/find/**","/findpw/**" , "/search/**", "/itemList", "/detail/**", "/user/**", "/members/**", "/item/**", "/include/**", "/layouts/**").permitAll()

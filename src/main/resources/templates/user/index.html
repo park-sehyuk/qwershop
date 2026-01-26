@@ -6,18 +6,6 @@
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $("#suggItemList").slick({
-        slidesToShow: 4,
-        slidesToScroll: 3,
-        autoplay: true,
-        autoplaySpeed: 2500,
-        arrows: false,
-        dots: false,
-      });
-    });
-  </script>
   <link th:href="@{/user/css/base.css}" rel="stylesheet"/>
   <link th:href="@{/user/css/main.css}" rel="stylesheet"/>
 </head>
@@ -64,7 +52,7 @@
         <div id="suggItemList">
           <th:block th:each="suggItem : ${suggItems}">
             <div class="item">
-              <a th:href="'/detail?ItemId='+${suggItem.itemId}">
+              <a th:href="'/detail?itemId='+${suggItem.itemId}">
                 <img th:src="${suggItem.itemUrl}" th:alt="${suggItem.itemName}">
                 <p class="title">[[${suggItem.itemName}]]</p>
                 <p class="price">[[${suggItem.itemPrice}]]원</p>

@@ -4,9 +4,9 @@
 .container {
   align-items: center;
   margin: 150px auto;
-  background-color: #fff;
+  background-color: var(--bg);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-soft);
   width: 100%;
   max-width: 650px;
   overflow: hidden;
@@ -14,7 +14,7 @@
 
 .tabs {
   display: flex;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line);
 }
 
 .tab {
@@ -22,14 +22,14 @@
   padding: 15px 0;
   text-align: center;
   font-weight: bold;
-  color: #888;
+  color: var(--text-muted);
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .tab.active {
-  color: #000;
-  border-bottom: 2px solid #000;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
 }
 
 .content-box {
@@ -37,11 +37,11 @@
 }
 
 .instruction {
-  color: #666;
+  color: var(--text-muted);
   font-size: 0.9em;
   margin-bottom: 20px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line);
   padding-bottom: 15px;
 }
 
@@ -52,7 +52,7 @@
 .input-group label {
   display: block;
   font-size: 0.9em;
-  color: #555;
+  color: var(--text-muted);
   margin-bottom: 5px;
 }
 
@@ -60,32 +60,32 @@
   width: calc(100% - 20px);
   padding: 10px;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--line);
   font-size: 1em;
   outline: none;
 }
 
 .input-group input[type="text"]:focus {
-  border-bottom-color: #000;
+  border-bottom-color: var(--primary);
 }
 
 .input-group input[type="password"] {
   width: calc(100% - 20px);
   padding: 10px;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--line);
   font-size: 1em;
   outline: none;
 }
 
 .input-group input[type="password"]:focus {
-  border-bottom-color: #000;
+  border-bottom-color: var(--primary);
 }
 
 .btn-confirm {
   width: 100%;
   padding: 15px;
-  background-color: #000;
+  background-color: var(--primary);
   color: #fff;
   border: none;
   border-radius: 0 0 8px 8px;
@@ -96,5 +96,5 @@
 }
 
 .btn-confirm:hover {
-  background-color: #333;
+  background-color: var(--primary-strong);
 }

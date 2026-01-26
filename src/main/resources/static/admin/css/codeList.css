@@ -1,0 +1,240 @@
+@charset "utf-8";
+
+#scale {
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid black;
+}
+
+#scale .left-side {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: rgb(117, 117, 117);
+}
+
+.userimg {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userimg img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.left-side button {
+    font-size: 14px;
+    color: white;
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+    position: relative;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    gap: 10px;
+}
+
+.text-border{
+    text-decoration: none;
+}
+
+.left-side button:last-child {
+    border-bottom: none;
+}
+
+.left-side button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.left-side .codeList {
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+/* admin layout normalization */
+:root {
+    --admin-font: "Noto Sans KR", "Noto Sans JP", "Apple SD Gothic Neo",
+        "Malgun Gothic", "Segoe UI", sans-serif;
+    --admin-text: #222;
+    --admin-bg: #f7f7f7;
+}
+html {
+    font-size: 16px;
+}
+body {
+    margin: 0;
+    font-family: var(--admin-font);
+    color: var(--admin-text);
+    background: var(--admin-bg);
+    -webkit-text-size-adjust: 100%;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+#scale {
+    width: min(1440px, 100%);
+    min-height: 100vh;
+}
+.top-right {
+    width: 100%;
+    height: auto;
+}
+
+/* 기존 스타일 유지 및 보완 */
+#scale {
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh; /* 화면 전체 높이 확보 */
+    border: 1px solid #ddd;
+}
+
+/* =============================
+   기본 레이아웃 (사이드바 제외)
+============================= */
+
+#codeList {
+    background-color: #f9fafb;
+    font-family: 'Pretendard', sans-serif;
+}
+
+#scale {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =============================
+   메인 콘텐츠 영역
+============================= */
+
+#scale > div:last-child {
+    flex: 1;
+    padding: 32px;
+    background-color: #f9fafb;
+}
+
+/* =============================
+   카드 공통 스타일
+============================= */
+
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+/* =============================
+   그룹 코드 영역
+============================= */
+
+.group-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.group-list li + li {
+    margin-top: 8px;
+}
+
+.group-btn {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.group-btn:hover {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+/* =============================
+   상세 코드 테이블
+============================= */
+
+#detailTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#detailTable thead {
+    background-color: #f3f4f6;
+}
+
+#detailTable th {
+    padding: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    text-align: left;
+}
+
+#detailTable td {
+    padding: 14px;
+    font-size: 14px;
+    color: #111827;
+    border-top: 1px solid #e5e7eb;
+}
+
+#detailTable tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* =============================
+   사용여부 토글 버튼
+============================= */
+
+.useYn-btn {
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.useYn-btn[data-use-yn="Y"] {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+.useYn-btn[data-use-yn="N"] {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+.useYn-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+}

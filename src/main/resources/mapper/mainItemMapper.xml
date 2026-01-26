@@ -12,6 +12,8 @@
                 , item_url
         FROM    item i JOIN item_img ii ON i.item_id = ii.item_id
         WHERE item_category = #{itemCategory}
+        ORDER BY i.reg_time DESC
+        LIMIT 10
     </select>
 
     <select id="selectSugBrand" parameterType="string" resultType="mainItemDto">
@@ -26,7 +28,7 @@
         AND item_brand = #{brand}
     </select>
 
-    <select id="searchItems" resultType="com.example.qwershop.user.main.dto.MainItemDto">
+    <select id="searchItems" resultType="mainItemDto">
         SELECT
         i.item_id as itemId,
         i.item_name as itemName,

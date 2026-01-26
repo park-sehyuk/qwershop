@@ -24,15 +24,15 @@
           </button>
         </a>
 
-        <a th:href="@{/admin/category}" class="text-border">
-          <button class="categoryList">
+        <a th:href="@{/admin/codeList}" class="text-border">
+          <button class="codeList">
             <div class="userimg3"><img th:src="@{/admin/img/blogging.png}" alt="" /></div>
-            <div>카테고리 리스트</div>
+            <div>코드 리스트</div>
           </button>
         </a>
         <a th:href="@{/admin/orderList}" class="text-border">
           <button class="orderList">
-            <div class="userimg"><img th:src="@{/admin/img/blogging color.png}" alt=""></div>
+            <div class="userimg"><img th:src="@{/admin/img/blogging.png}" alt=""></div>
             <div>주문 리스트</div>
           </button>
         </a>
@@ -41,21 +41,7 @@
         <div class="right-side">
           <div class="right-Title">
             <p class="right-Title1">회원관리</p>
-            <p class="right-Title2">구매하신 회원분들의 내역조회 확인입니다.</p>
-          </div>
-          <div class="payment">
-            <p class="payment-text">결제 일시</p>
-            <div class="payment-cal">
-              <input type="date" id="startDate" value="2025-05-25" />
-              <input type="date" id="endDate" value="2025-07-06" />
-            </div>
-          </div>
-          <div class="button-tap">
-            <div class="startsearch">
-              <button class="starline">초기화</button>
-              <button class="search">검색</button>
-            </div>
-            <button class="download">엑셀 다운로드</button>
+            <p class="right-Title2">가입된 회원을 조회합니다.</p>
           </div>
         </div>
         <table class="user-data-table">
@@ -121,6 +107,6 @@
         </div>
       </div>
     </div>
-    <script th:src="@{/admin/js/userList.js}"></script>-
+    <script th:src="@{/admin/js/userList.js}"></script>
   </body>
 </html>

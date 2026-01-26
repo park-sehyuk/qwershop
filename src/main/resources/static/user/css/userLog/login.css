@@ -6,17 +6,17 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  color: #333;
+  color: var(--text);
   width: 100%;
   padding: 20px;
 }
 
 .form-wrapper {
   width: 650px;
-  background-color: #ffffff;
+  background-color: var(--bg);
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-soft);
 }
 
 .main-title {
@@ -24,12 +24,12 @@
   font-weight: 700;
   text-align: center;
   margin: 0 0 30px 0;
-  color: #000;
+  color: var(--primary);
 }
 
 .tab-nav {
   display: flex;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--line);
 }
 
 .tab-item {
@@ -39,16 +39,16 @@
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  color: #868e96;
+  color: var(--text-muted);
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color 0.3s, border-color 0.3s;
 }
 
 .tab-item.active {
-  color: #000000;
+  color: var(--primary);
   font-weight: 700;
-  border-bottom-color: #000000;
+  border-bottom-color: var(--primary);
 }
 
 .form-content {
@@ -71,7 +71,7 @@ input[type="password"] {
   width: 100%;
   padding: 10px 0;
   border: none;
-  border-bottom: 1px solid #ced4da;
+  border-bottom: 1px solid var(--line);
   font-size: 16px;
   outline: none;
   transition: border-color 0.3s;
@@ -79,7 +79,7 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-  border-bottom-color: #000;
+  border-bottom-color: var(--primary);
 }
 
 .options-group {
@@ -90,7 +90,7 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #495057;
+  color: var(--text-muted);
   cursor: pointer;
 }
 
@@ -105,7 +105,7 @@ input[type="password"]:focus {
   width: 100%;
   padding: 15px;
   border: none;
-  background-color: #000000;
+  background-color: var(--primary);
   color: #ffffff;
   font-size: 16px;
   font-weight: 700;
@@ -114,8 +114,9 @@ input[type="password"]:focus {
   transition: background-color 0.3s;
 }
 
-.btn-login:hover .btn-order-inquiry:hover {
-  background-color: #333;
+.btn-login:hover,
+.btn-order-inquiry:hover {
+  background-color: var(--primary-strong);
 }
 
 .util-links {
@@ -126,17 +127,17 @@ input[type="password"]:focus {
 
 .util-links a {
   text-decoration: none;
-  color: #495057;
+  color: var(--text-muted);
   margin: 0 5px;
   transition: color 0.3s;
 }
 
 .util-links a:hover {
-  color: #000;
+  color: var(--primary);
 }
 
 .util-links .separator {
-  color: #ced4da;
+  color: var(--line);
 }
 
 .hidden {

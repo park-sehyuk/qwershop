@@ -16,34 +16,69 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 42px;
+  color: var(--primary);
+  letter-spacing: 0.04em;
 }
 
 #bestItem #bestItemList {
   width: 1440px;
 }
-#bestItem #bestItemList .item {
-  padding: 0 10px;
+#bestItem #bestItemList .item,
+#suggItem #suggItemList .item,
+#productItem #productItemList .item {
   box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+
+#bestItem #bestItemList .item a,
+#suggItem #suggItemList .item a,
+#productItem #productItemList .item a {
+  display: block;
+  padding-bottom: 18px;
+}
+#bestItem #bestItemList .item:hover,
+#suggItem #suggItemList .item:hover,
+#productItem #productItemList .item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(39, 74, 120, 0.12);
+  border-color: var(--accent);
 }
 #bestItem #bestItemList img {
   width: 100%;
-  height: 550px;
+  height: 420px;
   margin-bottom: 7px;
+  display: block;
+  object-fit: cover;
 }
 #bestItem #bestItemList .title {
   font-size: 17px;
   margin-bottom: 4px;
-  color: #565656;
+  color: var(--text-muted);
+  padding: 0 16px;
 }
-#bestItem li .price {
+#bestItem #bestItemList .price {
   font-size: 15px;
-  color: #000;
+  color: var(--text);
   padding-right: 10px;
+  padding-left: 16px;
+  font-weight: 600;
 }
-#bestItem li .content {
+#bestItem #bestItemList .content {
   font-size: 14px;
-  color: #565656;
+  color: var(--text-muted);
   margin-bottom: 3px;
+  padding: 0 16px;
+}
+#bestItem #bestItemList .item:hover .title,
+#suggItem #suggItemList .item:hover .title,
+#productItem #productItemList .item:hover .title {
+  color: var(--primary);
 }
 
 /* 추천 상품 아이템 */
@@ -57,35 +92,42 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 42px;
+  color: var(--primary);
+  letter-spacing: 0.04em;
 }
 #suggItem #suggItemList {
   display: flex;
-  gap: 20px;
+  gap: 28px;
   justify-content: center;
 }
 #suggItem #suggItemList .item {
-  padding: 0 10px;
   box-sizing: border-box;
 }
 #suggItem img {
   width: 100%;
-  height: 550px;
+  height: 420px;
   margin-bottom: 7px;
+  display: block;
+  object-fit: cover;
 }
 #suggItem .title {
   font-size: 17px;
   margin-bottom: 4px;
-  color: #565656;
+  color: var(--text-muted);
+  padding: 0 16px;
 }
 #suggItem .price {
   font-size: 15px;
-  color: #000;
+  color: var(--text);
   padding-right: 10px;
+  padding-left: 16px;
+  font-weight: 600;
 }
 #suggItem .content {
   font-size: 14px;
-  color: #565656;
+  color: var(--text-muted);
   margin-bottom: 3px;
+  padding: 0 16px;
 }
 #hashList {
   display: flex;
@@ -95,6 +137,14 @@
 }
 #hashList button {
   font-size: 28px;
+  color: var(--primary);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+#hashList button:hover {
+  color: var(--primary-strong);
+  border-color: var(--accent);
 }
 
 /* 이달의 상품 */
@@ -109,33 +159,41 @@
   text-align: center;
   font-size: 36px;
   margin-bottom: 42px;
+  color: var(--primary);
+  letter-spacing: 0.04em;
 }
 #productItem #productItemList {
   display: flex;
-  gap: 20px;
+  gap: 28px;
 }
 #productItem .item {
   width: 503px;
 }
 #productItem img {
   width: 100%;
-  height: 550px;
+  height: 420px;
   margin-bottom: 7px;
+  display: block;
+  object-fit: cover;
 }
 #productItem .title {
   font-size: 17px;
   margin-bottom: 4px;
-  color: #565656;
+  color: var(--text-muted);
+  padding: 0 16px;
 }
 #productItem .price {
   font-size: 15px;
-  color: #000;
+  color: var(--text);
   padding-right: 10px;
+  padding-left: 16px;
+  font-weight: 600;
 }
 #productItem .content {
   font-size: 14px;
-  color: #565656;
+  color: var(--text-muted);
   margin-bottom: 3px;
+  padding: 0 16px;
 }
 
 /* sns 사진 */
@@ -148,6 +206,8 @@
   text-align: end;
   font-size: 36px;
   margin-bottom: 42px;
+  color: var(--primary);
+  letter-spacing: 0.04em;
 }
 #imgList ul {
   display: flex;

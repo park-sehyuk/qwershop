@@ -5,7 +5,7 @@
 }
 
 .section {
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid var(--primary);
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
@@ -25,13 +25,13 @@
 }
 
 .order-date {
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.9rem;
 }
 
 .order-price {
     font-weight: bold;
-    color: #e44d26;
+    color: var(--accent);
 }
 
 .badge {
