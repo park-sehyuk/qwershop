@@ -1,7 +1,6 @@
 const ITEMS_PER_PAGE = 12;
 let currentPage = 1;
 let currentSort = "popular";
-let wishList = new Set();
 
 function render() {
   const grid = document.getElementById("product-grid");
@@ -23,7 +22,6 @@ function render() {
         <a href="/detail?id=${product.itemId}">
           <img src="${product.itemUrl || ''}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23aaa%22>No Image</text></svg>';">
         </a>
-        <button class="wish-button ${wishList.has(product.itemName) ? 'active' : ''}" data-product-name="${product.itemName}">♥</button>
       </div>
       <div class="info">
         <div class="brand">${product.itemBrand}</div>

@@ -12,7 +12,7 @@ public class ItemService {
     @Autowired
     private ItemMapper itemMapper;
 
-    public List<ItemDto> getItemList(Integer type, String sort) {
-        return itemMapper.getItemList(type, sort);
+    public List<ItemDto> getItemList(Integer type, List<Integer> types, String sort) {
+        return itemMapper.getItemList(type, types, sort);
     }
 }

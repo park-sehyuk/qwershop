@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tableBody = document.getElementById('product-list-body');
+    const paginationEl = document.getElementById('pagination');
     const galleryModal = document.getElementById('gallery-modal');
     const galleryOverlay = document.getElementById('gallery-overlay');
     const galleryGrid = document.getElementById('gallery-grid');
 
+    const ITEMS_PER_PAGE = 20;
+    let currentPage = 1;
     const categoryMap = { 13: "BEST", 14: "추천상품", 15: "이달의 상품" };
 
     // 이 부분이 누락되어 에러가 났던 것입니다. 전체 다시 넣어드립니다.
@@ -30,11 +33,38 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 currentItems = data;
-                tableBody.innerHTML = '';
-                data.forEach(p => renderRow(p));
+                currentPage = 1;
+                renderPage();
             })
             .catch(err => console.error("데이터 로드 실패:", err));
     };
+
+    function renderPage() {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const pageItems = currentItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+        tableBody.innerHTML = '';
+        pageItems.forEach(p => renderRow(p));
+        renderPagination(currentItems.length);
+    }
+
+    function renderPagination(totalItems) {
+        if (!paginationEl) return;
+        const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
+        paginationEl.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            const btn = document.createElement('button');
+            btn.className = `page-link ${i === currentPage ? 'active' : ''}`;
+            btn.textContent = i;
+            btn.addEventListener('click', () => {
+                currentPage = i;
+                renderPage();
+                window.scrollTo(0, 0);
+            });
+            li.appendChild(btn);
+            paginationEl.appendChild(li);
+        }
+    }
 
     function renderRow(p) {
         const row = document.createElement('tr');
@@ -100,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             div.innerHTML = `
-                <img src="/admin/posting/${name}" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
+                <img src="/user/posting/${name}" style="width:70px; height:70px; object-fit:cover; border-radius:4px;">
                 <div style="display: flex; align-items: center; margin-top: 5px; gap: 3px;">
                     <span style="font-size: 10px; font-weight: bold; color: ${index === 0 ? '#007bff' : '#666'};">
                         ${index === 0 ? '★대표' : '[변경]'}

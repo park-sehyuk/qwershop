@@ -18,13 +18,20 @@ public class ItemController {
 
     @GetMapping("/itemList")
     public String itemList(@RequestParam(name = "type", required = false) Integer type,
+                           @RequestParam(name = "types", required = false) List<Integer> types,
                            @RequestParam(name = "sort", required = false, defaultValue = "latest") String sort,
                            Model model) {
 
-        List<ItemDto> list = itemService.getItemList(type, sort);
+        List<ItemDto> list = itemService.getItemList(type, types, sort);
 
         model.addAttribute("itemList", list);
-        model.addAttribute("selectedType", type);
+        if (types != null && !types.isEmpty()) {
+            model.addAttribute("selectedTypes", types);
+            model.addAttribute("selectedType", null);
+        } else {
+            model.addAttribute("selectedType", type);
+            model.addAttribute("selectedTypes", null);
+        }
         model.addAttribute("currentSort", sort);
 
         return "user/production/itemList";

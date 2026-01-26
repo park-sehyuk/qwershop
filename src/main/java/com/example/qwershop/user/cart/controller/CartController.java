@@ -1,10 +1,8 @@
 package com.example.qwershop.user.cart.controller;
 
 import com.example.qwershop.user.cart.dto.CartDetailDto;
-import com.example.qwershop.user.cart.dto.CartDto;
 import com.example.qwershop.user.cart.dto.CartItemDto;
 import com.example.qwershop.user.cart.service.CartService;
-import com.example.qwershop.user.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,6 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
-    private final MemberService memberService;
 
     @GetMapping("/cart")
     public String cartPage(Principal principal, Model model) {
