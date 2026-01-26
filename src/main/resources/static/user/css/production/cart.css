@@ -1,37 +1,37 @@
 /* cart page styles */
 .cart-container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
-.cart-title { font-size: 28px; font-weight: 800; margin-bottom: 30px; border-bottom: 2px solid #222; padding-bottom: 15px; }
+.cart-title { font-size: 28px; font-weight: 800; margin-bottom: 30px; border-bottom: 2px solid var(--primary); padding-bottom: 15px; color: var(--primary); }
 
 .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-.cart-table th { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; color: #666; }
-.cart-table td { padding: 20px 10px; border-bottom: 1px solid #f9f9f9; vertical-align: middle; }
+.cart-table th { padding: 15px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--text-muted); }
+.cart-table td { padding: 20px 10px; border-bottom: 1px solid var(--bg-soft); vertical-align: middle; }
 
 .item-info { display: flex; align-items: center; gap: 20px; }
-.item-thumb { width: 100px; height: 120px; object-fit: cover; border-radius: 4px; background: #f4f4f4; }
-.item-title { font-weight: 700; font-size: 16px; margin-bottom: 5px; color: #222; }
+.item-thumb { width: 100px; height: 120px; object-fit: cover; border-radius: 6px; background: var(--bg-soft); }
+.item-title { font-weight: 700; font-size: 16px; margin-bottom: 5px; color: var(--text); }
 
 /* 옵션 뱃지 스타일 */
-.option-tag { font-size: 12px; color: #888; background: #f0f0f0; padding: 3px 8px; border-radius: 12px; display: inline-block; margin-top: 5px; }
+.option-tag { font-size: 12px; color: var(--text-muted); background: var(--accent-soft); padding: 3px 8px; border-radius: 12px; display: inline-block; margin-top: 5px; }
 
-.qty-input { width: 50px; padding: 5px; text-align: center; border: 1px solid #ddd; border-radius: 4px; }
-.price-text { font-weight: 700; color: #222; }
-.btn-remove { background: none; border: 1px solid #ddd; color: #999; padding: 5px 10px; cursor: pointer; font-size: 12px; transition: 0.2s; }
-.btn-remove:hover { border-color: #f33; color: #f33; }
+.qty-input { width: 50px; padding: 5px; text-align: center; border: 1px solid var(--line); border-radius: 4px; }
+.price-text { font-weight: 700; color: var(--text); }
+.btn-remove { background: none; border: 1px solid var(--line); color: var(--text-muted); padding: 5px 10px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+.btn-remove:hover { border-color: var(--accent); color: var(--accent); }
 
 /* 하단 요약 영역 */
-.cart-footer { display: flex; justify-content: space-between; align-items: flex-start; background: #fcfcfc; padding: 30px; border-radius: 8px; border: 1px solid #eee; }
+.cart-footer { display: flex; justify-content: space-between; align-items: flex-start; background: var(--bg-soft); padding: 30px; border-radius: 8px; border: 1px solid var(--line); }
 .total-info { text-align: right; }
-.total-info p { margin-bottom: 10px; color: #666; }
-.total-price { font-size: 24px; font-weight: 800; color: #f33; }
+.total-info p { margin-bottom: 10px; color: var(--text-muted); }
+.total-price { font-size: 24px; font-weight: 800; color: var(--accent); }
 
 .action-btns { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
-.btn-order { background: #222; color: #fff; padding: 15px 50px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; }
-.btn-clear { background: #fff; border: 1px solid #ccc; padding: 15px 30px; cursor: pointer; }
+.btn-order { background: var(--primary); color: #fff; padding: 15px 50px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; }
+.btn-clear { background: var(--bg); border: 1px solid var(--line); padding: 15px 30px; cursor: pointer; }
 
 @media(max-width:720px){
   .item-thumb{width:60px;height:60px}
   .cart-table thead{display:none}
-  .cart-row{display:block;border-bottom:1px solid #eee;padding:12px 0}
+  .cart-row{display:block;border-bottom:1px solid var(--line);padding:12px 0}
   .cart-row td{display:block;padding:6px 0}
   .col-act{margin-top:8px}
   .cart-actions{flex-direction:column;gap:10px;align-items:flex-end}
@@ -43,9 +43,9 @@
   align-items: center;           /* 세로 중앙 정렬 */
   margin-top: 40px;
   padding: 30px 40px;
-  background-color: #f9f9f9;      /* 약간의 배경색으로 영역 구분 */
+  background-color: var(--bg-soft);      /* 약간의 배경색으로 영역 구분 */
   border-radius: 8px;
-  border-top: 2px solid #222;
+  border-top: 2px solid var(--primary);
 }
 
 /* 왼쪽 금액 영역 스타일 */
@@ -58,20 +58,20 @@
 .total-label {
   font-size: 18px;
   font-weight: 600;
-  color: #444;
+  color: var(--text);
 }
 
 .total-amount {
   font-size: 32px;
   font-weight: 800;
-  color: #f33;
+  color: var(--accent);
 }
 
 /* 오른쪽 버튼 영역 스타일 */
 .btn-order {
   width: 250px;       /* 버튼 너비 적정 수준 유지 */
   height: 60px;
-  background: #222;
+  background: var(--primary);
   color: #fff;
   border: none;
   font-size: 18px;
@@ -81,7 +81,7 @@
 }
 
 .btn-order:hover {
-  background: #444;
+  background: var(--primary-strong);
 }
 
 /* 모바일 등 좁은 화면 대응 */

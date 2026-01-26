@@ -20,7 +20,7 @@
 .left-image {
     width: 100%;
     aspect-ratio: 1 / 1; /* 정사각형 유지 */
-    background-color: #f8f8f8;
+    background-color: var(--bg-soft);
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 30px;
@@ -38,23 +38,23 @@
     position: sticky;
     top: 100px; /* 스크롤 시 상단 고정 */
     padding: 30px;
-    border: 1px solid #eee;
+    border: 1px solid var(--line);
     border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: var(--bg);
+    box-shadow: var(--shadow-soft);
 }
 
 /* 텍스트 스타일링 */
 .price {
     font-size: 24px;
     font-weight: 800;
-    color: #333;
+    color: var(--text);
     margin-bottom: 10px;
 }
 
 .brand-name {
     font-size: 14px;
-    color: #888;
+    color: var(--text-muted);
     margin-bottom: 4px;
 }
 
@@ -79,18 +79,22 @@
 select, input[type="number"] {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--line);
     border-radius: 6px;
     font-size: 14px;
     outline: none;
     transition: border-color 0.2s;
+}
+select:focus,
+input[type="number"]:focus {
+    border-color: var(--primary);
 }
 
 /* 총 결제 금액 */
 .total-price-area {
     margin: 25px 0;
     padding-top: 20px;
-    border-top: 2px solid #f4f4f4;
+    border-top: 2px solid var(--line);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,7 +103,7 @@ select, input[type="number"] {
 #totalPrice {
     font-size: 22px;
     font-weight: 800;
-    color: #f33;
+    color: var(--accent);
 }
 
 /* 버튼 디자인 */
@@ -119,13 +123,13 @@ select, input[type="number"] {
 }
 
 .Buy { /* 장바구니 */
-    background: #fff;
-    border: 1px solid #222;
-    color: #222;
+    background: var(--bg);
+    border: 1px solid var(--primary);
+    color: var(--primary);
 }
 
 .Cart { /* 구매하기 */
-    background: #222;
+    background: var(--primary);
     border: none;
     color: #fff;
 }
@@ -133,7 +137,7 @@ select, input[type="number"] {
 /* 탭 메뉴 스타일 */
 .tabs {
     display: flex;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--line);
     margin-bottom: 20px;
 }
 
@@ -143,12 +147,12 @@ select, input[type="number"] {
     border: none;
     cursor: pointer;
     font-size: 15px;
-    color: #999;
+    color: var(--text-muted);
 }
 
 .tab.active {
-    color: #222;
-    border-bottom: 2px solid #222;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
     font-weight: bold;
 }
 
@@ -169,7 +173,7 @@ select, input[type="number"] {
 }
 .size-table th, .size-table td {
     padding: 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--line);
     text-align: center;
 }
 
@@ -189,14 +193,14 @@ select, input[type="number"] {
 .star-rating label {
     cursor: pointer;
     font-size: 30px;
-    color: #ddd;
+    color: var(--line);
     transition: 0.2s;
 }
 
 .star-rating input:checked ~ label,
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-    color: #f39c12;
+    color: var(--accent);
 }
 
 /* 반응형 처리 */

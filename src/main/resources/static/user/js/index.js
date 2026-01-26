@@ -486,10 +486,29 @@ function enableDragScroll(container) {
 enableDragScroll(bestItem);
 
 loadItems();
+function applySlickGap(selector, gap) {
+  const halfGap = gap / 2;
+  $(selector).on("init reInit setPosition", function () {
+    $(this).find(".slick-slide").css("margin", `0 ${halfGap}px`);
+    $(this).find(".slick-list").css("margin", `0 -${halfGap}px`);
+  });
+}
+
+applySlickGap("#bestItemList", 28);
+applySlickGap("#suggItemList", 28);
 $("#bestItemList").slick({
   infinite: true,
   slidesToShow: 4,
   slidesToScroll: 3,
   autoplay: true,
   arrows: false,
+});
+$("#suggItemList").slick({
+  infinite: true,
+  slidesToShow: 4,
+  slidesToScroll: 3,
+  autoplay: true,
+  autoplaySpeed: 2500,
+  arrows: false,
+  dots: false,
 });

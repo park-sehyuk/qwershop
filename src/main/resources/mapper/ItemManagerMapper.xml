@@ -43,13 +43,24 @@
     </delete>
 
     <insert id="insertItemImage">
-        INSERT INTO item_img (item_id, item_url, img_name, origin_name, reg_time)
+        INSERT INTO item_img (
+            item_id,
+            item_url,
+            img_name,
+            origin_name,
+            is_main,
+            reg_time
+        )
         VALUES (
                    #{itemId},
-                   CONCAT('/admin/posting/', #{fileName}),
-                   #{fileName}, #{fileName}, NOW()
+                   CONCAT('/user/posting/', #{fileName}),
+                   #{fileName},
+                   #{fileName},
+                   #{isMain},
+                   NOW()
                )
     </insert>
+
 
     <delete id="deleteItem">
         DELETE FROM item WHERE item_id = #{itemId}

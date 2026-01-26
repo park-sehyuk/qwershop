@@ -1,15 +1,37 @@
 @charset "utf-8";
 
 /* 페이지에 상관없이 사용되는(헤더, 푸터, 버튼등) 스타일 저장 */
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f6f3;
+  --primary: #274a78;
+  --primary-strong: #1f3c63;
+  --accent: #a68a7b;
+  --accent-soft: #efe7e1;
+  --text: #333333;
+  --text-muted: #6b6b6b;
+  --line: #e3e0dc;
+  --shadow-soft: 0 8px 24px rgba(39, 74, 120, 0.08);
+}
+
+body {
+  font-family: "Spoqa Han Sans Neo", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    "sans-serif";
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+}
 
 div {
-  font-family: "Spoqa Han Sans Neo", "sans-serif";
-  font-size: 14px;
-  line-height: 1.5;
-  color: #121212;
+  font-family: inherit;
+  color: inherit;
 }
 a {
-  color: black !important;
+  color: var(--text) !important;
+}
+a:hover {
+  text-decoration: none;
 }
 #wrapper {
   width: 1440px;
@@ -18,8 +40,10 @@ a {
 #header {
   position: relative;
   width: 100%;
-  color: black;
+  color: var(--text);
+  background-color: var(--bg);
   z-index: 500;
+  box-shadow: 0 6px 18px rgba(39, 74, 120, 0.05);
 }
 
 #header-top {
@@ -31,8 +55,8 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid #121212;
-  border-bottom: 1px solid #121212;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 #header #category {
   display: flex;
@@ -41,8 +65,11 @@ a {
   gap: 40px;
 }
 #header #category > li {
-  color: #222;
+  color: var(--text);
   padding: 24px 0px;
+}
+#header #category > li:hover {
+  color: var(--primary);
 }
 #header #icons {
   display: flex;
@@ -74,7 +101,7 @@ a {
   width: 17px;
   height: 17px;
   border-radius: 50%;
-  background-color: #707070;
+  background-color: var(--primary);
   color: #fff;
   font-size: 10px;
   text-align: Center;
@@ -89,19 +116,20 @@ a {
 }
 
 #footer {
-  background-color: #f4f4f4;
+  background-color: var(--bg-soft);
   height: auto;
   padding: 0 25px;
+  border-top: 1px solid var(--line);
 }
 #footer span {
   display: block;
-  color: #222;
+  color: var(--text);
 }
 #footer strong {
   font-weight: bold;
 }
 #footer .fMenu {
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--line);
 }
 #footer .fMenu ul {
   display: flex;
@@ -112,14 +140,14 @@ a {
 #footer .fMenu ul li {
   position: relative;
   font-size: 14px;
-  color: #222;
+  color: var(--text);
 }
 #footer .fMenu ul li:not(:last-child)::after {
   content: "";
   display: block;
   width: 1px;
   height: 20px;
-  background-color: #c8c8c8;
+  background-color: var(--line);
   position: absolute;
   top: 2px;
   right: -15px;
@@ -137,7 +165,8 @@ a {
   display: none;
   width: 100%;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: var(--bg);
+  box-shadow: var(--shadow-soft);
 }
 #searchResult #srTop {
   position: relative;
@@ -152,7 +181,7 @@ a {
   margin: 0 auto;
 }
 #searchResult #srTop div #search {
-  background-color: #f5f5f5;
+  background-color: var(--bg-soft);
   width: 825px;
   height: 36px;
   border: none;
@@ -166,9 +195,9 @@ a {
   width: 31px;
   height: 31px;
   background-repeat: no-repeat;
-  border: 2px solid #f5f5f5;
+  border: 2px solid var(--bg-soft);
   border-radius: 50%;
-  background-color: #f5f5f5;
+  background-color: var(--bg-soft);
   text-indent: -9999px;
   background-image: url(../imges/reading.png);
   background-size: 24px 24px;
@@ -180,9 +209,9 @@ a {
   width: 36px;
   height: 36px;
   background-repeat: no-repeat;
-  border: 2px solid #f5f5f5;
+  border: 2px solid var(--bg-soft);
   border-radius: 50%;
-  background-color: #f5f5f5;
+  background-color: var(--bg-soft);
   text-indent: -9999px;
   background-image: url(../imges/x.png);
   background-size: 24px 24px;
@@ -194,7 +223,7 @@ a {
   gap: 30px;
 }
 #searchResult ul li button {
-  background-color: #f5f5f5;
+  background-color: var(--accent-soft);
   border-radius: 20px;
   padding: 10px;
   font-weight: bold;
@@ -209,7 +238,7 @@ a {
   padding: 12px 0px;
   margin-bottom: 10px;
   font-size: 14px;
-  color: #707072;
+  color: var(--text-muted);
   font-weight: bold;
 }
 .textInput {
@@ -223,7 +252,7 @@ a {
   display: none;
   position: absolute;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  background-color: var(--bg);
   z-index: 1;
   min-width: 100px;
   margin: 0;
@@ -236,7 +265,7 @@ a {
   position: absolute;
   left: 100%;
   top: 0;
-  background-color: #fff;
+  background-color: var(--bg);
   z-index: 2;
   min-width: 120px;
 }
@@ -253,7 +282,7 @@ a {
 .subMenuTitle a:hover,
 .sub-menu a:hover {
   display: block;
-  background-color: #cdcccc;
+  background-color: var(--accent-soft);
 }
 
 .subMenuTitle a,
@@ -268,8 +297,8 @@ a {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: var(--bg);
+  border: 1px solid var(--line);
   min-width: 130px;
   z-index: 1000;
   padding: 5px 0;
@@ -280,13 +309,13 @@ a {
   display: block;
   padding: 10px;
   font-size: 13px;
-  color: #333;
+  color: var(--text);
   text-decoration: none;
   text-align: center;
 }
 
 .mypage-dropdown li a:hover {
-  background-color: #f8f8f8;
+  background-color: var(--accent-soft);
 }
 
 /* 마우스 올렸을 때 보여주기 */

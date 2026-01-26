@@ -7,8 +7,8 @@
   height: auto !important;
   margin: 0;
   padding: 40px 0;
-  background-color: #ffffff;
-  color: #333;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 .container {
@@ -28,7 +28,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--line);
   margin-bottom: 40px;
 }
 
@@ -50,8 +50,8 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--bg);
+  border: 1px solid var(--line);
   min-width: 140px;
   z-index: 1000;
 }
@@ -64,7 +64,7 @@
   display: block;
   padding: 10px 15px;
   text-decoration: none;
-  color: #333;
+  color: var(--text);
 }
 
 .product-grid {
@@ -82,7 +82,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3/4;
-  background: #f7f7f7;
+  background: var(--bg-soft);
   overflow: hidden;
 }
 
@@ -99,15 +99,15 @@
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  border: 1px solid #ddd;
-  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.85);
   cursor: pointer;
 }
 
 .info { padding: 15px 0; }
-.info .brand { font-size: 12px; color: #888; font-weight: bold; margin-bottom: 5px; }
+.info .brand { font-size: 12px; color: var(--text-muted); font-weight: bold; margin-bottom: 5px; }
 .info .name { font-size: 14px; margin-bottom: 8px; height: 2.8em; overflow: hidden; }
-.info .name a { text-decoration: none; color: #333; }
+.info .name a { text-decoration: none; color: var(--text); }
 .info .price { font-size: 15px; font-weight: bold; }
 
 .pagination-container {
@@ -124,12 +124,12 @@
 
 .page-link {
   padding: 8px 15px;
-  border: 1px solid #ddd;
-  background: #fff;
+  border: 1px solid var(--line);
+  background: var(--bg);
   cursor: pointer;
 }
 
 .page-link.active {
-  background: #000;
+  background: var(--primary);
   color: #fff;
 }

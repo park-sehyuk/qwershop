@@ -61,3 +61,34 @@
 .edit-btn { background-color: #4a4a4a; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; }
 .delete-btn { background-color: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; margin-left: 5px; }
 .add-category { width: 150px; height: 50px; background-color: #28a745; color: white; border-radius: 10px; border: 1px solid black; cursor: pointer; font-weight: bold; }
+
+/* admin layout normalization */
+:root {
+    --admin-font: "Noto Sans KR", "Noto Sans JP", "Apple SD Gothic Neo",
+        "Malgun Gothic", "Segoe UI", sans-serif;
+    --admin-text: #222;
+    --admin-bg: #f7f7f7;
+}
+html {
+    font-size: 16px;
+}
+body {
+    margin: 0;
+    font-family: var(--admin-font);
+    color: var(--admin-text);
+    background: var(--admin-bg);
+    -webkit-text-size-adjust: 100%;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+#scale {
+    width: min(1440px, 100%);
+    min-height: 100vh;
+}
+.top-right {
+    width: 100%;
+    height: auto;
+}

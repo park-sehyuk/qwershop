@@ -66,6 +66,37 @@
     font-weight: bold;
 }
 
+/* admin layout normalization */
+:root {
+    --admin-font: "Noto Sans KR", "Noto Sans JP", "Apple SD Gothic Neo",
+        "Malgun Gothic", "Segoe UI", sans-serif;
+    --admin-text: #222;
+    --admin-bg: #f7f7f7;
+}
+html {
+    font-size: 16px;
+}
+body {
+    margin: 0;
+    font-family: var(--admin-font);
+    color: var(--admin-text);
+    background: var(--admin-bg);
+    -webkit-text-size-adjust: 100%;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+#scale {
+    width: min(1440px, 100%);
+    min-height: 100vh;
+}
+.top-right {
+    width: 100%;
+    height: auto;
+}
+
 /* 기존 #scale 수정 */
 #scale {
     display: flex;
