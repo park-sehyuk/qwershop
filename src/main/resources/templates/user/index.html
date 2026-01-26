@@ -41,12 +41,12 @@
     <div id="suggList">
       <h1>추천 상품</h1>
       <div id="hash">
-        <form th:action="@{/}" method="get" id="hashList">
-          <button id="gucciBtn" type="submit" name="suggBrand" value="구찌">#구찌</button>
-          <button id="poloBtn" type="submit" name="suggBrand" value="랄프로렌">#랄프로렌</button>
-          <button id="maisonBtn" type="submit" name="suggBrand" value="메종키츠네">#메종 키츠네</button>
-          <button id="balBtn" type="submit" name="suggBrand" value="발렌시아가">#발렌시아가</button>
-        </form>
+        <div id="hashList">
+          <button id="gucciBtn" type="button" data-brand="구찌">#구찌</button>
+          <button id="poloBtn" type="button" data-brand="랄프로렌">#랄프로렌</button>
+          <button id="maisonBtn" type="button" data-brand="메종키츠네">#메종 키츠네</button>
+          <button id="balBtn" type="button" data-brand="발렌시아가">#발렌시아가</button>
+        </div>
       </div>
       <div id="suggItem">
         <div id="suggItemList">
@@ -101,13 +101,5 @@
 
   <script th:src="@{/user/js/index.js}"></script>
 
-  <script th:inline="javascript">
-    window.onload = function() {
-      var resultMessage = [[${resultMessage}]];
-      if (resultMessage) {
-        alert(resultMessage);
-      }
-    };
-  </script>
 </div>
 </html>
