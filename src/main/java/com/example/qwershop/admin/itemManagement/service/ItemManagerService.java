@@ -23,7 +23,7 @@ public class ItemManagerService {
     @Transactional
     public void saveItemWithFiles(ItemManagerDto dto, List<MultipartFile> files) {
         // 상품 정보 먼저 저장 (DB에서 GeneratedKey 등을 사용한다면 그 값을 받아야 함)
-        itemManagerMapper.insertItem(dto);
+        itemManagerMapper .insertItem(dto);
         handleFiles(dto.getItemId(), files);
     }
 
