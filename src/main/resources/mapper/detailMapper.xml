@@ -21,7 +21,7 @@
                 , sort_order
                 , use_yn
         FROM    detail_code
-        WHERE   group_code = #{groupCode}
+        WHERE   group_code = #{groupCode} AND use_yn = "Y"
     </select>
 
 </mapper>

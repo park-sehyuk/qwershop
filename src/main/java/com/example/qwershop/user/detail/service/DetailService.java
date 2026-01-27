@@ -3,7 +3,6 @@ package com.example.qwershop.user.detail.service;
 import com.example.qwershop.user.detail.dto.DetailDto;
 import com.example.qwershop.user.detail.dto.GroupDto;
 import com.example.qwershop.user.detail.mapper.DetailMapper;
-import com.example.qwershop.user.main.dto.MainItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class Detailservice {
+public class DetailService {
 
     private final DetailMapper detailMapper;
 

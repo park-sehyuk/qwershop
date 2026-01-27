@@ -2,12 +2,11 @@ package com.example.qwershop.user.detail.controller;
 
 import com.example.qwershop.user.detail.dto.DetailDto;
 import com.example.qwershop.user.detail.dto.GroupDto;
-import com.example.qwershop.user.detail.service.Detailservice;
+import com.example.qwershop.user.detail.service.DetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DetailController {
 
-    private final Detailservice detailservice;
+    private final DetailService detailservice;
 
     @GetMapping(value="/detail")
     public String detail(@RequestParam Long itemId
